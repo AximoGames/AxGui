@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AxGui", "AxGui\AxGui.csproj", "{9B906823-FD98-452C-9ED6-D673A6CCF9C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AxGui.Sample.OpenGL", "AxGui.Sample\AxGui.Sample.OpenGL.csproj", "{38F93AAC-01AA-452C-B12E-8BB62C3255E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B906823-FD98-452C-9ED6-D673A6CCF9C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B906823-FD98-452C-9ED6-D673A6CCF9C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B906823-FD98-452C-9ED6-D673A6CCF9C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B906823-FD98-452C-9ED6-D673A6CCF9C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38F93AAC-01AA-452C-B12E-8BB62C3255E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38F93AAC-01AA-452C-B12E-8BB62C3255E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38F93AAC-01AA-452C-B12E-8BB62C3255E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38F93AAC-01AA-452C-B12E-8BB62C3255E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8550A3E-DC55-4594-A505-33ADC3863546}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Net3dBoolDemo\Net3dBoolDemo.csproj
+	EndGlobalSection
+EndGlobal

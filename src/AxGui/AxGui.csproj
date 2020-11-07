@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<CodeAnalysisRuleSet>..\..\props\default.ruleset</CodeAnalysisRuleSet>
+		<Nullable>enable</Nullable>
+		<LangVersion>8.0</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<WarningsAsErrors>CS8618</WarningsAsErrors>
+	</PropertyGroup>
+
+	<Import Project="..\..\props\SharedProjectSettings.props" />
+
+	<ItemGroup>
+		<PackageReference Include="Svg.Skia" Version="0.4.1" />
+	</ItemGroup>
+</Project>

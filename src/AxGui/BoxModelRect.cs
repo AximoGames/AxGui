@@ -1,0 +1,123 @@
+﻿// This file is part of AxGUI. Web: https://github.com/AximoGames
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using SkiaSharp;
+using System;
+
+namespace AxGui
+{
+
+    public class BoxModelRect : IEquatable<BoxModelRect>
+    {
+
+        internal Action? ParentChanged;
+
+        private void Changed()
+        {
+            ParentChanged?.Invoke();
+        }
+
+        internal StyleValue _Top;
+        public StyleValue Top
+        {
+            readonly get => new StyleValue();
+            set
+            {
+                if (_Top == value)
+                    return;
+                _Top = value;
+                Changed();
+            }
+        }
+
+        internal StyleValue _Bottom;
+        public StyleValue Bottom
+        {
+            get => _Bottom;
+            set
+            {
+                if (_Bottom == value)
+                    return;
+                _Bottom = value;
+                Changed();
+            }
+        }
+
+        internal StyleValue _Left;
+        public StyleValue Left
+        {
+            get => _Left;
+            set
+            {
+                if (_Left == value)
+                    return;
+                _Left = value;
+                Changed();
+            }
+        }
+
+        internal StyleValue _Right;
+        public StyleValue Right
+        {
+            get => _Right;
+            set
+            {
+                if (_Right == value)
+                    return;
+                _Right = value;
+                Changed();
+            }
+        }
+
+        public BoxModelRect Clone()
+        {
+            return new BoxModelRect
+            {
+                Left = Left,
+                Top = Top,
+                Right = Right,
+                Bottom = Bottom,
+            };
+        }
+
+        public static bool operator ==(BoxModelRect x, BoxModelRect y)
+        {
+            return x.Top == y.Top && x.Bottom == y.Bottom && x.Left == y.Left && x.Right == y.Right;
+        }
+
+        public static bool operator !=(BoxModelRect x, BoxModelRect y)
+        {
+            return !(x == y);
+        }
+
+        public static bool Equals(BoxModelRect left, BoxModelRect right)
+        {
+            return left == right;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BoxModelRect m))
+                return false;
+
+            return this == m;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Top, Bottom, Left, Right);
+        }
+
+        public bool Equals(BoxModelRect other)
+        {
+            return this == other;
+        }
+
+        public Box ToBox()
+        {
+            return new Box(Left.Number, Top.Number, Right.Number, Bottom.Number);
+        }
+
+    }
+
+}
