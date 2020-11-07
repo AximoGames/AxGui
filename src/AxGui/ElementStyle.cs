@@ -100,6 +100,19 @@ namespace AxGui
             }
         }
 
+        internal StyleSize _Size;
+        public StyleSize Size
+        {
+            get => _Size;
+            set
+            {
+                if (_Size == value)
+                    return;
+                _Size = value;
+                BoundingChanged();
+            }
+        }
+
         internal BoxModelRect _Anchors = new BoxModelRect();
         public BoxModelRect Anchors
         {
@@ -108,7 +121,7 @@ namespace AxGui
             {
                 if (_Anchors == value)
                     return;
-                _Anchors = value;
+                _Anchors = value.Clone();
                 _Anchors.ParentChanged = BoundingChangedDelegate;
                 BoundingChanged();
             }
@@ -122,7 +135,7 @@ namespace AxGui
             {
                 if (_Margin == value)
                     return;
-                _Margin = value;
+                _Margin = value.Clone();
                 _Margin.ParentChanged = BoundingChangedDelegate;
                 BoundingChanged();
             }
@@ -136,7 +149,7 @@ namespace AxGui
             {
                 if (_Padding == value)
                     return;
-                _Padding = value;
+                _Padding = value.Clone();
                 _Padding.ParentChanged = BoundingChangedDelegate;
                 BoundingChanged();
             }
@@ -150,7 +163,7 @@ namespace AxGui
             {
                 if (_BorderWidth == value)
                     return;
-                _BorderWidth = value;
+                _BorderWidth = value.Clone();
                 _BorderWidth.ParentChanged = BoundingChangedDelegate;
                 BoundingChanged();
             }
@@ -164,31 +177,31 @@ namespace AxGui
             {
                 if (_BorderColor == value)
                     return;
-                _BorderColor = value;
+                _BorderColor = value.Clone();
             }
         }
 
-        internal BoxModelRect _BorderStyleWidth = new BoxModelRect();
-        public BoxModelRect BorderStyleWidth
+        internal BoxModelRect _BorderStyle = new BoxModelRect();
+        public BoxModelRect BorderStyle
         {
             get => _BorderColor;
             set
             {
                 if (_BorderColor == value)
                     return;
-                _BorderColor = value;
+                _BorderColor = value.Clone();
             }
         }
 
-        internal BoxModelRect _BorderRadiusWidth = new BoxModelRect();
-        public BoxModelRect BorderRadiusWidth
+        internal BoxModelRect _BorderRadius = new BoxModelRect();
+        public BoxModelRect BorderRadius
         {
-            get => _BorderRadiusWidth;
+            get => _BorderRadius;
             set
             {
-                if (_BorderRadiusWidth == value)
+                if (_BorderRadius == value)
                     return;
-                _BorderRadiusWidth = value;
+                _BorderRadius = value.Clone();
             }
         }
 

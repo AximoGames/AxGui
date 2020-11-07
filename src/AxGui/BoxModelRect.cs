@@ -20,7 +20,7 @@ namespace AxGui
         internal StyleValue _Top;
         public StyleValue Top
         {
-            readonly get => new StyleValue();
+            get => _Top;
             set
             {
                 if (_Top == value)

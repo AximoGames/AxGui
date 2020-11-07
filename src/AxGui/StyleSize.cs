@@ -5,10 +5,16 @@ using System;
 
 namespace AxGui
 {
-    public struct StyleSize : IEquatable<StyleSize>
+    public readonly struct StyleSize : IEquatable<StyleSize>
     {
-        public StyleValue Width;
-        public StyleValue Height;
+        public readonly StyleValue Width;
+        public readonly StyleValue Height;
+
+        public StyleSize(StyleValue width, StyleValue height)
+        {
+            Width = width;
+            Height = height;
+        }
 
         public override int GetHashCode()
         {

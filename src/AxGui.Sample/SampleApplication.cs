@@ -93,8 +93,14 @@ namespace AxGui.Sample.OpenGL
                 var el = new Element();
                 el.Style.Position = StylePosition.Absolute;
 
+                var globalAnchors = new BoxModelRect
+                {
+                    Bottom = 5,
+                };
+
                 el.Style.Height = 100;
                 el.Style.Anchors.Top = 10;
+
                 //el.Style.Anchors.Bottom = 20;
 
                 var layouter = new LayoutProcessor();
