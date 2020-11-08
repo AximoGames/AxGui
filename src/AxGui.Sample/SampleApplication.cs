@@ -99,7 +99,7 @@ namespace AxGui.Sample.OpenGL
 
                 el.Style.Anchors = new BoxModelRect
                 {
-                    Top = 5,
+                    //Top = 5,
                     Bottom = 5,
                 };
 

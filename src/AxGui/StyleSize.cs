@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace AxGui
 {
+
     public readonly struct StyleSize : IEquatable<StyleSize>
     {
         public readonly StyleValue Width;

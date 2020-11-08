@@ -93,6 +93,9 @@ namespace AxGui
                     relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
                     relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);
 
+            // top | left
+            bool normalDirection = true;
+
             if (ResolvedStyle.Position == StylePosition.Absolute)
             {
                 if (ResolvedStyle._Anchors.Top.HasValue() && ResolvedStyle._Anchors.Bottom.HasValue())
@@ -110,6 +113,7 @@ namespace AxGui
                     }
                     else if (ResolvedStyle._Anchors.Bottom.HasValue())
                     {
+                        normalDirection = false;
                         absAnchors.Bottom -= ResolvedStyle._Anchors.Bottom.Number;
                         absAnchors.Top = absAnchors.Bottom - diffHeight;
                     }
@@ -124,19 +128,39 @@ namespace AxGui
             if (ClientRect.Height > relMaxSize.Height)
             {
                 var diff = ClientRect.Height - relMaxSize.Height;
-                ClientRect.Bottom -= diff;
-                PaddingRect.Bottom -= diff;
-                BorderRect.Bottom -= diff;
-                MarginRect.Bottom -= diff;
+                if (normalDirection)
+                {
+                    ClientRect.Bottom -= diff;
+                    PaddingRect.Bottom -= diff;
+                    BorderRect.Bottom -= diff;
+                    MarginRect.Bottom -= diff;
+                }
+                else
+                {
+                    ClientRect.Top += diff;
+                    PaddingRect.Top += diff;
+                    BorderRect.Top += diff;
+                    MarginRect.Top += diff;
+                }
             }
 
             if (ClientRect.Height < relMinSize.Height)
             {
                 var diff = relMinSize.Height - ClientRect.Height;
-                ClientRect.Bottom += diff;
-                PaddingRect.Bottom += diff;
-                BorderRect.Bottom += diff;
-                MarginRect.Bottom += diff;
+                if (normalDirection)
+                {
+                    ClientRect.Bottom += diff;
+                    PaddingRect.Bottom += diff;
+                    BorderRect.Bottom += diff;
+                    MarginRect.Bottom += diff;
+                }
+                else
+                {
+                    ClientRect.Top -= diff;
+                    PaddingRect.Top -= diff;
+                    BorderRect.Top -= diff;
+                    MarginRect.Top -= diff;
+                }
             }
         }
 
