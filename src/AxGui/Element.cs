@@ -125,7 +125,7 @@ namespace AxGui
             PaddingRect = BorderRect.Substract(relBorder);
             ClientRect = PaddingRect.Substract(relPadding);
 
-            if (ClientRect.Height > relMaxSize.Height)
+            if (ResolvedStyle.MaxHeight.HasValue() && ClientRect.Height > relMaxSize.Height)
             {
                 var diff = ClientRect.Height - relMaxSize.Height;
                 if (normalDirection)
@@ -144,7 +144,7 @@ namespace AxGui
                 }
             }
 
-            if (ClientRect.Height < relMinSize.Height)
+            if (ResolvedStyle.MinHeight.HasValue() && ClientRect.Height < relMinSize.Height)
             {
                 var diff = relMinSize.Height - ClientRect.Height;
                 if (normalDirection)
