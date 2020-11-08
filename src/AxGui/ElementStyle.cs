@@ -124,6 +124,31 @@ namespace AxGui
             set => MinSize = new StyleSize(_MinSize.Width, value);
         }
 
+        internal StyleSize _MaxSize;
+        public StyleSize MaxSize
+        {
+            get => _MaxSize;
+            set
+            {
+                if (_MaxSize == value)
+                    return;
+                _MaxSize = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue MaxWidth
+        {
+            get => _MaxSize.Width;
+            set => MaxSize = new StyleSize(value, _MaxSize.Height);
+        }
+
+        public StyleValue MaxHeight
+        {
+            get => _MaxSize.Height;
+            set => MaxSize = new StyleSize(_MaxSize.Width, value);
+        }
+
         internal BoxModelRect _Anchors = new BoxModelRect();
         public BoxModelRect Anchors
         {

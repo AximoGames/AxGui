@@ -49,6 +49,7 @@ namespace AxGui
             {
                 resolved._Size = style._Size;
                 resolved._MinSize = style._MinSize;
+                resolved._MaxSize = style._MaxSize;
                 resolved._Margin = style._Margin.Clone();
                 resolved._Padding = style._Padding.Clone();
                 resolved._BorderWidth = style._BorderWidth.Clone();
@@ -86,6 +87,7 @@ namespace AxGui
 
             Size relSize = ResolvedStyle._Size.ToSize();
             Size relMinSize = ResolvedStyle._MinSize.ToSize();
+            Size relMaxSize = ResolvedStyle._MaxSize.ToSize();
 
             var decorationSize = new Size(
                     relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
@@ -118,6 +120,15 @@ namespace AxGui
             BorderRect = MarginRect.Substract(relMargin);
             PaddingRect = BorderRect.Substract(relBorder);
             ClientRect = PaddingRect.Substract(relPadding);
+
+            if (ClientRect.Height > relMaxSize.Height)
+            {
+                var diff = ClientRect.Height - relMaxSize.Height;
+                ClientRect.Bottom -= diff;
+                PaddingRect.Bottom -= diff;
+                BorderRect.Bottom -= diff;
+                MarginRect.Bottom -= diff;
+            }
 
             if (ClientRect.Height < relMinSize.Height)
             {
