@@ -113,15 +113,20 @@ namespace AxGui
             ClientRect = PaddingRect.Substract(relPadding);
         }
 
+        private static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
+        private static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
+        private static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
+        private static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188) };
+
         public virtual void OnRender(RenderContext ctx)
         {
             ctx.Reset();
             ctx.Commands.Add(new DrawActionCommand(x =>
             {
-                x.Canvas.DrawRect(MarginRect.ToSKRect(), new SKPaint { Color = new SKColor(174, 129, 82) });
-                x.Canvas.DrawRect(BorderRect.ToSKRect(), new SKPaint { Color = new SKColor(227, 195, 129) });
-                //x.Canvas.DrawRect(PaddingRect.ToSKRect(), new SKPaint { Color = new SKColor(183, 196, 127) });
-                //x.Canvas.DrawRect(ClientRect.ToSKRect(), new SKPaint { Color = new SKColor(135, 178, 188) });
+                x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint);
+                x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint);
+                x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint);
+                x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint);
             }));
         }
 

@@ -93,21 +93,18 @@ namespace AxGui.Sample.OpenGL
                 var el = new Element();
                 el.Style.Position = StylePosition.Absolute;
 
-                var globalAnchors = new BoxModelRect
-                {
-                    Bottom = 5,
-                };
-
                 el.Style.Height = 100;
                 //el.Style.Anchors.Top = 10;
 
                 el.Style.Anchors = new BoxModelRect
                 {
                     Top = 5,
+                    Bottom = 5,
                 };
 
                 el.Style.Margin = 5;
-                //el.Style.BorderWidth = 5;
+                el.Style.BorderWidth = 5;
+                el.Style.Padding = 5;
 
                 //el.Style.Anchors.Bottom = 20;
 
