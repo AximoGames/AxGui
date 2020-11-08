@@ -14,10 +14,10 @@ namespace AxGui.Test
             return el;
         }
 
-        private void Layout(Element el)
+        private void Layout(Element el, Box? viewport = null)
         {
             var layouter = new LayoutProcessor();
-            layouter.ViewPort = new Box(0, 0, 640, 360);
+            layouter.ViewPort = viewport ?? new Box(0, 0, 640, 360);
             layouter.Process(el);
         }
 
@@ -71,6 +71,20 @@ namespace AxGui.Test
             Layout(el);
             Assert.Equal(el.BorderRect, el.ClientRect);
             Assert.Equal(el.PaddingRect, el.ClientRect);
+        }
+
+        [Fact]
+        public void MinHeight()
+        {
+            var el = CreateElement();
+            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Margin = 5;
+            el.Style.BorderWidth = 5;
+            el.Style.Padding = 5;
+            el.Style.MinHeight = 50;
+
+            Layout(el, viewport: new Box(0, 0, 640, 20));
+            Assert.Equal(new Box(15, 20, 625, 120), el.ClientRect);
         }
 
     }

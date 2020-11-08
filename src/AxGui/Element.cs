@@ -48,6 +48,7 @@ namespace AxGui
             if (style._BoundingChanged)
             {
                 resolved._Size = style._Size;
+                resolved._MinSize = style._MinSize;
                 resolved._Margin = style._Margin.Clone();
                 resolved._Padding = style._Padding.Clone();
                 resolved._BorderWidth = style._BorderWidth.Clone();
@@ -79,11 +80,12 @@ namespace AxGui
 
             Box absAnchors = OuterRect;
 
-            Box relMargin = ResolvedStyle.Margin.ToBox();
-            Box relBorder = ResolvedStyle.BorderWidth.ToBox();
-            Box relPadding = ResolvedStyle.Padding.ToBox();
+            Box relMargin = ResolvedStyle._Margin.ToBox();
+            Box relBorder = ResolvedStyle._BorderWidth.ToBox();
+            Box relPadding = ResolvedStyle._Padding.ToBox();
 
-            Size relSize = ResolvedStyle.Size.ToSize();
+            Size relSize = ResolvedStyle._Size.ToSize();
+            Size relMinSize = ResolvedStyle._MinSize.ToSize();
 
             var decorationSize = new Size(
                     relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
@@ -91,22 +93,22 @@ namespace AxGui
 
             if (ResolvedStyle.Position == StylePosition.Absolute)
             {
-                if (ResolvedStyle.Anchors.Top.HasValue() && ResolvedStyle.Anchors.Bottom.HasValue())
+                if (ResolvedStyle._Anchors.Top.HasValue() && ResolvedStyle._Anchors.Bottom.HasValue())
                 {
-                    absAnchors.Top += ResolvedStyle.Anchors.Top.Number;
-                    absAnchors.Bottom -= ResolvedStyle.Anchors.Bottom.Number;
+                    absAnchors.Top += ResolvedStyle._Anchors.Top.Number;
+                    absAnchors.Bottom -= ResolvedStyle._Anchors.Bottom.Number;
                 }
                 else
                 {
                     var diffHeight = relSize.Height + decorationSize.Height;
-                    if (ResolvedStyle.Anchors.Top.HasValue())
+                    if (ResolvedStyle._Anchors.Top.HasValue())
                     {
-                        absAnchors.Top += ResolvedStyle.Anchors.Top.Number;
+                        absAnchors.Top += ResolvedStyle._Anchors.Top.Number;
                         absAnchors.Bottom = absAnchors.Top + diffHeight;
                     }
-                    else if (ResolvedStyle.Anchors.Bottom.HasValue())
+                    else if (ResolvedStyle._Anchors.Bottom.HasValue())
                     {
-                        absAnchors.Bottom -= ResolvedStyle.Anchors.Bottom.Number;
+                        absAnchors.Bottom -= ResolvedStyle._Anchors.Bottom.Number;
                         absAnchors.Top = absAnchors.Bottom - diffHeight;
                     }
                 }
@@ -116,6 +118,15 @@ namespace AxGui
             BorderRect = MarginRect.Substract(relMargin);
             PaddingRect = BorderRect.Substract(relBorder);
             ClientRect = PaddingRect.Substract(relPadding);
+
+            if (ClientRect.Height < relMinSize.Height)
+            {
+                var diff = relMinSize.Height - ClientRect.Height;
+                ClientRect.Bottom += diff;
+                PaddingRect.Bottom += diff;
+                BorderRect.Bottom += diff;
+                MarginRect.Bottom += diff;
+            }
         }
 
         private static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };

@@ -93,7 +93,7 @@ namespace AxGui.Sample.OpenGL
                 var el = new Element();
                 el.Style.Position = StylePosition.Absolute;
 
-                //el.Style.MinHeight = 50;
+                el.Style.MinHeight = 50;
                 el.Style.Height = 100;
                 //el.Style.Anchors.Top = 10;
 
