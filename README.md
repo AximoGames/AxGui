@@ -27,7 +27,7 @@ Benefits
 Differences to ImGUI
 --------------------
 
-- Designed primary for Development/Debugging UI
+- ImGUI is Designed primary for Development/Debugging UI
 - Persistent UI State between Draw calls
 - That's resulting in higher frame rates
 - Simpler creation of custom controls
@@ -36,6 +36,6 @@ Differences to ImGUI
 Differences to AvalonUI
 -----------------------
 
-- Designed primary for GUI-First applications, not for 3D games.
-- Overloaded with features you do not need in 3D games.
-- Less control rendering pipeline
+- AvalonUI is designed primary for GUI-First applications, not for 3D games.
+- AvalonUI is overloaded with features you do not need in 3D games.
+- AvalonUI has Less control in rendering pipeline

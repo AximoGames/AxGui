@@ -1,13 +1,14 @@
 ﻿// This file is part of AxGUI. Web: https://github.com/AximoGames
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Microsoft.VisualBasic.CompilerServices;
 using SkiaSharp;
 using System;
 
 namespace AxGui
 {
 
-    public class BoxModelRect : IEquatable<BoxModelRect>
+    public struct BoxModelRect : IEquatable<BoxModelRect>
     {
 
         internal Action? ParentChanged;
@@ -15,32 +16,6 @@ namespace AxGui
         private void Changed()
         {
             ParentChanged?.Invoke();
-        }
-
-        internal StyleValue _Top;
-        public StyleValue Top
-        {
-            get => _Top;
-            set
-            {
-                if (_Top == value)
-                    return;
-                _Top = value;
-                Changed();
-            }
-        }
-
-        internal StyleValue _Bottom;
-        public StyleValue Bottom
-        {
-            get => _Bottom;
-            set
-            {
-                if (_Bottom == value)
-                    return;
-                _Bottom = value;
-                Changed();
-            }
         }
 
         internal StyleValue _Left;
@@ -52,6 +27,19 @@ namespace AxGui
                 if (_Left == value)
                     return;
                 _Left = value;
+                Changed();
+            }
+        }
+
+        internal StyleValue _Top;
+        public StyleValue Top
+        {
+            get => _Top;
+            set
+            {
+                if (_Top == value)
+                    return;
+                _Top = value;
                 Changed();
             }
         }
@@ -69,6 +57,19 @@ namespace AxGui
             }
         }
 
+        internal StyleValue _Bottom;
+        public StyleValue Bottom
+        {
+            get => _Bottom;
+            set
+            {
+                if (_Bottom == value)
+                    return;
+                _Bottom = value;
+                Changed();
+            }
+        }
+
         public BoxModelRect Clone()
         {
             return new BoxModelRect
@@ -82,7 +83,7 @@ namespace AxGui
 
         public static bool operator ==(BoxModelRect x, BoxModelRect y)
         {
-            return x.Top == y.Top && x.Bottom == y.Bottom && x.Left == y.Left && x.Right == y.Right;
+            return x.Left == y.Left && x.Top == y.Top && x.Right == y.Right && x.Bottom == y.Bottom;
         }
 
         public static bool operator !=(BoxModelRect x, BoxModelRect y)
@@ -105,7 +106,7 @@ namespace AxGui
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Top, Bottom, Left, Right);
+            return HashCode.Combine(Left, Top, Right, Bottom);
         }
 
         public bool Equals(BoxModelRect other)
@@ -116,6 +117,17 @@ namespace AxGui
         public Box ToBox()
         {
             return new Box(Left.Number, Top.Number, Right.Number, Bottom.Number);
+        }
+
+        public static implicit operator BoxModelRect(float value)
+        {
+            return new BoxModelRect
+            {
+                Left = value,
+                Top = value,
+                Right = value,
+                Bottom = value,
+            };
         }
 
     }

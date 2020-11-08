@@ -60,13 +60,13 @@ namespace AxGui
             resolved.Visibility = style.Visibility;
         }
 
-        private Box OuterRect;
+        internal Box OuterRect;
 
-        private Box MarginRect;
-        private Box BorderRect;
-        private Box PaddingRect;
-        private Box ClientRect;
-        private Size NaturalSize;
+        internal Box MarginRect;
+        internal Box BorderRect;
+        internal Box PaddingRect;
+        internal Box ClientRect;
+        internal Size NaturalSize;
 
         protected internal virtual void ComputeChildBoundsOffers()
         {
@@ -107,7 +107,10 @@ namespace AxGui
                 }
             }
 
-            MarginRect = absAnchors.Substract(relMargin);
+            MarginRect = absAnchors;
+            BorderRect = MarginRect.Substract(relMargin);
+            PaddingRect = BorderRect.Substract(relBorder);
+            ClientRect = PaddingRect.Substract(relPadding);
         }
 
         public virtual void OnRender(RenderContext ctx)
@@ -115,7 +118,10 @@ namespace AxGui
             ctx.Reset();
             ctx.Commands.Add(new DrawActionCommand(x =>
             {
-                x.Canvas.DrawRect(MarginRect.ToSKRect(), new SKPaint { Color = new SKColor(165, 42, 42) });
+                x.Canvas.DrawRect(MarginRect.ToSKRect(), new SKPaint { Color = new SKColor(174, 129, 82) });
+                x.Canvas.DrawRect(BorderRect.ToSKRect(), new SKPaint { Color = new SKColor(227, 195, 129) });
+                //x.Canvas.DrawRect(PaddingRect.ToSKRect(), new SKPaint { Color = new SKColor(183, 196, 127) });
+                //x.Canvas.DrawRect(ClientRect.ToSKRect(), new SKPaint { Color = new SKColor(135, 178, 188) });
             }));
         }
 

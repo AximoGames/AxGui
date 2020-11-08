@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AxGui", "AxGui\AxGui.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AxGui.Sample.OpenGL", "AxGui.Sample\AxGui.Sample.OpenGL.csproj", "{38F93AAC-01AA-452C-B12E-8BB62C3255E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxGui.Test", "AxGui.Test\AxGui.Test.csproj", "{28954CA8-2797-4769-83B3-AD15AF4884A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{38F93AAC-01AA-452C-B12E-8BB62C3255E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38F93AAC-01AA-452C-B12E-8BB62C3255E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38F93AAC-01AA-452C-B12E-8BB62C3255E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28954CA8-2797-4769-83B3-AD15AF4884A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28954CA8-2797-4769-83B3-AD15AF4884A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28954CA8-2797-4769-83B3-AD15AF4884A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28954CA8-2797-4769-83B3-AD15AF4884A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
