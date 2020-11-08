@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AxGui
 {
@@ -43,6 +44,8 @@ namespace AxGui
         {
             return !(x == y);
         }
+
+        public Size ToSize() => new Size(Width.Number, Height.Number);
 
     }
 

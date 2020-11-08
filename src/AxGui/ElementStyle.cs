@@ -74,32 +74,6 @@ namespace AxGui
         public StyleDisplay Display;
         public StyleVisibility Visibility;
 
-        internal StyleValue _Width;
-        public StyleValue Width
-        {
-            get => _Width;
-            set
-            {
-                if (_Width == value)
-                    return;
-                _Width = value;
-                BoundingChanged();
-            }
-        }
-
-        internal StyleValue _Height;
-        public StyleValue Height
-        {
-            get => _Height;
-            set
-            {
-                if (_Height == value)
-                    return;
-                _Height = value;
-                BoundingChanged();
-            }
-        }
-
         internal StyleSize _Size;
         public StyleSize Size
         {
@@ -111,6 +85,43 @@ namespace AxGui
                 _Size = value;
                 BoundingChanged();
             }
+        }
+
+        public StyleValue Width
+        {
+            get => _Size.Width;
+            set => Size = new StyleSize(value, _Size.Height);
+        }
+
+        public StyleValue Height
+        {
+            get => _Size.Height;
+            set => Size = new StyleSize(_Size.Width, value);
+        }
+
+        internal StyleSize _MinSize;
+        public StyleSize MinSize
+        {
+            get => _MinSize;
+            set
+            {
+                if (_MinSize == value)
+                    return;
+                _MinSize = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue MinWidth
+        {
+            get => _MinSize.Width;
+            set => MinSize = new StyleSize(value, _MinSize.Height);
+        }
+
+        public StyleValue MinHeight
+        {
+            get => _MinSize.Height;
+            set => MinSize = new StyleSize(_MinSize.Width, value);
         }
 
         internal BoxModelRect _Anchors = new BoxModelRect();

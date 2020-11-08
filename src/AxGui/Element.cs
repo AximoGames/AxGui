@@ -47,8 +47,7 @@ namespace AxGui
 
             if (style._BoundingChanged)
             {
-                resolved._Width = style._Width;
-                resolved._Height = style._Height;
+                resolved._Size = style._Size;
                 resolved._Margin = style._Margin.Clone();
                 resolved._Padding = style._Padding.Clone();
                 resolved._BorderWidth = style._BorderWidth.Clone();
@@ -79,10 +78,16 @@ namespace AxGui
                 OuterRect = ctx.GlobalViewPort;
 
             Box absAnchors = OuterRect;
+
             Box relMargin = ResolvedStyle.Margin.ToBox();
             Box relBorder = ResolvedStyle.BorderWidth.ToBox();
             Box relPadding = ResolvedStyle.Padding.ToBox();
-            Size relSize = new Size(ResolvedStyle.Width.Number, ResolvedStyle.Height.Number);
+
+            Size relSize = ResolvedStyle.Size.ToSize();
+
+            var decorationSize = new Size(
+                    relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
+                    relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);
 
             if (ResolvedStyle.Position == StylePosition.Absolute)
             {
@@ -93,7 +98,7 @@ namespace AxGui
                 }
                 else
                 {
-                    var diffHeight = relSize.Height + relPadding.TopBottom + relBorder.TopBottom + relMargin.TopBottom;
+                    var diffHeight = relSize.Height + decorationSize.Height;
                     if (ResolvedStyle.Anchors.Top.HasValue())
                     {
                         absAnchors.Top += ResolvedStyle.Anchors.Top.Number;
