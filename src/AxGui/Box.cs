@@ -2,10 +2,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using SkiaSharp;
+using System;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 
 namespace AxGui
 {
+
     public struct Box
     {
         public float Left;
@@ -27,9 +30,9 @@ namespace AxGui
         public float Width => Right - Left;
         public float Height => Bottom - Top;
 
-        public SKPoint Center
+        public Point Center
         {
-            get => new SKPoint(Right + (Width / 2), Top + (Height / 2));
+            get => new Point(Right + (Width / 2), Top + (Height / 2));
         }
 
         public float Size(Axis axis)
@@ -50,6 +53,46 @@ namespace AxGui
         public override string ToString()
         {
             return $"Left: {Left:F1}, Top: {Top:F1}, Right: {Right:F1}, Bottom: {Bottom:F1}, Width: {Width:F1}, Height: {Height:F1}";
+        }
+
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return Left;
+                    case 1:
+                        return Top;
+                    case 2:
+                        return Right;
+                    case 3:
+                        return Bottom;
+                    default:
+                        throw new ArgumentException(nameof(index));
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        Left = value;
+                        break;
+                    case 1:
+                        Top = value;
+                        break;
+                    case 2:
+                        Right = value;
+                        break;
+                    case 3:
+                        Bottom = value;
+                        break;
+                    default:
+                        throw new ArgumentException(nameof(index));
+                }
+            }
         }
 
     }

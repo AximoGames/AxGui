@@ -4,6 +4,7 @@
 using Microsoft.VisualBasic.CompilerServices;
 using SkiaSharp;
 using System;
+using System.Reflection.Metadata.Ecma335;
 
 namespace AxGui
 {
@@ -150,6 +151,68 @@ namespace AxGui
                 Right = value,
                 Bottom = value,
             };
+        }
+
+        //public StyleValue GetMin(Axis axis)
+        //    => axis == Axis.X ? Left : Top;
+
+        //public void SetMin(Axis axis, StyleValue value)
+        //{
+        //    if (axis == Axis.X)
+        //        Left = value;
+        //    else
+        //        Top = value;
+        //}
+
+        //public StyleValue GetMax(Axis axis)
+        //    => axis == Axis.X ? Right : Bottom;
+
+        //public void SetMax(Axis axis, StyleValue value)
+        //{
+        //    if (axis == Axis.X)
+        //        Right = value;
+        //    else
+        //        Bottom = value;
+        //}
+
+        public StyleValue this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return Left;
+                    case 1:
+                        return Top;
+                    case 2:
+                        return Right;
+                    case 3:
+                        return Bottom;
+                    default:
+                        throw new ArgumentException(nameof(index));
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        Left = value;
+                        break;
+                    case 1:
+                        Top = value;
+                        break;
+                    case 2:
+                        Right = value;
+                        break;
+                    case 3:
+                        Bottom = value;
+                        break;
+                    default:
+                        throw new ArgumentException(nameof(index));
+                }
+            }
         }
 
     }

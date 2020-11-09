@@ -101,39 +101,54 @@ namespace AxGui
                     relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);
 
             // top | left
-            bool normalDirection = true;
+            Span<bool> normalDirection = stackalloc bool[2];
 
-            if (ResolvedStyle.Position == StylePosition.Absolute)
+            // Debug
+            const int axisCount = 2;
+            const int axisStart = 1;
+
+            const int Top = 0;
+            const int Bottom = 2;
+            //const int Width = 0;
+            //const int Height = 1;
+
+            for (var a = axisStart; a < axisCount; a++)
             {
-                if (ResolvedStyle._Anchors.Top.HasValue() && ResolvedStyle._Anchors.Bottom.HasValue())
-                {
-                    absAnchors.Top += ResolvedStyle._Anchors.Top.Number;
-                    absAnchors.Bottom -= ResolvedStyle._Anchors.Bottom.Number;
-                }
-                else
-                {
-                    var diffHeight = relSize.Height + decorationSize.Height;
-                    if (ResolvedStyle._Margin.Top.Unit == StyleUnit.Auto
-                        && ResolvedStyle._Margin.Bottom.Unit == StyleUnit.Auto)
-                    {
-                        var size = diffHeight;
-                        var halfSize = size / 2;
+                normalDirection[a] = true;
+                var ax = (Axis)a;
 
-                        absAnchors.Top = absCenter.Y - halfSize;
-                        absAnchors.Bottom = absCenter.Y + halfSize;
+                if (ResolvedStyle.Position == StylePosition.Absolute)
+                {
+                    if (ResolvedStyle._Anchors[Top + a].HasValue() && ResolvedStyle._Anchors[Bottom + a].HasValue())
+                    {
+                        absAnchors[Top + a] += ResolvedStyle._Anchors[Top + a].Number;
+                        absAnchors[Bottom + a] -= ResolvedStyle._Anchors[Bottom + a].Number;
                     }
                     else
                     {
-                        if (ResolvedStyle._Anchors.Top.HasValue())
+                        var diffHeight = relSize[a] + decorationSize[a];
+                        if (ResolvedStyle._Margin[Top + a].Unit == StyleUnit.Auto
+                            && ResolvedStyle._Margin[Bottom + a].Unit == StyleUnit.Auto)
                         {
-                            absAnchors.Top += ResolvedStyle._Anchors.Top.Number;
-                            absAnchors.Bottom = absAnchors.Top + diffHeight;
+                            var size = diffHeight;
+                            var halfSize = size / 2;
+
+                            absAnchors[Top + a] = absCenter[a] - halfSize;
+                            absAnchors[Bottom + a] = absCenter[a] + halfSize;
                         }
-                        else if (ResolvedStyle._Anchors.Bottom.HasValue())
+                        else
                         {
-                            normalDirection = false;
-                            absAnchors.Bottom -= ResolvedStyle._Anchors.Bottom.Number;
-                            absAnchors.Top = absAnchors.Bottom - diffHeight;
+                            if (ResolvedStyle._Anchors[Top + a].HasValue())
+                            {
+                                absAnchors[Top + a] += ResolvedStyle._Anchors[Top + a].Number;
+                                absAnchors[Bottom + a] = absAnchors[Top + a] + diffHeight;
+                            }
+                            else if (ResolvedStyle._Anchors[Bottom + a].HasValue())
+                            {
+                                normalDirection[a] = false;
+                                absAnchors[Bottom + a] -= ResolvedStyle._Anchors[Bottom + a].Number;
+                                absAnchors[Top + a] = absAnchors[Bottom + a] - diffHeight;
+                            }
                         }
                     }
                 }
@@ -144,41 +159,47 @@ namespace AxGui
             PaddingRect = BorderRect.Substract(relBorder);
             ClientRect = PaddingRect.Substract(relPadding);
 
-            if (ResolvedStyle.MaxHeight.HasValue() && ClientRect.Height > relMaxSize.Height)
+            for (var a = axisStart; a < axisCount; a++)
             {
-                var diff = ClientRect.Height - relMaxSize.Height;
-                if (normalDirection)
-                {
-                    ClientRect.Bottom -= diff;
-                    PaddingRect.Bottom -= diff;
-                    BorderRect.Bottom -= diff;
-                    MarginRect.Bottom -= diff;
-                }
-                else
-                {
-                    ClientRect.Top += diff;
-                    PaddingRect.Top += diff;
-                    BorderRect.Top += diff;
-                    MarginRect.Top += diff;
-                }
-            }
+                normalDirection[a] = true;
+                var ax = (Axis)a;
 
-            if (ResolvedStyle.MinHeight.HasValue() && ClientRect.Height < relMinSize.Height)
-            {
-                var diff = relMinSize.Height - ClientRect.Height;
-                if (normalDirection)
+                if (ResolvedStyle.MaxSize[a].HasValue() && ClientRect.Size(ax) > relMaxSize[a])
                 {
-                    ClientRect.Bottom += diff;
-                    PaddingRect.Bottom += diff;
-                    BorderRect.Bottom += diff;
-                    MarginRect.Bottom += diff;
+                    var diff = ClientRect.Size(ax) - relMaxSize[a];
+                    if (normalDirection[a])
+                    {
+                        ClientRect[Bottom + a] -= diff;
+                        PaddingRect[Bottom + a] -= diff;
+                        BorderRect[Bottom + a] -= diff;
+                        MarginRect[Bottom + a] -= diff;
+                    }
+                    else
+                    {
+                        ClientRect[Top + a] += diff;
+                        PaddingRect[Top + a] += diff;
+                        BorderRect[Top + a] += diff;
+                        MarginRect[Top + a] += diff;
+                    }
                 }
-                else
+
+                if (ResolvedStyle.MinSize[a].HasValue() && ClientRect.Size(ax) < relMinSize[a])
                 {
-                    ClientRect.Top -= diff;
-                    PaddingRect.Top -= diff;
-                    BorderRect.Top -= diff;
-                    MarginRect.Top -= diff;
+                    var diff = relMinSize[a] - ClientRect.Size(ax);
+                    if (normalDirection[a])
+                    {
+                        ClientRect[Bottom + a] += diff;
+                        PaddingRect[Bottom + a] += diff;
+                        BorderRect[Bottom + a] += diff;
+                        MarginRect[Bottom + a] += diff;
+                    }
+                    else
+                    {
+                        ClientRect[Top + a] -= diff;
+                        PaddingRect[Top + a] -= diff;
+                        BorderRect[Top + a] -= diff;
+                        MarginRect[Top + a] -= diff;
+                    }
                 }
             }
         }

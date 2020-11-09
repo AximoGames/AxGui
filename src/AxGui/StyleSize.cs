@@ -55,6 +55,22 @@ namespace AxGui
                 Height.Normalize(ctx, Axis.Y));
         }
 
+        public StyleValue this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return Width;
+                    case 1:
+                        return Height;
+                    default:
+                        throw new ArgumentException(nameof(index));
+                }
+            }
+        }
+
     }
 
 }
