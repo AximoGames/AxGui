@@ -141,6 +141,17 @@ namespace AxGui
             };
         }
 
+        public static implicit operator BoxModelRect(string value)
+        {
+            return new BoxModelRect
+            {
+                Left = value,
+                Top = value,
+                Right = value,
+                Bottom = value,
+            };
+        }
+
     }
 
 }

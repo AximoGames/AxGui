@@ -97,13 +97,13 @@ namespace AxGui.Sample.OpenGL
                 el.Style.Height = "50%";
                 //el.Style.Anchors.Top = 10;
 
-                el.Style.Anchors = new BoxModelRect
-                {
-                    //Top = 5,
-                    Bottom = 5,
-                };
+                //el.Style.Anchors = new BoxModelRect
+                //{
+                //    //Top = 5,
+                //    Bottom = 5,
+                //};
 
-                el.Style.Margin = 5;
+                el.Style.Margin = "auto";
                 el.Style.BorderWidth = 5;
                 el.Style.Padding = 5;
 

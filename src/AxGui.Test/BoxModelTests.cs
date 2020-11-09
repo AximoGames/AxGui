@@ -101,5 +101,18 @@ namespace AxGui.Test
             Assert.Equal(new Box(15, 20, 625, 200), el.ClientRect);
         }
 
+        [Fact]
+        public void CenterY()
+        {
+            var el = CreateElement();
+            el.Style.Margin = "auto";
+            el.Style.BorderWidth = 5;
+            el.Style.Padding = 5;
+            el.Style.Height = 100;
+
+            Layout(el);
+            Assert.Equal(new Box(10, 130, 630, 230), el.ClientRect);
+        }
+
     }
 }

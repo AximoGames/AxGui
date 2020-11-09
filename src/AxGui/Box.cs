@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using SkiaSharp;
+using System.Net.Http.Headers;
 
 namespace AxGui
 {
@@ -25,6 +26,11 @@ namespace AxGui
 
         public float Width => Right - Left;
         public float Height => Bottom - Top;
+
+        public SKPoint Center
+        {
+            get => new SKPoint(Right + (Width / 2), Top + (Height / 2));
+        }
 
         public float Size(Axis axis)
         {

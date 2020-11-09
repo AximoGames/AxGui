@@ -86,6 +86,7 @@ namespace AxGui
                 OuterRect = ctx.LocalViewPort;
 
             Box absAnchors = OuterRect;
+            var absCenter = absAnchors.Center;
 
             Box relMargin = ResolvedStyle._Margin.ToBox();
             Box relBorder = ResolvedStyle._BorderWidth.ToBox();
@@ -112,16 +113,28 @@ namespace AxGui
                 else
                 {
                     var diffHeight = relSize.Height + decorationSize.Height;
-                    if (ResolvedStyle._Anchors.Top.HasValue())
+                    if (ResolvedStyle._Margin.Top.Unit == StyleUnit.Auto
+                        && ResolvedStyle._Margin.Bottom.Unit == StyleUnit.Auto)
                     {
-                        absAnchors.Top += ResolvedStyle._Anchors.Top.Number;
-                        absAnchors.Bottom = absAnchors.Top + diffHeight;
+                        var size = diffHeight;
+                        var halfSize = size / 2;
+
+                        absAnchors.Top = absCenter.Y - halfSize;
+                        absAnchors.Bottom = absCenter.Y + halfSize;
                     }
-                    else if (ResolvedStyle._Anchors.Bottom.HasValue())
+                    else
                     {
-                        normalDirection = false;
-                        absAnchors.Bottom -= ResolvedStyle._Anchors.Bottom.Number;
-                        absAnchors.Top = absAnchors.Bottom - diffHeight;
+                        if (ResolvedStyle._Anchors.Top.HasValue())
+                        {
+                            absAnchors.Top += ResolvedStyle._Anchors.Top.Number;
+                            absAnchors.Bottom = absAnchors.Top + diffHeight;
+                        }
+                        else if (ResolvedStyle._Anchors.Bottom.HasValue())
+                        {
+                            normalDirection = false;
+                            absAnchors.Bottom -= ResolvedStyle._Anchors.Bottom.Number;
+                            absAnchors.Top = absAnchors.Bottom - diffHeight;
+                        }
                     }
                 }
             }

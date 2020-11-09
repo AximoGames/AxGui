@@ -74,6 +74,22 @@ namespace AxGui
                 v.Number = float.Parse(value.AsSpan(0, value.Length - 1), provider: CultureInfo.InvariantCulture.NumberFormat);
                 v.Unit = StyleUnit.Number;
             }
+            else if (value == "auto")
+            {
+                v.Unit = StyleUnit.Auto;
+            }
+            else if (value == "initial")
+            {
+                v.Unit = StyleUnit.Initial;
+            }
+            else if (value == "inherit")
+            {
+                v.Unit = StyleUnit.Inherit;
+            }
+            else if (value == "unset")
+            {
+                v.Unit = StyleUnit.Unset;
+            }
             else
             {
                 v.Number = float.Parse(value, provider: CultureInfo.InvariantCulture.NumberFormat);
