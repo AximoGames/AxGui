@@ -9,24 +9,21 @@ namespace AxGui
 
     public class LayoutProcessor
     {
-        private ComputeStyleContext ctx = new ComputeStyleContext();
-        private ComputeBoundsContext ctx2 = new ComputeBoundsContext();
+        private ProcessLayoutContext ctx = new ProcessLayoutContext();
         public Box ViewPort;
         public void Process(Element root)
         {
-            ctx2.GlobalViewPort = ViewPort;
+            ctx.GlobalViewPort = ViewPort;
+            ctx.LocalViewPort = ViewPort;
             root.ComputeStyle(ctx);
             root.ComputeChildBoundsOffers();
-            root.ComputeBounds(ctx2);
+            root.ComputeBounds(ctx);
         }
     }
 
-    public class ComputeStyleContext
+    public class ProcessLayoutContext
     {
-    }
-
-    public class ComputeBoundsContext
-    {
+        public Box LocalViewPort;
         public Box GlobalViewPort;
     }
 

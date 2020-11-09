@@ -26,6 +26,11 @@ namespace AxGui
         public float Width => Right - Left;
         public float Height => Bottom - Top;
 
+        public float Size(Axis axis)
+        {
+            return axis == Axis.X ? Width : Height;
+        }
+
         public Box Substract(Box other)
         {
             return new Box(Left + other.Left, Top + other.Top, Right - other.Right, Bottom - other.Bottom);

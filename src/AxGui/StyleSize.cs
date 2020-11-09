@@ -48,6 +48,13 @@ namespace AxGui
 
         public Size ToSize() => new Size(Width.Number, Height.Number);
 
+        internal StyleSize Normalize(ProcessLayoutContext ctx)
+        {
+            return new StyleSize(
+                Width.Normalize(ctx, Axis.X),
+                Height.Normalize(ctx, Axis.Y));
+        }
+
     }
 
 }

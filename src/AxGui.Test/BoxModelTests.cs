@@ -87,5 +87,19 @@ namespace AxGui.Test
             Assert.Equal(new Box(15, 20, 625, 120), el.ClientRect);
         }
 
+        [Fact]
+        public void PercentHeight()
+        {
+            var el = CreateElement();
+            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Margin = 5;
+            el.Style.BorderWidth = 5;
+            el.Style.Padding = 5;
+            el.Style.Height = "50%";
+
+            Layout(el);
+            Assert.Equal(new Box(15, 20, 625, 200), el.ClientRect);
+        }
+
     }
 }

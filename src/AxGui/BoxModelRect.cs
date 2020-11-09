@@ -81,6 +81,17 @@ namespace AxGui
             };
         }
 
+        internal BoxModelRect Normalize(ProcessLayoutContext ctx)
+        {
+            return new BoxModelRect
+            {
+                Left = Left.Normalize(ctx, Axis.X),
+                Top = Top.Normalize(ctx, Axis.Y),
+                Right = Right.Normalize(ctx, Axis.X),
+                Bottom = Bottom.Normalize(ctx, Axis.Y),
+            };
+        }
+
         public static bool operator ==(BoxModelRect x, BoxModelRect y)
         {
             return x.Left == y.Left && x.Top == y.Top && x.Right == y.Right && x.Bottom == y.Bottom;

@@ -8,6 +8,12 @@ using SkiaSharp;
 namespace AxGui
 {
 
+    public enum Axis
+    {
+        X,
+        Y,
+    }
+
     public class Element
     {
         public readonly ElemenetAttributs Attributes = new ElemenetAttributs();
@@ -40,20 +46,20 @@ namespace AxGui
          * Render
          */
 
-        protected internal virtual void ComputeStyle(ComputeStyleContext ctx)
+        protected internal virtual void ComputeStyle(ProcessLayoutContext ctx)
         {
             var style = Style;
             var resolved = ResolvedStyle;
 
             if (style._BoundingChanged)
             {
-                resolved._Size = style._Size;
-                resolved._MinSize = style._MinSize;
-                resolved._MaxSize = style._MaxSize;
-                resolved._Margin = style._Margin.Clone();
-                resolved._Padding = style._Padding.Clone();
-                resolved._BorderWidth = style._BorderWidth.Clone();
-                resolved._Anchors = style._Anchors.Clone();
+                resolved._Size = style._Size.Normalize(ctx);
+                resolved._MinSize = style._MinSize.Normalize(ctx);
+                resolved._MaxSize = style._MaxSize.Normalize(ctx);
+                resolved._Margin = style._Margin.Normalize(ctx);
+                resolved._Padding = style._Padding.Normalize(ctx);
+                resolved._BorderWidth = style._BorderWidth.Normalize(ctx);
+                resolved._Anchors = style._Anchors.Normalize(ctx);
             }
 
             resolved.Position = style.Position;
@@ -73,11 +79,11 @@ namespace AxGui
         {
         }
 
-        protected internal virtual void ComputeBounds(ComputeBoundsContext ctx)
+        protected internal virtual void ComputeBounds(ProcessLayoutContext ctx)
         {
             // special case: we're on root
             if (Parent == null)
-                OuterRect = ctx.GlobalViewPort;
+                OuterRect = ctx.LocalViewPort;
 
             Box absAnchors = OuterRect;
 
