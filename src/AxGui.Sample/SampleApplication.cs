@@ -23,8 +23,8 @@ namespace AxGui.Sample.OpenGL
         private GRContext grContext;
         private GRBackendRenderTarget renderTarget;
         private SKSurface surface;
-        private const SKColorType colorType = SKColorType.Rgba8888;
-        private const GRSurfaceOrigin surfaceOrigin = GRSurfaceOrigin.BottomLeft;
+        private const SKColorType ColorType = SKColorType.Rgba8888;
+        private const GRSurfaceOrigin SurfaceOrigin = GRSurfaceOrigin.BottomLeft;
 
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -52,17 +52,17 @@ namespace AxGui.Sample.OpenGL
             GL.GetInteger(GetPName.FramebufferBinding, out var framebuffer);
             var stencil = 0;
             GL.GetInteger(GetPName.Samples, out var samples);
-            var maxSamples = grContext.GetMaxSurfaceSampleCount(colorType);
+            var maxSamples = grContext.GetMaxSurfaceSampleCount(ColorType);
             if (samples > maxSamples)
                 samples = maxSamples;
-            var glInfo = new GRGlFramebufferInfo((uint)framebuffer, colorType.ToGlSizedFormat());
+            var glInfo = new GRGlFramebufferInfo((uint)framebuffer, ColorType.ToGlSizedFormat());
             renderTarget = new GRBackendRenderTarget(CurrentSize.X, CurrentSize.Y, 0, 0, glInfo);
 
             // create the surface
             surface?.Dispose();
-            surface = SKSurface.Create(grContext, renderTarget, surfaceOrigin, colorType);
+            surface = SKSurface.Create(grContext, renderTarget, SurfaceOrigin, ColorType);
 
-            paint = new SKPaint { Color = new SKColor(0, 128, 0), IsAntialias = true };
+            Paint = new SKPaint { Color = new SKColor(0, 128, 0), IsAntialias = true };
         }
 
         protected override void OnLoad()
@@ -72,7 +72,7 @@ namespace AxGui.Sample.OpenGL
             InitSkia();
         }
 
-        SKPaint paint;
+        private SKPaint Paint;
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
@@ -88,7 +88,7 @@ namespace AxGui.Sample.OpenGL
                 var canvas = surface.Canvas;
                 canvas.Clear(new SKColor(128, 0, 128));
                 //canvas.Translate(20, 20);
-                canvas.DrawText("Hello", 0, 0, paint);
+                canvas.DrawText("Hello", 0, 0, Paint);
 
                 var el = new Element();
                 el.Style.Position = StylePosition.Absolute;

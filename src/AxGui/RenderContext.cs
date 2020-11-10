@@ -7,26 +7,6 @@ using SkiaSharp;
 namespace AxGui
 {
 
-    public class LayoutProcessor
-    {
-        private ProcessLayoutContext ctx = new ProcessLayoutContext();
-        public Box ViewPort;
-        public void Process(Element root)
-        {
-            ctx.GlobalViewPort = ViewPort;
-            ctx.LocalViewPort = ViewPort;
-            root.ComputeStyle(ctx);
-            root.ComputeChildBoundsOffers();
-            root.ComputeBounds(ctx);
-        }
-    }
-
-    public class ProcessLayoutContext
-    {
-        public Box LocalViewPort;
-        public Box GlobalViewPort;
-    }
-
     public class RenderContext
     {
         public void Reset()

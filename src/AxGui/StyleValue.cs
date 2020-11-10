@@ -21,7 +21,7 @@ namespace AxGui
             return HashCode.Combine(Number, Unit);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is StyleValue m))
                 return false;
@@ -64,12 +64,12 @@ namespace AxGui
             if (string.IsNullOrEmpty(value))
                 return v;
 
-            if (value.EndsWith("%"))
+            if (value.EndsWith("%", StringComparison.InvariantCulture))
             {
                 v.Number = float.Parse(value.AsSpan(0, value.Length - 1), provider: CultureInfo.InvariantCulture.NumberFormat);
                 v.Unit = StyleUnit.Percentage;
             }
-            else if (value.EndsWith("px"))
+            else if (value.EndsWith("px", StringComparison.InvariantCulture))
             {
                 v.Number = float.Parse(value.AsSpan(0, value.Length - 1), provider: CultureInfo.InvariantCulture.NumberFormat);
                 v.Unit = StyleUnit.Number;

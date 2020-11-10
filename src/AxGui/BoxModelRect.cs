@@ -1,10 +1,10 @@
 ﻿// This file is part of AxGUI. Web: https://github.com/AximoGames
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.VisualBasic.CompilerServices;
-using SkiaSharp;
 using System;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.VisualBasic.CompilerServices;
+using SkiaSharp;
 
 namespace AxGui
 {
@@ -108,7 +108,7 @@ namespace AxGui
             return left == right;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is BoxModelRect m))
                 return false;

@@ -23,7 +23,7 @@ namespace AxGui
             return HashCode.Combine(Width, Height);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is StyleSize m))
                 return false;

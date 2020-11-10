@@ -8,7 +8,7 @@ using OpenToolkit.Windowing.Desktop;
 
 namespace AxGui.Sample.OpenGL
 {
-    class MainClass
+    public static class Program
     {
         public static void Main(string[] args)
         {

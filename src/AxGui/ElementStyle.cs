@@ -62,7 +62,7 @@ namespace AxGui
             _Anchors.ParentChanged = BoundingChangedDelegate;
         }
 
-        internal bool _BoundingChanged = false;
+        internal bool _BoundingChanged;
         private void BoundingChanged()
         {
             _BoundingChanged = true;
@@ -149,7 +149,7 @@ namespace AxGui
             set => MaxSize = new StyleSize(_MaxSize.Width, value);
         }
 
-        internal BoxModelRect _Anchors = new BoxModelRect();
+        internal BoxModelRect _Anchors;
         public BoxModelRect Anchors
         {
             get => _Anchors;
@@ -163,7 +163,7 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _Margin = new BoxModelRect();
+        internal BoxModelRect _Margin;
         public BoxModelRect Margin
         {
             get => _Margin;
@@ -177,7 +177,7 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _Padding = new BoxModelRect();
+        internal BoxModelRect _Padding;
         public BoxModelRect Padding
         {
             get => _Padding;
@@ -191,7 +191,7 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _BorderWidth = new BoxModelRect();
+        internal BoxModelRect _BorderWidth;
         public BoxModelRect BorderWidth
         {
             get => _BorderWidth;
@@ -205,7 +205,7 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _BorderColor = new BoxModelRect();
+        internal BoxModelRect _BorderColor;
         public BoxModelRect BorderColor
         {
             get => _BorderColor;
@@ -217,7 +217,7 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _BorderStyle = new BoxModelRect();
+        internal BoxModelRect _BorderStyle;
         public BoxModelRect BorderStyle
         {
             get => _BorderColor;
@@ -229,7 +229,7 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _BorderRadius = new BoxModelRect();
+        internal BoxModelRect _BorderRadius;
         public BoxModelRect BorderRadius
         {
             get => _BorderRadius;
