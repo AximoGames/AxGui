@@ -17,4 +17,4 @@ jobs:
       - name: Build
         run: dotnet build src
       - name: Test
-        run: dotnet test src/AxGui.Test -v detailed --no-build -- RunConfiguration.TestSessionTimeout=120000
+        run: dotnet test src/AxGui.Test --no-build -- RunConfiguration.TestSessionTimeout=120000
