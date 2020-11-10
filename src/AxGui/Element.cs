@@ -3,17 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using SkiaSharp;
 
 namespace AxGui
 {
 
-    public enum Axis
-    {
-        X,
-        Y,
-    }
-
+    [SkipLocalsInit]
     public class Element
     {
         public readonly ElemenetAttributs Attributes = new ElemenetAttributs();

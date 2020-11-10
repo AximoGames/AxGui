@@ -59,15 +59,12 @@ namespace AxGui
         {
             get
             {
-                switch (index)
+                return index switch
                 {
-                    case 0:
-                        return Width;
-                    case 1:
-                        return Height;
-                    default:
-                        throw new ArgumentException(nameof(index));
-                }
+                    0 => Width,
+                    1 => Height,
+                    _ => throw new NotSupportedException(),
+                };
             }
         }
 

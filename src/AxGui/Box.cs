@@ -62,39 +62,25 @@ namespace AxGui
         {
             get
             {
-                switch (index)
+                return index switch
                 {
-                    case 0:
-                        return Left;
-                    case 1:
-                        return Top;
-                    case 2:
-                        return Right;
-                    case 3:
-                        return Bottom;
-                    default:
-                        throw new ArgumentException(nameof(index));
-                }
+                    0 => Left,
+                    1 => Top,
+                    2 => Right,
+                    3 => Bottom,
+                    _ => throw new NotSupportedException(),
+                };
             }
             set
             {
-                switch (index)
+                _ = index switch
                 {
-                    case 0:
-                        Left = value;
-                        break;
-                    case 1:
-                        Top = value;
-                        break;
-                    case 2:
-                        Right = value;
-                        break;
-                    case 3:
-                        Bottom = value;
-                        break;
-                    default:
-                        throw new ArgumentException(nameof(index));
-                }
+                    0 => Left = value,
+                    1 => Top = value,
+                    2 => Right = value,
+                    3 => Bottom = value,
+                    _ => throw new NotSupportedException(),
+                };
             }
         }
 
