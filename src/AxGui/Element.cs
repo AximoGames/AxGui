@@ -96,21 +96,21 @@ namespace AxGui
             Size relMinSize = ResolvedStyle._MinSize.ToSize();
             Size relMaxSize = ResolvedStyle._MaxSize.ToSize();
 
-            var decorationSize = new Size(
-                    relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
-                    relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);
-
             // top | left
             Span<bool> normalDirection = stackalloc bool[2];
 
             // Debug
+            const int axisStart = 0;
             const int axisCount = 2;
-            const int axisStart = 1;
 
             const int Top = 0;
             const int Bottom = 2;
             //const int Width = 0;
             //const int Height = 1;
+
+            var decorationSize = new Size(
+                relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
+                relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);
 
             for (var a = axisStart; a < axisCount; a++)
             {

@@ -27,12 +27,15 @@ namespace AxGui
         public float TopBottom => Top + Bottom;
         public float LeftRight => Left + Right;
 
+        public float GetMinMax(Axis ax)
+            => ax == Axis.X ? LeftRight : TopBottom;
+
         public float Width => Right - Left;
         public float Height => Bottom - Top;
 
         public Point Center
         {
-            get => new Point(Right + (Width / 2), Top + (Height / 2));
+            get => new Point(Left + (Width / 2), Top + (Height / 2));
         }
 
         public float Size(Axis axis)

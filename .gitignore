@@ -188,3 +188,4 @@ FakesAssemblies/
 
 packages/
 .vs/
+.idea/
