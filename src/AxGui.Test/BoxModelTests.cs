@@ -123,9 +123,10 @@ namespace AxGui.Test
             el.Style.BorderWidth = 5;
             el.Style.Padding = 5;
             el.Style.Height = 100;
+            el.Style.Width = 150;
 
             Layout(el);
-            Assert.Equal(new Box(10, 130, 630, 230), el.ClientRect);
+            Assert.Equal(new Box(245, 130, 395, 230), el.ClientRect);
         }
 
     }
