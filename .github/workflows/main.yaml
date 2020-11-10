@@ -13,6 +13,6 @@ jobs:
           lfs: true
       - uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: "5.0.0" # SDK Version to use.
+          dotnet-version: "5.0.100" # SDK Version to use.
       - name: Build
         run: dotnet build src
