@@ -110,7 +110,7 @@ namespace AxGui.Sample.OpenGL
                 child.Data = "child";
                 child.Style.BorderWidth = 5;
                 child.Style.Width = 200;
-                child.Style.Height = 30;
+                child.Style.Height = 50;
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Relative;
                 child.Style.Display = StyleDisplay.InlineBlock;

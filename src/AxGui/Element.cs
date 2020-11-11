@@ -100,6 +100,22 @@ namespace AxGui
         internal Box ClientRect;
         internal Size NaturalSize;
 
+        private void Translate(float x, float y)
+        {
+            MarginRect.Translate(x, y);
+            BorderRect.Translate(x, y);
+            PaddingRect.Translate(x, y);
+            ClientRect.Translate(x, y);
+        }
+
+        private void TranslateY(float value)
+        {
+            MarginRect.TranslateY(value);
+            BorderRect.TranslateY(value);
+            PaddingRect.TranslateY(value);
+            ClientRect.TranslateY(value);
+        }
+
         protected internal virtual void CallComputeChildBoundsOffers(GlobalProcessLayoutContext ctx)
         {
             var c = ProcessLayoutContext;
@@ -261,9 +277,21 @@ namespace AxGui
                     pc.RowElements.Clear();
                     pc.RowPosition.Y += pc.RowHeight;
                     pc.RowPosition.X = 0;
+                    pc.RowHeight = absAnchors.Height;
+                }
+                else if (absAnchors.Height > pc.RowHeight)
+                {
+                    var diff = absAnchors.Height - pc.RowHeight;
+                    var prevElLength = pc.RowElements.Count;
+                    for (var i = 0; i < prevElLength; i++)
+                    {
+                        var prevEl = pc.RowElements[i];
+                        prevEl.TranslateY(diff);
+                    }
+                    pc.RowHeight = absAnchors.Height;
                 }
 
-                absAnchors.Translate(pc.RowPosition);
+                absAnchors.Translate(pc.RowPosition.X, pc.RowPosition.Y + (pc.RowHeight - absAnchors.Height));
 
                 MarginRect = absAnchors;
                 BorderRect = MarginRect.Substract(relMargin);
@@ -271,7 +299,7 @@ namespace AxGui
                 ClientRect = PaddingRect.Substract(relPadding);
 
                 pc.RowPosition.X += absAnchors.Width;
-                pc.RowHeight = absAnchors.Height;
+                //pc.RowHeight = absAnchors.Height;
                 pc.RowElements.Add(this);
             }
 
