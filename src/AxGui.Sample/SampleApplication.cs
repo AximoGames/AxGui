@@ -108,9 +108,9 @@ namespace AxGui.Sample.OpenGL
 
                 var child = new Element();
                 child.Data = "child";
-                child.Style.BorderWidth = 1;
+                child.Style.BorderWidth = 5;
                 child.Style.Width = 50;
-                child.Style.Height = 20;
+                child.Style.Height = 30;
                 child.Style.Position = StylePosition.Absolute;
                 //child.Style.Position = StylePosition.Relative;
                 child.Style.Display = StyleDisplay.Inline;

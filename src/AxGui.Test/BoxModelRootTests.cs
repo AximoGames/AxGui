@@ -6,7 +6,7 @@ using Xunit;
 
 namespace AxGui.Test
 {
-    public class BoxModelTests
+    public class BoxModelRootTests
     {
 
         private Element CreateElement()
