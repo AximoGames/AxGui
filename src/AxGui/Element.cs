@@ -27,7 +27,7 @@ namespace AxGui
         /// Logical childs and additional childs like the scrollbar of a scroll view.
         /// </summary>
         protected List<Element> ChildrenInternal;
-        internal RenderContext _RenderContext = new RenderContext();
+        internal RenderContext RenderContext = new RenderContext();
 
         public Element()
         {
@@ -61,6 +61,16 @@ namespace AxGui
             resolved.Position = style.Position;
             resolved.Display = style.Display;
             resolved.Visibility = style.Visibility;
+
+            ComputeStyleChildren(ctx);
+        }
+
+        protected internal virtual void ComputeStyleChildren(ProcessLayoutContext ctx)
+        {
+            var length = Children.Count;
+            var children = Children;
+            for (var i = 0; i < length; i++)
+                children[i].ComputeStyle(ctx);
         }
 
         internal Box OuterRect;
@@ -198,6 +208,22 @@ namespace AxGui
                     }
                 }
             }
+
+            ComputeBoundsChildren(ctx);
+        }
+
+        protected internal virtual void ComputeBoundsChildren(ProcessLayoutContext ctx)
+        {
+            var length = Children.Count;
+            if (length == 0)
+                return;
+
+            var children = Children;
+            ctx.LocalViewPort = ClientRect;
+            for (var i = 0; i < length; i++)
+            {
+                children[i].ComputeBounds(ctx);
+            }
         }
 
         private static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
@@ -205,16 +231,38 @@ namespace AxGui
         private static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
         private static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188) };
 
-        public virtual void OnRender(RenderContext ctx)
+        protected internal void CallRender(GlobalRenderContext ctx)
+        {
+            var c = RenderContext;
+            c.GlobalContext = ctx;
+            Render(c);
+            if (c.HasCommands)
+                ctx.AddRenderContext(c);
+        }
+
+        public virtual void Render(RenderContext ctx)
         {
             ctx.Reset();
-            ctx.Commands.Add(new DrawActionCommand(x =>
+            if (ResolvedStyle.Visibility != StyleVisibility.Hidden)
             {
-                x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint);
-                x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint);
-                x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint);
-                x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint);
-            }));
+                ctx.Commands.Add(new DrawActionCommand(x =>
+                {
+                    x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint);
+                    x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint);
+                    x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint);
+                    x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint);
+                }));
+            }
+
+            RenderChildren(ctx);
+        }
+
+        protected internal virtual void RenderChildren(RenderContext ctx)
+        {
+            var length = Children.Count;
+            var children = Children;
+            for (var i = 0; i < length; i++)
+                children[i].CallRender(ctx.GlobalContext!);
         }
 
     }

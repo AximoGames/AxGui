@@ -10,17 +10,11 @@ namespace AxGui
     public class CommandRecorder
     {
 
-        internal RenderContext? _RenderContext;
+        internal readonly GlobalRenderContext RenderContext = new GlobalRenderContext();
 
         public void Record(Element root)
         {
-            var ctx = root._RenderContext;
-            _RenderContext = ctx;
-
-            // set shared values...
-            // ...
-            //root.Style.Anchors.Bottom.Number = 1;
-            root.OnRender(ctx);
+            root.CallRender(RenderContext);
         }
 
     }

@@ -7,6 +7,8 @@
   <Rules AnalyzerId="ClrHeapAllocationAnalyzer" RuleNamespace="ClrHeapAllocationAnalyzer">
     <Rule Id="HAA0301" Action="Info" />
     <Rule Id="HAA0302" Action="Info" />
+    <Rule Id="HAA0502" Action="None" />
+    <Rule Id="HAA0505" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1000" Action="Warning" />

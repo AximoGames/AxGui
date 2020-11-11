@@ -55,7 +55,9 @@ namespace AxGui
 
         public override string ToString()
         {
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
             return $"Left: {Left:F1}, Top: {Top:F1}, Right: {Right:F1}, Bottom: {Bottom:F1}, Width: {Width:F1}, Height: {Height:F1}";
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
         }
 
         public float this[int index]

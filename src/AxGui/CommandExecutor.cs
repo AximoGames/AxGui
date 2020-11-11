@@ -15,26 +15,32 @@ namespace AxGui
 
         public void Execute(CommandRecorder recorder, SKCanvas canvas)
         {
-            var ctx = _CommandContext;
-            if (ctx == null)
+            var commandContext = _CommandContext;
+            if (commandContext == null)
             {
-                ctx = new CommandContext(canvas);
-                _CommandContext = ctx;
+                commandContext = new CommandContext(canvas);
+                _CommandContext = commandContext;
             }
             else
             {
-                ctx.Canvas = canvas;
+                commandContext.Canvas = canvas;
             }
 
-            var rootContext = recorder._RenderContext;
+            var rootContext = recorder.RenderContext;
             if (rootContext == null)
                 throw new Exception("rootContext == null");
 
-            var cmds = rootContext.Commands;
-            for (var i = 0; i < cmds.Count; i++)
+            var renderContextList = rootContext.RenderContextList;
+            for (var rci = 0; rci < renderContextList.Count; rci++)
             {
-                cmds[i].Invoke(ctx);
+                var renderContext = renderContextList[rci];
+                var commands = renderContext.Commands;
+                for (var i = 0; i < commands.Count; i++)
+                {
+                    commands[i].Invoke(commandContext);
+                }
             }
+
         }
     }
 

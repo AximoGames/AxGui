@@ -9,7 +9,7 @@ namespace AxGui
 
     public class LayoutProcessor
     {
-        private ProcessLayoutContext ctx = new ProcessLayoutContext();
+        private readonly ProcessLayoutContext ctx = new ProcessLayoutContext();
         public Box ViewPort;
         public void Process(Element root)
         {
