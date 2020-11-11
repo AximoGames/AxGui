@@ -91,6 +91,8 @@ namespace AxGui.Sample.OpenGL
                 canvas.DrawText("Hello", 0, 0, Paint);
 
                 var el = new Element();
+                el.Data = "root";
+
                 el.Style.Position = StylePosition.Absolute;
 
                 el.Style.MinHeight = 50;
@@ -104,14 +106,16 @@ namespace AxGui.Sample.OpenGL
                 el.Style.Padding = 5;
                 //el.Style.Visibility = StyleVisibility.Hidden;
 
-                //var child = new Element();
-                //child.Style.Width = 50;
-                //child.Style.Height = 20;
-                //child.Style.Position = StylePosition.Absolute;
-                ////child.Style.Position = StylePosition.Relative;
-                //child.Style.Display = StyleDisplay.Inline;
+                var child = new Element();
+                child.Data = "child";
+                child.Style.BorderWidth = 1;
+                child.Style.Width = 50;
+                child.Style.Height = 20;
+                child.Style.Position = StylePosition.Absolute;
+                //child.Style.Position = StylePosition.Relative;
+                child.Style.Display = StyleDisplay.Inline;
 
-                //el.Children.Add(child);
+                el.Children.Add(child);
 
                 var layouter = new LayoutProcessor();
                 layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);

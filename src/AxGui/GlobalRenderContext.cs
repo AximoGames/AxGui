@@ -21,6 +21,13 @@ namespace AxGui
             RenderContextList.Clear();
         }
 
+        public override string ToString()
+        {
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
+            return $"RenderContext.Count: {RenderContextList.Count}";
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+        }
+
     }
 
 }

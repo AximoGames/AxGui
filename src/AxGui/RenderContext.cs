@@ -20,6 +20,14 @@ namespace AxGui
         public readonly DrawCommands Commands = new DrawCommands();
         public readonly List<DrawCommands> AdditionalCommandLists = new List<DrawCommands>();
         internal GlobalRenderContext? GlobalContext;
+
+        public override string ToString()
+        {
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
+            return $"Commands: {Commands.Count}, AdditionalCommands: {AdditionalCommandLists.Count}";
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+        }
+
     }
 
 }

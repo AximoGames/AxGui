@@ -19,6 +19,11 @@ namespace AxGui
         public Element? Parent;
 
         /// <summary>
+        /// Custom data
+        /// </summary>
+        public object? Data;
+
+        /// <summary>
         /// Logical childs, for example items in a scroll view.
         /// </summary>
         public List<Element> Children;
@@ -239,9 +244,8 @@ namespace AxGui
         {
             var c = RenderContext;
             c.GlobalContext = ctx;
+            ctx.AddRenderContext(c);
             Render(c);
-            if (c.HasCommands)
-                ctx.AddRenderContext(c);
         }
 
         public virtual void Render(RenderContext ctx)
