@@ -99,10 +99,9 @@ namespace AxGui.Test
             el.Style.Margin = 5;
             el.Style.BorderWidth = 5;
             el.Style.Padding = 5;
-            el.Style.Height = 100;
 
             Layout(el);
-            Assert.Equal(new Box(15, 20, 625, 340), el.ClientRect);
+            Assert.Equal(new Box(15, 20, 215, 340), el.ClientRect);
         }
 
         [Fact]
