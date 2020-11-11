@@ -30,8 +30,40 @@ namespace AxGui
         public float GetMinMax(Axis ax)
             => ax == Axis.X ? LeftRight : TopBottom;
 
-        public float Width => Right - Left;
-        public float Height => Bottom - Top;
+        public float Width
+        {
+            get => Right - Left;
+            set => Right = Left + value;
+        }
+        public float Height
+        {
+            get => Bottom - Top;
+            set => Bottom = Top + value;
+        }
+
+        public void TranslateX(float value)
+        {
+            Left += value;
+            Right += value;
+        }
+
+        public void TranslateY(float value)
+        {
+            Top += value;
+            Bottom += value;
+        }
+
+        public void Translate(float x, float y)
+        {
+            TranslateX(x);
+            TranslateY(y);
+        }
+
+        public void Translate(Point p)
+        {
+            TranslateX(p.X);
+            TranslateY(p.Y);
+        }
 
         public Point Center
         {

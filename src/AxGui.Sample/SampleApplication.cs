@@ -112,9 +112,18 @@ namespace AxGui.Sample.OpenGL
                 child.Style.Width = 50;
                 child.Style.Height = 30;
                 //child.Style.Position = StylePosition.Absolute;
-                child.Style.Position = StylePosition.Absolute;
-                //child.Style.Display = StyleDisplay.InlineBlock;
+                child.Style.Position = StylePosition.Relative;
+                child.Style.Display = StyleDisplay.InlineBlock;
+                el.AddChild(child);
 
+                child = new Element();
+                child.Data = "child2";
+                child.Style.BorderWidth = 5;
+                child.Style.Width = 50;
+                child.Style.Height = 30;
+                //child.Style.Position = StylePosition.Absolute;
+                child.Style.Position = StylePosition.Relative;
+                child.Style.Display = StyleDisplay.InlineBlock;
                 el.AddChild(child);
 
                 var layouter = new LayoutProcessor();

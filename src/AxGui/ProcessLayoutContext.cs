@@ -11,6 +11,9 @@ namespace AxGui
     {
         public Box LocalViewPort;
         internal GlobalProcessLayoutContext? GlobalContext;
+        internal readonly List<Element> RowElements = new List<Element>();
+        internal Point RowPosition;
+        internal float RowHeight;
     }
 
 }

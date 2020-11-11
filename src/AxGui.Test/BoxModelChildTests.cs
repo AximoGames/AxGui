@@ -41,5 +41,31 @@ namespace AxGui.Test
             Layout(el);
             Assert.Equal(new Box(15, 15, 65, 45), child.ClientRect);
         }
+
+        [Fact]
+        public void Child2()
+        {
+            var el = CreateRootElement();
+
+            var child = new Element();
+            el.AddChild(child);
+            child.Style.Position = StylePosition.Relative;
+            child.Style.Display = StyleDisplay.InlineBlock;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 50;
+            child.Style.Height = 30;
+
+            child = new Element();
+            el.AddChild(child);
+            child.Style.Position = StylePosition.Relative;
+            child.Style.Display = StyleDisplay.InlineBlock;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 50;
+            child.Style.Height = 30;
+
+            Layout(el);
+            Assert.Equal(new Box(75, 15, 125, 45), child.ClientRect);
+        }
+
     }
 }

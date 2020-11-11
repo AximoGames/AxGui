@@ -243,10 +243,25 @@ namespace AxGui
                     }
                 }
             }
-            //else if (ResolvedStyle.Display == StyleDisplay.InlineBlock)
-            //{
-            //    //ctx.LocalViewPort
-            //}
+            else if (ResolvedStyle.Display == StyleDisplay.InlineBlock)
+            {
+                absAnchors.Width = relSize.Width + decorationSize.Width;
+                absAnchors.Height = relSize.Height + decorationSize.Height;
+
+                if (Parent == null)
+                    return; // not supported
+
+                absAnchors.Translate(Parent.ProcessLayoutContext.RowPosition);
+
+                MarginRect = absAnchors;
+                BorderRect = MarginRect.Substract(relMargin);
+                PaddingRect = BorderRect.Substract(relBorder);
+                ClientRect = PaddingRect.Substract(relPadding);
+
+                Parent.ProcessLayoutContext.RowPosition.X += absAnchors.Width;
+                Parent.ProcessLayoutContext.RowHeight = absAnchors.Height;
+                Parent.ProcessLayoutContext.RowElements.Add(this);
+            }
 
             ComputeBoundsChildren(ctx);
         }
