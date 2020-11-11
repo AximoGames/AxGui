@@ -155,6 +155,10 @@ namespace AxGui
                                 absAnchors[Bottom + a] -= ResolvedStyle._Anchors[Bottom + a].Number;
                                 absAnchors[Top + a] = absAnchors[Bottom + a] - diffHeight;
                             }
+                            else
+                            {
+                                absAnchors[Bottom + a] = absAnchors[Top + a] + diffHeight;
+                            }
                         }
                     }
                 }

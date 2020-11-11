@@ -13,6 +13,7 @@ namespace AxGui.Test
         {
             var el = new Element();
             el.Style.Position = StylePosition.Absolute;
+            el.Style.Width = 200;
             el.Style.Height = 100;
             return el;
         }
@@ -87,7 +88,7 @@ namespace AxGui.Test
             el.Style.MinHeight = 50;
 
             Layout(el, viewport: new Box(0, 0, 640, 20));
-            Assert.Equal(new Box(15, 20, 625, 120), el.ClientRect);
+            Assert.Equal(new Box(15, 20, 215, 120), el.ClientRect);
         }
 
         [Fact]
@@ -115,7 +116,7 @@ namespace AxGui.Test
             el.Style.Height = "50%";
 
             Layout(el);
-            Assert.Equal(new Box(15, 20, 625, 200), el.ClientRect);
+            Assert.Equal(new Box(15, 20, 215, 200), el.ClientRect);
         }
 
         [Fact]
