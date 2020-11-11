@@ -111,11 +111,11 @@ namespace AxGui.Sample.OpenGL
                 child.Style.BorderWidth = 5;
                 child.Style.Width = 50;
                 child.Style.Height = 30;
+                //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Absolute;
-                //child.Style.Position = StylePosition.Relative;
-                child.Style.Display = StyleDisplay.Inline;
+                //child.Style.Display = StyleDisplay.InlineBlock;
 
-                el.Children.Add(child);
+                el.AddChild(child);
 
                 var layouter = new LayoutProcessor();
                 layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);

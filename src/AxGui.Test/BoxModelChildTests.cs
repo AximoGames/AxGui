@@ -33,7 +33,7 @@ namespace AxGui.Test
         {
             var el = CreateRootElement();
             var child = new Element();
-            el.Children.Add(child);
+            el.AddChild(child);
             child.Style.Position = StylePosition.Absolute;
             child.Style.BorderWidth = 5;
             child.Style.Width = 50;

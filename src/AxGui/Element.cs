@@ -33,11 +33,18 @@ namespace AxGui
         /// </summary>
         protected List<Element> ChildrenInternal;
         internal RenderContext RenderContext = new RenderContext();
+        internal ProcessLayoutContext ProcessLayoutContext = new ProcessLayoutContext();
 
         public Element()
         {
             Children = new List<Element>();
             ChildrenInternal = Children;
+        }
+
+        public void AddChild(Element el)
+        {
+            el.Parent = this;
+            Children.Add(el);
         }
 
         /* Order:
@@ -46,6 +53,13 @@ namespace AxGui
          * ComputeBounds
          * Render
          */
+
+        protected internal virtual void CallComputeStyle(GlobalProcessLayoutContext ctx)
+        {
+            var c = ProcessLayoutContext;
+            c.GlobalContext = ctx;
+            ComputeStyle(c);
+        }
 
         protected internal virtual void ComputeStyle(ProcessLayoutContext ctx)
         {
@@ -86,15 +100,27 @@ namespace AxGui
         internal Box ClientRect;
         internal Size NaturalSize;
 
-        protected internal virtual void ComputeChildBoundsOffers()
+        protected internal virtual void CallComputeChildBoundsOffers(GlobalProcessLayoutContext ctx)
         {
+            var c = ProcessLayoutContext;
+            c.GlobalContext = ctx;
+            ComputeChildBoundsOffers(c);
+        }
+
+        protected internal virtual void ComputeChildBoundsOffers(ProcessLayoutContext ctx)
+        {
+        }
+
+        protected internal virtual void CallComputeBounds(GlobalProcessLayoutContext ctx)
+        {
+            var c = ProcessLayoutContext;
+            c.GlobalContext = ctx;
+            ComputeBounds(c);
         }
 
         protected internal virtual void ComputeBounds(ProcessLayoutContext ctx)
         {
-            // special case: we're on root
-            if (Parent == null)
-                OuterRect = ctx.LocalViewPort;
+            OuterRect = ctx.LocalViewPort;
 
             Box absAnchors = OuterRect;
             var absCenter = absAnchors.Center;
@@ -123,13 +149,13 @@ namespace AxGui
                 relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
                 relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);
 
-            for (var a = axisStart; a < axisCount; a++)
+            if (ResolvedStyle.Position == StylePosition.Absolute)
             {
-                normalDirection[a] = true;
-                var ax = (Axis)a;
-
-                if (ResolvedStyle.Position == StylePosition.Absolute)
+                for (var a = axisStart; a < axisCount; a++)
                 {
+                    normalDirection[a] = true;
+                    var ax = (Axis)a;
+
                     if (ResolvedStyle._Anchors[Top + a].HasValue() && ResolvedStyle._Anchors[Bottom + a].HasValue())
                     {
                         absAnchors[Top + a] += ResolvedStyle._Anchors[Top + a].Number;
@@ -167,56 +193,60 @@ namespace AxGui
                         }
                     }
                 }
-            }
 
-            MarginRect = absAnchors;
-            BorderRect = MarginRect.Substract(relMargin);
-            PaddingRect = BorderRect.Substract(relBorder);
-            ClientRect = PaddingRect.Substract(relPadding);
+                MarginRect = absAnchors;
+                BorderRect = MarginRect.Substract(relMargin);
+                PaddingRect = BorderRect.Substract(relBorder);
+                ClientRect = PaddingRect.Substract(relPadding);
 
-            for (var a = axisStart; a < axisCount; a++)
-            {
-                normalDirection[a] = true;
-                var ax = (Axis)a;
-
-                if (ResolvedStyle.MaxSize[a].HasValue() && ClientRect.Size(ax) > relMaxSize[a])
+                for (var a = axisStart; a < axisCount; a++)
                 {
-                    var diff = ClientRect.Size(ax) - relMaxSize[a];
-                    if (normalDirection[a])
+                    normalDirection[a] = true;
+                    var ax = (Axis)a;
+
+                    if (ResolvedStyle.MaxSize[a].HasValue() && ClientRect.Size(ax) > relMaxSize[a])
                     {
-                        ClientRect[Bottom + a] -= diff;
-                        PaddingRect[Bottom + a] -= diff;
-                        BorderRect[Bottom + a] -= diff;
-                        MarginRect[Bottom + a] -= diff;
+                        var diff = ClientRect.Size(ax) - relMaxSize[a];
+                        if (normalDirection[a])
+                        {
+                            ClientRect[Bottom + a] -= diff;
+                            PaddingRect[Bottom + a] -= diff;
+                            BorderRect[Bottom + a] -= diff;
+                            MarginRect[Bottom + a] -= diff;
+                        }
+                        else
+                        {
+                            ClientRect[Top + a] += diff;
+                            PaddingRect[Top + a] += diff;
+                            BorderRect[Top + a] += diff;
+                            MarginRect[Top + a] += diff;
+                        }
                     }
-                    else
+
+                    if (ResolvedStyle.MinSize[a].HasValue() && ClientRect.Size(ax) < relMinSize[a])
                     {
-                        ClientRect[Top + a] += diff;
-                        PaddingRect[Top + a] += diff;
-                        BorderRect[Top + a] += diff;
-                        MarginRect[Top + a] += diff;
+                        var diff = relMinSize[a] - ClientRect.Size(ax);
+                        if (normalDirection[a])
+                        {
+                            ClientRect[Bottom + a] += diff;
+                            PaddingRect[Bottom + a] += diff;
+                            BorderRect[Bottom + a] += diff;
+                            MarginRect[Bottom + a] += diff;
+                        }
+                        else
+                        {
+                            ClientRect[Top + a] -= diff;
+                            PaddingRect[Top + a] -= diff;
+                            BorderRect[Top + a] -= diff;
+                            MarginRect[Top + a] -= diff;
+                        }
                     }
                 }
-
-                if (ResolvedStyle.MinSize[a].HasValue() && ClientRect.Size(ax) < relMinSize[a])
-                {
-                    var diff = relMinSize[a] - ClientRect.Size(ax);
-                    if (normalDirection[a])
-                    {
-                        ClientRect[Bottom + a] += diff;
-                        PaddingRect[Bottom + a] += diff;
-                        BorderRect[Bottom + a] += diff;
-                        MarginRect[Bottom + a] += diff;
-                    }
-                    else
-                    {
-                        ClientRect[Top + a] -= diff;
-                        PaddingRect[Top + a] -= diff;
-                        BorderRect[Top + a] -= diff;
-                        MarginRect[Top + a] -= diff;
-                    }
-                }
             }
+            //else if (ResolvedStyle.Display == StyleDisplay.InlineBlock)
+            //{
+            //    //ctx.LocalViewPort
+            //}
 
             ComputeBoundsChildren(ctx);
         }
@@ -228,10 +258,11 @@ namespace AxGui
                 return;
 
             var children = Children;
-            ctx.LocalViewPort = ClientRect;
             for (var i = 0; i < length; i++)
             {
-                children[i].ComputeBounds(ctx);
+                var child = children[i];
+                child.ProcessLayoutContext.LocalViewPort = ClientRect;
+                child.CallComputeBounds(ctx.GlobalContext!);
             }
         }
 

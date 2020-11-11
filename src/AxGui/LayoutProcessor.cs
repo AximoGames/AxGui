@@ -9,15 +9,15 @@ namespace AxGui
 
     public class LayoutProcessor
     {
-        private readonly ProcessLayoutContext ctx = new ProcessLayoutContext();
+        private readonly GlobalProcessLayoutContext ctx = new GlobalProcessLayoutContext();
         public Box ViewPort;
         public void Process(Element root)
         {
             ctx.GlobalViewPort = ViewPort;
-            ctx.LocalViewPort = ViewPort;
-            root.ComputeStyle(ctx);
-            root.ComputeChildBoundsOffers();
-            root.ComputeBounds(ctx);
+            root.ProcessLayoutContext.LocalViewPort = ViewPort;
+            root.CallComputeStyle(ctx);
+            root.CallComputeChildBoundsOffers(ctx);
+            root.CallComputeBounds(ctx);
         }
     }
 

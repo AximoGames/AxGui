@@ -7,10 +7,9 @@ using SkiaSharp;
 namespace AxGui
 {
 
-    public class ProcessLayoutContext
+    public class GlobalProcessLayoutContext
     {
-        public Box LocalViewPort;
-        internal GlobalProcessLayoutContext? GlobalContext;
+        public Box GlobalViewPort;
     }
 
 }

@@ -15,7 +15,7 @@ namespace AxGui
         Inherit,
 
         Block,
-        Inline,
+        InlineBlock,
         None,
     }
 
