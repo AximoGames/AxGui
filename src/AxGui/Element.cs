@@ -254,16 +254,25 @@ namespace AxGui
                 if (Parent == null)
                     return; // not supported
 
-                absAnchors.Translate(Parent.ProcessLayoutContext.RowPosition);
+                var pc = Parent.ProcessLayoutContext;
+
+                if (absAnchors.Right + pc.RowPosition.X > OuterRect.Right)
+                {
+                    pc.RowElements.Clear();
+                    pc.RowPosition.Y += pc.RowHeight;
+                    pc.RowPosition.X = 0;
+                }
+
+                absAnchors.Translate(pc.RowPosition);
 
                 MarginRect = absAnchors;
                 BorderRect = MarginRect.Substract(relMargin);
                 PaddingRect = BorderRect.Substract(relBorder);
                 ClientRect = PaddingRect.Substract(relPadding);
 
-                Parent.ProcessLayoutContext.RowPosition.X += absAnchors.Width;
-                Parent.ProcessLayoutContext.RowHeight = absAnchors.Height;
-                Parent.ProcessLayoutContext.RowElements.Add(this);
+                pc.RowPosition.X += absAnchors.Width;
+                pc.RowHeight = absAnchors.Height;
+                pc.RowElements.Add(this);
             }
 
             ComputeBoundsChildren(ctx);

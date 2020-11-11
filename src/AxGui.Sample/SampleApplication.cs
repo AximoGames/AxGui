@@ -109,7 +109,7 @@ namespace AxGui.Sample.OpenGL
                 var child = new Element();
                 child.Data = "child";
                 child.Style.BorderWidth = 5;
-                child.Style.Width = 50;
+                child.Style.Width = 200;
                 child.Style.Height = 30;
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Relative;
@@ -119,7 +119,17 @@ namespace AxGui.Sample.OpenGL
                 child = new Element();
                 child.Data = "child2";
                 child.Style.BorderWidth = 5;
-                child.Style.Width = 50;
+                child.Style.Width = 200;
+                child.Style.Height = 30;
+                //child.Style.Position = StylePosition.Absolute;
+                child.Style.Position = StylePosition.Relative;
+                child.Style.Display = StyleDisplay.InlineBlock;
+                el.AddChild(child);
+
+                child = new Element();
+                child.Data = "child3";
+                child.Style.BorderWidth = 5;
+                child.Style.Width = 200;
                 child.Style.Height = 30;
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Relative;
