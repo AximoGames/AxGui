@@ -115,6 +115,9 @@ namespace AxGui
         {
             var c = ProcessLayoutContext;
             c.GlobalContext = ctx;
+            c.RowPosition = default;
+            c.RowHeight = default;
+            c.RowElements.Clear();
             ComputeBounds(c);
         }
 
