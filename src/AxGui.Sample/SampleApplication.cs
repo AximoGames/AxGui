@@ -119,7 +119,7 @@ namespace AxGui.Sample.OpenGL
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Relative;
                 child.Style.Display = StyleDisplay.InlineBlock;
-                (child as TextElement).Content = "Testganz";
+                (child as TextElement).Content = "Testganz Testganz2 Testganz3";
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 
