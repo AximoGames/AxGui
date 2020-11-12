@@ -88,7 +88,10 @@ namespace AxGui.Sample.OpenGL
                 var canvas = surface.Canvas;
                 canvas.Clear(new SKColor(128, 0, 128));
                 //canvas.Translate(20, 20);
-                canvas.DrawText("Hello", 0, 0, Paint);
+                //Paint.Color = new SKColor(0, 0, 200);
+                //Paint.TextSize = 64;
+                //canvas.DrawText("Hello", 0, 64, Paint);
+                //canvas.DrawRect(0, 0, 100, 100, Paint);
 
                 var el = new Element();
                 el.Data = "root";
@@ -106,7 +109,9 @@ namespace AxGui.Sample.OpenGL
                 el.Style.Padding = 5;
                 //el.Style.Visibility = StyleVisibility.Hidden;
 
-                var child = new Element();
+                Element child;
+
+                var child1 = child = new TextElement();
                 child.Data = "child";
                 child.Style.BorderWidth = 5;
                 child.Style.Width = 200;
@@ -114,6 +119,8 @@ namespace AxGui.Sample.OpenGL
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Relative;
                 child.Style.Display = StyleDisplay.InlineBlock;
+                (child as TextElement).Content = "Testganz";
+                (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 
                 child = new Element();

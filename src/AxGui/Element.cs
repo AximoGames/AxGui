@@ -10,7 +10,7 @@ namespace AxGui
 {
 
     [SkipLocalsInit]
-    public class Element
+    public class Element : IDisposable
     {
         public readonly ElemenetAttributs Attributes = new ElemenetAttributs();
         public readonly ElementStyle Style = new ElementStyle();
@@ -325,28 +325,32 @@ namespace AxGui
         private static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
         private static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
         private static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188) };
+        protected internal bool Disposed;
 
         protected internal void CallRender(GlobalRenderContext ctx)
         {
             var c = RenderContext;
             c.GlobalContext = ctx;
             ctx.AddRenderContext(c);
+            c.Reset(); // TODO: Flag "AutoReset true/false"
             Render(c);
+        }
+
+        protected void RenderBorderAndBackground(RenderContext ctx)
+        {
+            ctx.Commands.Add(new DrawActionCommand(x =>
+            {
+                x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint);
+                x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint);
+                x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint);
+                x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint);
+            }));
         }
 
         public virtual void Render(RenderContext ctx)
         {
-            ctx.Reset();
             if (ResolvedStyle.Visibility != StyleVisibility.Hidden)
-            {
-                ctx.Commands.Add(new DrawActionCommand(x =>
-                {
-                    x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint);
-                    x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint);
-                    x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint);
-                    x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint);
-                }));
-            }
+                RenderBorderAndBackground(ctx);
 
             RenderChildren(ctx);
         }
@@ -359,6 +363,32 @@ namespace AxGui
                 children[i].CallRender(ctx.GlobalContext!);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (Disposed)
+                return;
+
+            if (disposing)
+            {
+                // TODO: dispose managed state (managed objects)
+            }
+
+            // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            Children = null!;
+            Disposed = true;
+        }
+
+        ~Element()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 
 }
