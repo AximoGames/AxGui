@@ -333,6 +333,13 @@ namespace AxGui
         private protected static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
         private protected static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188) };
 
+        private protected static SKPaint DebugMarginPaint_Border = new SKPaint { Color = new SKColor(134, 89, 42) };
+        private protected static SKPaint DebugBorderPaint_Border = new SKPaint { Color = new SKColor(187, 155, 89) };
+        private protected static SKPaint DebugPaddingPaint_Border = new SKPaint { Color = new SKColor(143, 156, 87) };
+        private protected static SKPaint DebugClientPaint_Border = new SKPaint { Color = new SKColor(95, 138, 148) };
+
+        private const float DebugBorderWidth = 1;
+
         protected internal bool Disposed;
 
         protected internal void CallRender(GlobalRenderContext ctx)
@@ -346,12 +353,24 @@ namespace AxGui
 
         protected void RenderBorderAndBackground(RenderContext ctx)
         {
+            var marginRectInner = MarginRect.Substract(DebugBorderWidth);
+            var borderRectInner = BorderRect.Substract(DebugBorderWidth);
+            var paddingRectInner = PaddingRect.Substract(DebugBorderWidth);
+
+            var clientRectInner = ClientRect.Substract(DebugBorderWidth);
             ctx.Commands.Add(new DrawActionCommand(x =>
             {
-                x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint);
-                x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint);
-                x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint);
-                x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint);
+                x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint_Border);
+                x.Canvas.DrawRect(marginRectInner.ToSKRect(), DebugMarginPaint);
+
+                x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint_Border);
+                x.Canvas.DrawRect(borderRectInner.ToSKRect(), DebugBorderPaint);
+
+                x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint_Border);
+                x.Canvas.DrawRect(paddingRectInner.ToSKRect(), DebugPaddingPaint);
+
+                x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint_Border);
+                x.Canvas.DrawRect(clientRectInner.ToSKRect(), DebugClientPaint);
             }));
         }
 

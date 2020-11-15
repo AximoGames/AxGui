@@ -123,6 +123,12 @@ namespace AxGui.Sample.OpenGL
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 
+                //var f = new Element();
+                //f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
+                //f.ResolvedStyle.Position = StylePosition.Relative;
+                //f.Style.Width = 20;
+                //f.Style.Height = 20;
+
                 var child2 = child = new TextElement();
                 child.Data = "child";
                 child.Style.BorderWidth = 5;

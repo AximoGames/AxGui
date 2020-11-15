@@ -22,9 +22,11 @@ namespace AxGui
 
         public override void Render(RenderContext ctx)
         {
+            RenderBorderAndBackground(ctx);
+
+            var clientRectInner = ClientRect.Substract(1);
             ctx.Commands.Add(new DrawActionCommand(x =>
             {
-                x.Canvas.DrawRect(ClientRect.Left, ClientRect.Top, ClientRect.Right, ClientRect.Bottom, DebugBorderPaint);
                 x.Canvas.DrawText(Text, ClientRect.Left, ClientRect.Top + Paint.TextSize, Paint);
             }));
         }
