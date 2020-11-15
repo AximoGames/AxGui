@@ -118,8 +118,8 @@ namespace AxGui.Sample.OpenGL
                 //child.Style.Width = 55;
                 //child.Style.Height = 100;
                 //child.Style.Position = StylePosition.Absolute;
-                child.Style.Position = StylePosition.Static;
                 child.Style.Display = StyleDisplay.Inline;
+                child.Style.Position = StylePosition.Static;
                 (child as TextElement).Content = "Testganz Testganz2 Testganz3";
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
@@ -127,7 +127,7 @@ namespace AxGui.Sample.OpenGL
                 var f = new Element();
                 f.Data = "b1";
                 f.Style.Display = StyleDisplay.InlineBlock;
-                f.Style.Position = StylePosition.Relative;
+                f.Style.Position = StylePosition.Static;
                 f.Style.Width = 20;
                 f.Style.Height = 20;
                 el.AddChild(f);
@@ -138,8 +138,8 @@ namespace AxGui.Sample.OpenGL
                 //child.Style.Width = 55;
                 //child.Style.Height = 100;
                 //child.Style.Position = StylePosition.Absolute;
-                child.Style.Position = StylePosition.Static;
                 child.Style.Display = StyleDisplay.Inline;
+                child.Style.Position = StylePosition.Static;
                 (child as TextElement).Content = "Testganz4 Testganz5 Testganz6";
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
@@ -151,8 +151,6 @@ namespace AxGui.Sample.OpenGL
                 f2.Style.Width = 20;
                 f2.Style.Height = 20;
                 el.AddChild(f2);
-
-
 
                 //child = new Element();
                 //child.Data = "child2";

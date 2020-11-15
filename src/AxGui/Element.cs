@@ -208,7 +208,7 @@ namespace AxGui
                     if (el != null)
                     {
                         var pc = el.ProcessLayoutContext;
-                        if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right) // OuterRect.Right
+                        if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right || ResolvedStyle.Display == StyleDisplay.Block) // OuterRect.Right
                         {
                             pc.RowElements.Clear();
                             pc.RowPosition.Y += pc.RowHeight;
@@ -243,6 +243,7 @@ namespace AxGui
             }
             else // flow == false:
             {
+
                 for (var a = axisStart; a < axisCount; a++)
                 {
                     normalDirection[a] = true;
