@@ -64,6 +64,24 @@ namespace AxGui
             _Anchors.ParentChanged = BoundingChangedDelegate;
         }
 
+        public void CopyTo(ElementStyle target)
+        {
+            target._Anchors = _Anchors;
+            target._BorderColor = _BorderColor;
+            target._BorderRadius = _BorderRadius;
+            target._BorderStyle = _BorderStyle;
+            target._BorderWidth = _BorderWidth;
+            target._BoundingChanged = _BoundingChanged;
+            target._Margin = _Margin;
+            target._MaxSize = _MaxSize;
+            target._MinSize = _MinSize;
+            target._Padding = _Padding;
+            target._Size = _Size;
+            target.Display = Display;
+            target.Position = Position;
+            target.Visibility = Visibility;
+        }
+
         internal bool _BoundingChanged;
         private void BoundingChanged()
         {

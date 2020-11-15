@@ -65,14 +65,13 @@ namespace AxGui
 
                 var finalText = new string(span.Slice(0, num));
                 var f = new TextElementFragment(finalText, Paint);
+                ResolvedStyle.CopyTo(f.ResolvedStyle);
                 measuredWidth = Paint.MeasureText(finalText);
                 //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);
                 f.ResolvedStyle.Width = measuredWidth;
 
-                if (ResolvedStyle.Height.Unit == StyleUnit.Unset)
+                if (f.ResolvedStyle.Height.Unit == StyleUnit.Unset)
                     f.ResolvedStyle.Height = TextHeight;
-                else
-                    f.ResolvedStyle.Height = ResolvedStyle.Height;
 
                 f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
                 f.ResolvedStyle.Position = StylePosition.Static;
