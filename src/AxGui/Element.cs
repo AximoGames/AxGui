@@ -27,12 +27,12 @@ namespace AxGui
         /// <summary>
         /// Logical childs, for example items in a scroll view.
         /// </summary>
-        public List<Element> Children;
+        internal List<Element> Children;
 
         /// <summary>
         /// Logical childs and additional childs like the scrollbar of a scroll view.
         /// </summary>
-        protected List<Element> ChildrenInternal;
+        internal List<Element> ChildrenInternal;
         internal RenderContext RenderContext = new RenderContext();
         internal ProcessLayoutContext ProcessLayoutContext = new ProcessLayoutContext();
 

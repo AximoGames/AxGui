@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Globalization;
 
 namespace AxGui
 {
@@ -37,6 +38,12 @@ namespace AxGui
                 };
             }
         }
+
+        public override string ToString()
+        {
+            return $"X={X.ToString("F1", CultureInfo.InvariantCulture)} Y={Y.ToString("F1", CultureInfo.InvariantCulture)}";
+        }
+
     }
 
 }

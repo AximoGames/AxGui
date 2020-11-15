@@ -123,6 +123,15 @@ namespace AxGui
             }
         }
 
+        public Point Min => new Point(Left, Top);
+        public Point Max => new Point(Right, Bottom);
+
+        public Point LeftTop => new Point(Left, Top);
+        public Point LeftBottom => new Point(Left, Bottom);
+
+        public Point RightTop => new Point(Right, Top);
+        public Point RightBottom => new Point(Right, Bottom);
+
     }
 
 }

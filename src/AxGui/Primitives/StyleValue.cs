@@ -119,7 +119,9 @@ namespace AxGui
                 StyleUnit.Number => Number.ToString("F1"),
                 StyleUnit.Pixel => Number.ToString("F1") + " px",
                 StyleUnit.Percentage => Number.ToString("F1") + " %",
+#pragma warning disable HAA0102 // Non-overridden virtual method call on value type
                 _ => Unit.ToString(),
+#pragma warning restore HAA0102 // Non-overridden virtual method call on value type
             };
         }
 
