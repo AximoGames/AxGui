@@ -98,11 +98,11 @@ namespace AxGui.Sample.OpenGL
 
                 el.Style.Position = StylePosition.Absolute;
 
-                el.Style.MinHeight = 50;
+                el.Style.MinHeight = 55;
                 el.Style.MinWidth = 80;
 
-                el.Style.Height = 300;
-                el.Style.Width = 500;
+                el.Style.Height = 320;
+                el.Style.Width = 220;
 
                 //el.Style.Margin = "auto";
                 el.Style.BorderWidth = 5;
@@ -114,34 +114,46 @@ namespace AxGui.Sample.OpenGL
                 var child1 = child = new TextElement();
                 child.Data = "child";
                 child.Style.BorderWidth = 5;
-                child.Style.Width = 200;
-                child.Style.Height = 50;
+                //child.Style.Width = 55;
+                //child.Style.Height = 100;
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Relative;
-                child.Style.Display = StyleDisplay.InlineBlock;
+                child.Style.Display = StyleDisplay.Inline;
                 (child as TextElement).Content = "Testganz Testganz2 Testganz3";
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 
-                child = new Element();
-                child.Data = "child2";
+                var child2 = child = new TextElement();
+                child.Data = "child";
                 child.Style.BorderWidth = 5;
-                child.Style.Width = 200;
-                child.Style.Height = 30;
+                //child.Style.Width = 55;
+                //child.Style.Height = 100;
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Position = StylePosition.Relative;
-                child.Style.Display = StyleDisplay.InlineBlock;
+                child.Style.Display = StyleDisplay.Inline;
+                (child as TextElement).Content = "Testganz4 Testganz5 Testganz6";
+                (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 
-                child = new Element();
-                child.Data = "child3";
-                child.Style.BorderWidth = 5;
-                child.Style.Width = 200;
-                child.Style.Height = 30;
-                //child.Style.Position = StylePosition.Absolute;
-                child.Style.Position = StylePosition.Relative;
-                child.Style.Display = StyleDisplay.InlineBlock;
-                el.AddChild(child);
+                //child = new Element();
+                //child.Data = "child2";
+                //child.Style.BorderWidth = 5;
+                //child.Style.Width = 200;
+                //child.Style.Height = 30;
+                ////child.Style.Position = StylePosition.Absolute;
+                //child.Style.Position = StylePosition.Relative;
+                //child.Style.Display = StyleDisplay.InlineBlock;
+                //el.AddChild(child);
+
+                //child = new Element();
+                //child.Data = "child3";
+                //child.Style.BorderWidth = 5;
+                //child.Style.Width = 200;
+                //child.Style.Height = 30;
+                ////child.Style.Position = StylePosition.Absolute;
+                //child.Style.Position = StylePosition.Relative;
+                //child.Style.Display = StyleDisplay.InlineBlock;
+                //el.AddChild(child);
 
                 var layouter = new LayoutProcessor();
                 layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);

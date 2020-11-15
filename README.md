@@ -39,3 +39,8 @@ Differences to AvalonUI
 - AvalonUI is designed primary for GUI-First applications, not for 3D games.
 - AvalonUI is overloaded with features you do not need in 3D games.
 - AvalonUI has Less control in rendering pipeline
+
+Development Status
+------------------
+
+AxGui is currently in Development. There's no stable release yet.

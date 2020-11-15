@@ -137,7 +137,7 @@ namespace AxGui
             ComputeBounds(c);
         }
 
-        protected internal virtual void ComputeBounds(ProcessLayoutContext ctx)
+        protected internal virtual void ComputeBoundsSelf(ProcessLayoutContext ctx)
         {
             OuterRect = ctx.LocalViewPort;
 
@@ -270,39 +270,46 @@ namespace AxGui
                 if (Parent == null)
                     return; // not supported
 
-                var pc = Parent.ProcessLayoutContext;
-
-                if (absAnchors.Right + pc.RowPosition.X > OuterRect.Right)
+                var el = GetParentBlockElement(ctx);
+                if (el != null)
                 {
-                    pc.RowElements.Clear();
-                    pc.RowPosition.Y += pc.RowHeight;
-                    pc.RowPosition.X = 0;
-                    pc.RowHeight = absAnchors.Height;
-                }
-                else if (absAnchors.Height > pc.RowHeight)
-                {
-                    var diff = absAnchors.Height - pc.RowHeight;
-                    var prevElLength = pc.RowElements.Count;
-                    for (var i = 0; i < prevElLength; i++)
+                    var pc = el.ProcessLayoutContext;
+                    if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right) // OuterRect.Right
                     {
-                        var prevEl = pc.RowElements[i];
-                        prevEl.TranslateY(diff);
+                        pc.RowElements.Clear();
+                        pc.RowPosition.Y += pc.RowHeight;
+                        pc.RowPosition.X = 0;
+                        pc.RowHeight = absAnchors.Height;
                     }
-                    pc.RowHeight = absAnchors.Height;
+                    else if (absAnchors.Height > pc.RowHeight)
+                    {
+                        var diff = absAnchors.Height - pc.RowHeight;
+                        var prevElLength = pc.RowElements.Count;
+                        for (var i = 0; i < prevElLength; i++)
+                        {
+                            var prevEl = pc.RowElements[i];
+                            prevEl.TranslateY(diff);
+                        }
+                        pc.RowHeight = absAnchors.Height;
+                    }
+
+                    absAnchors.Translate(pc.RowPosition.X, pc.RowPosition.Y + (pc.RowHeight - absAnchors.Height));
+
+                    MarginRect = absAnchors;
+                    BorderRect = MarginRect.Substract(relMargin);
+                    PaddingRect = BorderRect.Substract(relBorder);
+                    ClientRect = PaddingRect.Substract(relPadding);
+
+                    pc.RowPosition.X += absAnchors.Width;
+                    //pc.RowHeight = absAnchors.Height;
+                    pc.RowElements.Add(this);
                 }
-
-                absAnchors.Translate(pc.RowPosition.X, pc.RowPosition.Y + (pc.RowHeight - absAnchors.Height));
-
-                MarginRect = absAnchors;
-                BorderRect = MarginRect.Substract(relMargin);
-                PaddingRect = BorderRect.Substract(relBorder);
-                ClientRect = PaddingRect.Substract(relPadding);
-
-                pc.RowPosition.X += absAnchors.Width;
-                //pc.RowHeight = absAnchors.Height;
-                pc.RowElements.Add(this);
             }
+        }
 
+        protected internal virtual void ComputeBounds(ProcessLayoutContext ctx)
+        {
+            ComputeBoundsSelf(ctx);
             ComputeBoundsChildren(ctx);
         }
 
@@ -321,10 +328,11 @@ namespace AxGui
             }
         }
 
-        private static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
-        private static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
-        private static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
-        private static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188) };
+        private protected static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
+        private protected static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
+        private protected static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
+        private protected static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188) };
+
         protected internal bool Disposed;
 
         protected internal void CallRender(GlobalRenderContext ctx)
@@ -361,6 +369,30 @@ namespace AxGui
             var children = Children;
             for (var i = 0; i < length; i++)
                 children[i].CallRender(ctx.GlobalContext!);
+        }
+
+        private protected Box GetParentBlockBox(ProcessLayoutContext ctx)
+        {
+            var el = GetParentBlockElement(ctx);
+            if (el == null)
+                return ctx.GlobalContext!.GlobalViewPort;
+
+            return el.ClientRect;
+        }
+
+        private protected Element? GetParentBlockElement(ProcessLayoutContext ctx)
+        {
+            var p = Parent;
+
+            while (p != null)
+            {
+                if (p.ResolvedStyle.Position == StylePosition.Absolute)
+                    return p;
+
+                p = p.Parent;
+            }
+
+            return null;
         }
 
         protected virtual void Dispose(bool disposing)
