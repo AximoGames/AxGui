@@ -164,6 +164,15 @@ namespace AxGui
             //const int Width = 0;
             //const int Height = 1;
 
+            /*
+             *  if Position == Absolute:
+             *  MUST ignore Anchors!
+             *
+             *  If Display == Inline:
+             *  MUST ignore Size, take the inner content as it is.
+             *
+             */
+
             var decorationSize = new Size(
                 relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
                 relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);

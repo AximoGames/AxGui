@@ -12,6 +12,7 @@ namespace AxGui.Test
         private Element CreateRootElement()
         {
             var el = new Element();
+            el.Style.Display = StyleDisplay.Block;
             el.Style.Position = StylePosition.Absolute;
             el.Style.Width = 500;
             el.Style.Height = 300;
@@ -34,6 +35,7 @@ namespace AxGui.Test
             var el = CreateRootElement();
             var child = new Element();
             el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
             child.Style.Position = StylePosition.Absolute;
             child.Style.BorderWidth = 5;
             child.Style.Width = 50;

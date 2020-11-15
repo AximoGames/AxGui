@@ -12,6 +12,7 @@ namespace AxGui.Test
         private Element CreateElement()
         {
             var el = new Element();
+            el.Style.Display = StyleDisplay.Block;
             el.Style.Position = StylePosition.Absolute;
             el.Style.Width = 200;
             el.Style.Height = 100;
