@@ -111,35 +111,45 @@ namespace AxGui.Sample.OpenGL
 
                 Element child;
 
-                var child1 = child = new TextElement();
-                child.Data = "child";
-                child.Style.BorderWidth = 5;
-                //child.Style.Width = 55;
-                //child.Style.Height = 100;
-                //child.Style.Position = StylePosition.Absolute;
-                child.Style.Position = StylePosition.Relative;
-                child.Style.Display = StyleDisplay.Inline;
-                (child as TextElement).Content = "Testganz Testganz2 Testganz3";
-                (child as TextElement).TextSize = 20;
-                el.AddChild(child);
+                //var child1 = child = new TextElement();
+                //child.Data = "child";
+                //child.Style.BorderWidth = 5;
+                ////child.Style.Width = 55;
+                ////child.Style.Height = 100;
+                ////child.Style.Position = StylePosition.Absolute;
+                //child.Style.Position = StylePosition.Relative;
+                //child.Style.Display = StyleDisplay.Inline;
+                //(child as TextElement).Content = "Testganz Testganz2 Testganz3";
+                //(child as TextElement).TextSize = 20;
+                //el.AddChild(child);
 
                 //var f = new Element();
-                //f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
-                //f.ResolvedStyle.Position = StylePosition.Relative;
+                //f.Data = "b1";
+                //f.Style.Display = StyleDisplay.InlineBlock;
+                //f.Style.Position = StylePosition.Relative;
                 //f.Style.Width = 20;
                 //f.Style.Height = 20;
+                //el.AddChild(f);
 
-                var child2 = child = new TextElement();
-                child.Data = "child";
-                child.Style.BorderWidth = 5;
-                //child.Style.Width = 55;
-                //child.Style.Height = 100;
-                //child.Style.Position = StylePosition.Absolute;
-                child.Style.Position = StylePosition.Relative;
-                child.Style.Display = StyleDisplay.Inline;
-                (child as TextElement).Content = "Testganz4 Testganz5 Testganz6";
-                (child as TextElement).TextSize = 20;
-                el.AddChild(child);
+                //var child2 = child = new TextElement();
+                //child.Data = "child2";
+                //child.Style.BorderWidth = 5;
+                ////child.Style.Width = 55;
+                ////child.Style.Height = 100;
+                ////child.Style.Position = StylePosition.Absolute;
+                //child.Style.Position = StylePosition.Relative;
+                //child.Style.Display = StyleDisplay.Inline;
+                //(child as TextElement).Content = "Testganz4 Testganz5 Testganz6";
+                //(child as TextElement).TextSize = 20;
+                //el.AddChild(child);
+
+                var f2 = new Element();
+                f2.Data = "b2";
+                f2.Style.Display = StyleDisplay.Block;
+                f2.Style.Position = StylePosition.Relative;
+                f2.Style.Width = 20;
+                f2.Style.Height = 20;
+                el.AddChild(f2);
 
                 //child = new Element();
                 //child.Data = "child2";

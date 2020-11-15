@@ -112,6 +112,17 @@ namespace AxGui
             return value;
         }
 
+        public override string ToString()
+        {
+            return Unit switch
+            {
+                StyleUnit.Number => Number.ToString("F1"),
+                StyleUnit.Pixel => Number.ToString("F1") + " px",
+                StyleUnit.Percentage => Number.ToString("F1") + " %",
+                _ => Unit.ToString(),
+            };
+        }
+
     }
 
 }

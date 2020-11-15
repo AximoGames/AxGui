@@ -68,6 +68,13 @@ namespace AxGui
             }
         }
 
+        public override string ToString()
+        {
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
+            return $"Width={Width} Height={Height}";
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+        }
+
     }
 
 }

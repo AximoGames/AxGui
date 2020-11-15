@@ -414,6 +414,14 @@ namespace AxGui
             return null;
         }
 
+        public override string ToString()
+        {
+            var label = Data?.ToString();
+            if (label != null)
+                label = "[" + label + "] ";
+            return label + GetType().Name;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (Disposed)
