@@ -112,6 +112,14 @@ namespace AxGui.Sample.OpenGL
 
                 Element child;
 
+                var f3 = new Element();
+                f3.Data = "b2";
+                f3.Style.Display = StyleDisplay.Block;
+                f3.Style.Position = StylePosition.Static;
+                f3.Style.Width = 20;
+                f3.Style.Height = 20;
+                el.AddChild(f3);
+
                 var child1 = child = new TextElement();
                 child.Data = "child";
                 child.Style.BorderWidth = 5;
@@ -152,25 +160,15 @@ namespace AxGui.Sample.OpenGL
                 f2.Style.Height = 20;
                 el.AddChild(f2);
 
-                //child = new Element();
-                //child.Data = "child2";
-                //child.Style.BorderWidth = 5;
-                //child.Style.Width = 200;
-                //child.Style.Height = 30;
-                ////child.Style.Position = StylePosition.Absolute;
-                //child.Style.Position = StylePosition.Relative;
-                //child.Style.Display = StyleDisplay.InlineBlock;
-                //el.AddChild(child);
+                var child3 = child = new TextElement();
+                child.Data = "child3";
+                child.Style.BorderWidth = 5;
+                child.Style.Display = StyleDisplay.Inline;
+                child.Style.Position = StylePosition.Static;
+                (child as TextElement).Content = "Testganz4 Testganz5 Testganz6";
+                (child as TextElement).TextSize = 20;
+                el.AddChild(child);
 
-                //child = new Element();
-                //child.Data = "child3";
-                //child.Style.BorderWidth = 5;
-                //child.Style.Width = 200;
-                //child.Style.Height = 30;
-                ////child.Style.Position = StylePosition.Absolute;
-                //child.Style.Position = StylePosition.Relative;
-                //child.Style.Display = StyleDisplay.InlineBlock;
-                //el.AddChild(child);
 
                 var layouter = new LayoutProcessor();
                 layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);

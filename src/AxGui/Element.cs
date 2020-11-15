@@ -92,7 +92,7 @@ namespace AxGui
                 children[i].ComputeStyle(ctx);
         }
 
-        internal Box OuterRect;
+        //internal Box OuterRect;
 
         internal Box MarginRect;
         internal Box BorderRect;
@@ -139,10 +139,7 @@ namespace AxGui
 
         protected internal virtual void ComputeBoundsSelf(ProcessLayoutContext ctx)
         {
-            OuterRect = ctx.LocalViewPort;
-
-            Box absAnchors = OuterRect;
-            var absCenter = absAnchors.Center;
+            //OuterRect = ctx.LocalViewPort;
 
             Box relMargin = ResolvedStyle._Margin.ToBox();
             Box relBorder = ResolvedStyle._BorderWidth.ToBox();
@@ -198,15 +195,20 @@ namespace AxGui
                     // StyleDisplay.Inline are typically Text spans, that are converted to
                     // one ore more TextElementFracment / StyleDisplay.InlineBlock
 
-                    absAnchors.Width = relSize.Width + decorationSize.Width;
-                    absAnchors.Height = relSize.Height + decorationSize.Height;
-
                     if (Parent == null)
-                        return; // not supported
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
+                        throw new Exception($"Elements with Display.{ResolvedStyle.Display} must be inside of a block element.");
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
 
                     var el = GetParentBlockElement(ctx);
                     if (el != null)
                     {
+                        Box absAnchors = el.ClientRect;
+                        var absCenter = absAnchors.Center;
+
+                        absAnchors.Width = relSize.Width + decorationSize.Width;
+                        absAnchors.Height = relSize.Height + decorationSize.Height;
+
                         var pc = el.ProcessLayoutContext;
                         if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right || ResolvedStyle.Display == StyleDisplay.Block) // OuterRect.Right
                         {
@@ -243,6 +245,9 @@ namespace AxGui
             }
             else // flow == false:
             {
+
+                Box absAnchors = Parent != null ? Parent.ClientRect : ctx.GlobalContext!.GlobalViewPort;
+                var absCenter = absAnchors.Center;
 
                 for (var a = axisStart; a < axisCount; a++)
                 {
