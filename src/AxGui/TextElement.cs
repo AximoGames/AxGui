@@ -16,6 +16,11 @@ namespace AxGui
         public float TextSize { get => Paint.TextSize; set => Paint.TextSize = value; }
         public float TextHeight => Paint.FontMetrics.Descent - Paint.FontMetrics.Ascent;
 
+        public TextElement()
+        {
+            PassThrough = true;
+        }
+
         protected internal override void ComputeBoundsSelf(ProcessLayoutContext ctx)
         {
             base.ComputeBoundsSelf(ctx);
@@ -41,11 +46,19 @@ namespace AxGui
                 // detect space
                 if (num < span.Length)
                 {
-                    spIdx = span.Slice(0, num).LastIndexOf(' ');
-                    if (spIdx > -1)
-                        num = spIdx;
+                    if (ResolvedStyle.Display == StyleDisplay.InlineBlock)
+                    {
+                        num = span.Length;
+                    }
+                    else
+                    {
 
-                    // TODO: Decrease num, if there are more spaces: 'text    ' --> 'text'
+                        spIdx = span.Slice(0, num).LastIndexOf(' ');
+                        if (spIdx > -1)
+                            num = spIdx;
+
+                        // TODO: Decrease num, if there are more spaces: 'text    ' --> 'text'
+                    }
                 }
 
                 var texHeight = TextHeight;
@@ -55,10 +68,12 @@ namespace AxGui
                 measuredWidth = Paint.MeasureText(finalText);
                 //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);
                 f.ResolvedStyle.Width = measuredWidth;
+
                 if (ResolvedStyle.Height.Unit == StyleUnit.Unset)
                     f.ResolvedStyle.Height = TextHeight;
                 else
                     f.ResolvedStyle.Height = ResolvedStyle.Height;
+
                 f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
                 f.ResolvedStyle.Position = StylePosition.Static;
 
