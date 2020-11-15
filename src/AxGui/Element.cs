@@ -165,13 +165,18 @@ namespace AxGui
             //const int Height = 1;
 
             /*
-             * position affects position (x, y) and flow of subsequent elements.
-             * it does not affect the dimensions of the box.
+             *  Anchors: Left, Top, Right, Bottom
+             *
+             *  position affects position (x, y) and flow of subsequent elements.
+             *  it does not affect the dimensions of the box.
              *
              *  if position == static:
              *  must ignore Anchors!
              *
-             * Display affects Box-Calculation
+             *  if position == absolute:
+             *  MUST ignore Display, except Display.None
+             *
+             *  Display affects Box-Calculation
              *
              *  If Display == Inline:
              *  MUST ignore Size, take the inner content as it is.
@@ -188,51 +193,56 @@ namespace AxGui
             {
                 // in flow
 
-                absAnchors.Width = relSize.Width + decorationSize.Width;
-                absAnchors.Height = relSize.Height + decorationSize.Height;
-
-                if (Parent == null)
-                    return; // not supported
-
-                var el = GetParentBlockElement(ctx);
-                if (el != null)
+                if (ResolvedStyle.Display != StyleDisplay.Inline)
                 {
-                    var pc = el.ProcessLayoutContext;
-                    if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right) // OuterRect.Right
+                    // StyleDisplay.Inline are typically Text spans, that are converted to
+                    // one ore more TextElementFracment / StyleDisplay.InlineBlock
+
+                    absAnchors.Width = relSize.Width + decorationSize.Width;
+                    absAnchors.Height = relSize.Height + decorationSize.Height;
+
+                    if (Parent == null)
+                        return; // not supported
+
+                    var el = GetParentBlockElement(ctx);
+                    if (el != null)
                     {
-                        pc.RowElements.Clear();
-                        pc.RowPosition.Y += pc.RowHeight;
-                        pc.RowPosition.X = 0;
-                        pc.RowHeight = absAnchors.Height;
-                    }
-                    else if (absAnchors.Height > pc.RowHeight)
-                    {
-                        var diff = absAnchors.Height - pc.RowHeight;
-                        var prevElLength = pc.RowElements.Count;
-                        for (var i = 0; i < prevElLength; i++)
+                        var pc = el.ProcessLayoutContext;
+                        if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right) // OuterRect.Right
                         {
-                            var prevEl = pc.RowElements[i];
-                            prevEl.TranslateY(diff);
+                            pc.RowElements.Clear();
+                            pc.RowPosition.Y += pc.RowHeight;
+                            pc.RowPosition.X = 0;
+                            pc.RowHeight = absAnchors.Height;
                         }
-                        pc.RowHeight = absAnchors.Height;
+                        else if (absAnchors.Height > pc.RowHeight)
+                        {
+                            var diff = absAnchors.Height - pc.RowHeight;
+                            var prevElLength = pc.RowElements.Count;
+                            for (var i = 0; i < prevElLength; i++)
+                            {
+                                var prevEl = pc.RowElements[i];
+                                prevEl.TranslateY(diff);
+                            }
+                            pc.RowHeight = absAnchors.Height;
+                        }
+
+                        absAnchors.Translate(pc.RowPosition.X, pc.RowPosition.Y + (pc.RowHeight - absAnchors.Height));
+
+                        MarginRect = absAnchors;
+                        BorderRect = MarginRect.Substract(relMargin);
+                        PaddingRect = BorderRect.Substract(relBorder);
+                        ClientRect = PaddingRect.Substract(relPadding);
+
+                        pc.RowPosition.X += absAnchors.Width;
+                        //pc.RowHeight = absAnchors.Height;
+                        pc.RowElements.Add(this);
                     }
-
-                    absAnchors.Translate(pc.RowPosition.X, pc.RowPosition.Y + (pc.RowHeight - absAnchors.Height));
-
-                    MarginRect = absAnchors;
-                    BorderRect = MarginRect.Substract(relMargin);
-                    PaddingRect = BorderRect.Substract(relBorder);
-                    ClientRect = PaddingRect.Substract(relPadding);
-
-                    pc.RowPosition.X += absAnchors.Width;
-                    //pc.RowHeight = absAnchors.Height;
-                    pc.RowElements.Add(this);
                 }
-            }
-            else
-            {
-                // out of flow
 
+            }
+            else // flow == false:
+            {
                 for (var a = axisStart; a < axisCount; a++)
                 {
                     normalDirection[a] = true;

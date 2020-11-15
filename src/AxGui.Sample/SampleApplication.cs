@@ -96,6 +96,7 @@ namespace AxGui.Sample.OpenGL
                 var el = new Element();
                 el.Data = "root";
 
+                el.Style.Display = StyleDisplay.Block;
                 el.Style.Position = StylePosition.Absolute;
 
                 el.Style.MinHeight = 55;
@@ -123,13 +124,13 @@ namespace AxGui.Sample.OpenGL
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 
-                //var f = new Element();
-                //f.Data = "b1";
-                //f.Style.Display = StyleDisplay.InlineBlock;
-                //f.Style.Position = StylePosition.Relative;
-                //f.Style.Width = 20;
-                //f.Style.Height = 20;
-                //el.AddChild(f);
+                var f = new Element();
+                f.Data = "b1";
+                f.Style.Display = StyleDisplay.InlineBlock;
+                f.Style.Position = StylePosition.Relative;
+                f.Style.Width = 20;
+                f.Style.Height = 20;
+                el.AddChild(f);
 
                 var child2 = child = new TextElement();
                 child.Data = "child2";
@@ -143,13 +144,13 @@ namespace AxGui.Sample.OpenGL
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 
-                //var f2 = new Element();
-                //f2.Data = "b2";
-                //f2.Style.Display = StyleDisplay.Block;
-                //f2.Style.Position = StylePosition.Static;
-                //f2.Style.Width = 20;
-                //f2.Style.Height = 20;
-                //el.AddChild(f2);
+                var f2 = new Element();
+                f2.Data = "b2";
+                f2.Style.Display = StyleDisplay.Block;
+                f2.Style.Position = StylePosition.Static;
+                f2.Style.Width = 20;
+                f2.Style.Height = 20;
+                el.AddChild(f2);
 
 
 
