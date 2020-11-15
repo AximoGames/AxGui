@@ -106,57 +106,13 @@ namespace AxGui.Sample.OpenGL
                 Element child;
                 Element box;
 
-                var box1 = box = new Element();
-                box.Data = "b1";
-                box.Style.Display = StyleDisplay.Block;
-                box.Style.Position = StylePosition.Static;
-                box.Style.Width = 20;
-                box.Style.Height = 20;
-                el.AddChild(box);
-
                 var child1 = child = new TextElement();
                 child.Data = "child";
                 child.Style.BorderWidth = 5;
                 child.Style.Height = 30;
-                child.Style.Display = StyleDisplay.Inline;
+                child.Style.Display = StyleDisplay.InlineBlock;
                 child.Style.Position = StylePosition.Static;
                 (child as TextElement).Content = "Testduck Testduck2 Testduck3";
-                (child as TextElement).TextSize = 20;
-                el.AddChild(child);
-
-                var box2 = box = new Element();
-                box.Data = "b1";
-                box.Style.Display = StyleDisplay.InlineBlock;
-                box.Style.Position = StylePosition.Static;
-                box.Style.Width = 20;
-                box.Style.Height = 20;
-                el.AddChild(box);
-
-                var child2 = child = new TextElement();
-                child.Data = "child2";
-                child.Style.BorderWidth = 5;
-                child.Style.Height = 30;
-                child.Style.Display = StyleDisplay.Inline;
-                child.Style.Position = StylePosition.Static;
-                (child as TextElement).Content = "Testduck4 Testduck5 Testduck6";
-                (child as TextElement).TextSize = 20;
-                el.AddChild(child);
-
-                var box3 = box = new Element();
-                box.Data = "b3";
-                box.Style.Display = StyleDisplay.Block;
-                box.Style.Position = StylePosition.Static;
-                box.Style.Width = 20;
-                box.Style.Height = 20;
-                el.AddChild(box);
-
-                var child3 = child = new TextElement();
-                child.Data = "child3";
-                child.Style.Height = 30;
-                child.Style.BorderWidth = 5;
-                child.Style.Display = StyleDisplay.Inline;
-                child.Style.Position = StylePosition.Static;
-                (child as TextElement).Content = "Testduck4 Testduck5 Testxk|²³|ₚ|ganz6";
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 

@@ -52,8 +52,41 @@ namespace AxGui.Test
 
             var txt = child.Children[1];
 
-            Assert.Equal(10, txt.ClientRect.Left);
-            Assert.Equal(70, txt.ClientRect.Bottom);
+            Assert.Equal(new Point(10, 70), txt.ClientRect.LeftBottom);
+        }
+
+        [Fact]
+        public void InlineBlock()
+        {
+            var el = CreateRootElement();
+
+            Element child;
+            Element box;
+
+            var box1 = box = new Element();
+            box.Data = "b1";
+            box.Style.Display = StyleDisplay.Block;
+            box.Style.Position = StylePosition.Static;
+            box.Style.Width = 20;
+            box.Style.Height = 20;
+            el.AddChild(box);
+
+            var child1 = child = new TextElement();
+            child.Data = "child";
+            child.Style.BorderWidth = 5;
+            child.Style.Height = 30;
+            child.Style.Display = StyleDisplay.InlineBlock;
+            child.Style.Position = StylePosition.Static;
+            (child as TextElement).Content = "Testduck Testduck2 Testduck3";
+            (child as TextElement).TextSize = 20;
+            el.AddChild(child);
+
+            Layout(el);
+
+            var txt = child.ChildrenInternal[0];
+
+            Assert.Equal(1, child.ChildrenInternal.Count);
+            Assert.Equal(new Point(10, 60), txt.ClientRect.LeftBottom);
         }
 
         [Fact]
