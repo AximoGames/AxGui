@@ -124,7 +124,7 @@ namespace AxGui.Sample.OpenGL
                 child.Data = "child";
                 child.Style.BorderWidth = 5;
                 //child.Style.Width = 55;
-                //child.Style.Height = 100;
+                child.Style.Height = 30;
                 //child.Style.Position = StylePosition.Absolute;
                 child.Style.Display = StyleDisplay.Inline;
                 child.Style.Position = StylePosition.Static;
@@ -165,7 +165,7 @@ namespace AxGui.Sample.OpenGL
                 child.Style.BorderWidth = 5;
                 child.Style.Display = StyleDisplay.Inline;
                 child.Style.Position = StylePosition.Static;
-                (child as TextElement).Content = "Testganz4 Testganz5 Testganz6";
+                (child as TextElement).Content = "Testganz4 Testganz5 Testxk|²³|ₚ|ganz6";
                 (child as TextElement).TextSize = 20;
                 el.AddChild(child);
 

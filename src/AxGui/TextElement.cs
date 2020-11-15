@@ -14,6 +14,7 @@ namespace AxGui
         public string? Content;
         private readonly SKPaint Paint = new SKPaint();
         public float TextSize { get => Paint.TextSize; set => Paint.TextSize = value; }
+        public float TextHeight => Paint.FontMetrics.Descent - Paint.FontMetrics.Ascent;
 
         protected internal override void ComputeBoundsSelf(ProcessLayoutContext ctx)
         {
@@ -47,14 +48,22 @@ namespace AxGui
                     // TODO: Decrease num, if there are more spaces: 'text    ' --> 'text'
                 }
 
+                var texHeight = TextHeight;
+
                 var finalText = new string(span.Slice(0, num));
                 var f = new TextElementFragment(finalText, Paint);
                 measuredWidth = Paint.MeasureText(finalText);
                 //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);
                 f.ResolvedStyle.Width = measuredWidth;
-                f.ResolvedStyle.Height = TextSize;
+                if (ResolvedStyle.Height.Unit == StyleUnit.Unset)
+                    f.ResolvedStyle.Height = TextHeight;
+                else
+                    f.ResolvedStyle.Height = ResolvedStyle.Height;
                 f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
                 f.ResolvedStyle.Position = StylePosition.Static;
+
+                var h = f.ResolvedStyle.Height.Number;
+                f.DrawPosition.Y = TextSize + ((h - TextHeight) / 2);
 
                 AddChild(f);
 

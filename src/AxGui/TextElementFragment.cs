@@ -18,16 +18,20 @@ namespace AxGui
 
         internal readonly SKPaint Paint;
         internal readonly string Text;
-        //public SKPoint DrawPosition;
+        public SKPoint DrawPosition;
 
         public override void Render(RenderContext ctx)
         {
             RenderBorderAndBackground(ctx);
 
             var clientRectInner = ClientRect.Substract(1);
+            //var textY = (((-Paint.FontMetrics.Ascent + Paint.FontMetrics.Descent) / 2) - Paint.FontMetrics.Descent);
+
+            //var fontHeight = Paint.FontMetrics.Descent - Paint.FontMetrics.Ascent;
+
             ctx.Commands.Add(new DrawActionCommand(x =>
             {
-                x.Canvas.DrawText(Text, ClientRect.Left, ClientRect.Top + Paint.TextSize, Paint);
+                x.Canvas.DrawText(Text, ClientRect.Left + DrawPosition.X, ClientRect.Top + DrawPosition.Y, Paint);
             }));
         }
 
