@@ -165,8 +165,13 @@ namespace AxGui
             //const int Height = 1;
 
             /*
-             *  if Position == Absolute:
+             * Position affects POSITION (X, Y) and flow of subsequent elements.
+             * It does not affect the Dimensions of the box.
+             *
+             *  if Position == Static:
              *  MUST ignore Anchors!
+             *
+             * Display affects Box-Calculation
              *
              *  If Display == Inline:
              *  MUST ignore Size, take the inner content as it is.
@@ -176,6 +181,8 @@ namespace AxGui
             var decorationSize = new Size(
                 relMargin.LeftRight + relBorder.LeftRight + relPadding.LeftRight,
                 relMargin.TopBottom + relBorder.TopBottom + relPadding.TopBottom);
+
+            var flow = ResolvedStyle.Position is StylePosition.Static or StylePosition.Relative;
 
             if (ResolvedStyle.Position == StylePosition.Absolute)
             {

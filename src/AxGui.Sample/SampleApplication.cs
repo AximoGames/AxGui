@@ -146,7 +146,7 @@ namespace AxGui.Sample.OpenGL
                 var f2 = new Element();
                 f2.Data = "b2";
                 f2.Style.Display = StyleDisplay.Block;
-                f2.Style.Position = StylePosition.Relative;
+                f2.Style.Position = StylePosition.Static;
                 f2.Style.Width = 20;
                 f2.Style.Height = 20;
                 el.AddChild(f2);

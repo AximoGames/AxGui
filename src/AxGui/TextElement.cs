@@ -54,7 +54,7 @@ namespace AxGui
                 f.ResolvedStyle.Width = measuredWidth;
                 f.ResolvedStyle.Height = TextSize;
                 f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
-                f.ResolvedStyle.Position = StylePosition.Relative;
+                f.ResolvedStyle.Position = StylePosition.Static;
 
                 AddChild(f);
 

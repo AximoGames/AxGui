@@ -36,6 +36,7 @@ namespace AxGui
         Initial,
         Inherit,
 
+        Static,
         Relative,
         Absolute,
         Fixed,

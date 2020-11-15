@@ -51,7 +51,7 @@ namespace AxGui.Test
 
             var child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 50;
@@ -59,7 +59,7 @@ namespace AxGui.Test
 
             child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 50;
@@ -76,7 +76,7 @@ namespace AxGui.Test
 
             var child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -84,7 +84,7 @@ namespace AxGui.Test
 
             child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -92,7 +92,7 @@ namespace AxGui.Test
 
             child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -111,7 +111,7 @@ namespace AxGui.Test
 
             var child1 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -119,7 +119,7 @@ namespace AxGui.Test
 
             var child2 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -127,7 +127,7 @@ namespace AxGui.Test
 
             var child3 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -147,7 +147,7 @@ namespace AxGui.Test
 
             var child1 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -155,7 +155,7 @@ namespace AxGui.Test
 
             var child2 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
@@ -163,7 +163,7 @@ namespace AxGui.Test
 
             var child3 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Relative;
+            child.Style.Position = StylePosition.Static;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.BorderWidth = 5;
             child.Style.Width = 200;
