@@ -1,20 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
-		<CodeAnalysisRuleSet>..\..\props\default.ruleset</CodeAnalysisRuleSet>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-		<WarningsAsErrors>CS8618</WarningsAsErrors>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Optimize>false</Optimize>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <CodeAnalysisRuleSet>..\..\props\default.ruleset</CodeAnalysisRuleSet>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors>CS8618</WarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
 
-	<Import Project="..\..\props\SharedProjectSettings.props" />
+  <Import Project="..\..\props\SharedProjectSettings.props" />
 
-	<ItemGroup>
-		<PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
-		<PackageReference Include="Svg.Skia" Version="0.4.1" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.80.2" />
+    <PackageReference Include="Svg.Skia" Version="0.4.1" />
+
+    <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
+  </ItemGroup>
 </Project>
