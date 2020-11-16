@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
@@ -68,11 +70,15 @@ namespace AxGui.Sample.OpenGL
         protected override void OnLoad()
         {
             CurrentSize = ClientSize;
+            //VSync = VSyncMode.On;
 
             InitSkia();
+            FPSCounter = new Stopwatch();
+            FPSCounter.Start();
         }
 
         private SKPaint Paint;
+        private Stopwatch FPSCounter;
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
@@ -174,9 +180,38 @@ namespace AxGui.Sample.OpenGL
                 canvas.Flush();
             }
 
+            //System.Threading.Thread.Sleep(500);
+
             SwapBuffers();
+
+            var ticks = FPSCounter.ElapsedTicks;
+            var ms = ticks / 10000.0;
+            var newFPS = 1000f / (float)ms;
+            FPSCounter.Restart();
+            CurrentFPS = Smooth(CurrentFPS, newFPS, 0.01f);
+            if ((DateTime.UtcNow - LastUpdatedFPS).TotalSeconds > 1)
+            {
+                LastUpdatedFPS = DateTime.UtcNow;
+                Title = $"FPS: {CurrentFPS.ToString("F0", CultureInfo.CurrentCulture)}";
+            }
         }
 
+        private float CurrentFPS;
+        private DateTime LastUpdatedFPS;
+
+        /// <summary>
+        /// Smoothes a value
+        /// </summary>
+        /// <param name="oldValue">old value</param>
+        /// <param name="newValue">new value</param>
+        /// <param name="smoothing">Number between 0-1</param>
+        /// <returns>the smoothed value</returns>
+        private static float Smooth(float oldValue, float newValue, float smoothing)
+        {
+            if (float.IsInfinity(oldValue))
+                return newValue;
+            return (newValue * smoothing) + (oldValue * (1.0f - smoothing));
+        }
     }
 
 }
