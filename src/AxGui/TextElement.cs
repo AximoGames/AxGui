@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using Microsoft.Extensions.FileProviders;
 using SkiaSharp;
 
 namespace AxGui
@@ -18,6 +21,7 @@ namespace AxGui
 
         public TextElement()
         {
+            Paint = new SKPaint(new SKFont(FontManager.DefaultTypeFace));
             PassThrough = true;
         }
 
