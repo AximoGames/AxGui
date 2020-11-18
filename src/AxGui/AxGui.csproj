@@ -3,12 +3,10 @@
     <TargetFramework>net5.0</TargetFramework>
     <CodeAnalysisRuleSet>..\..\props\default.ruleset</CodeAnalysisRuleSet>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors>CS8618</WarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>false</Optimize>
+    <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
 
   <Import Project="..\..\props\SharedProjectSettings.props" />
@@ -18,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExCSS" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.0" />
     <PackageReference Include="SkiaSharp" Version="2.80.2" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.80.2" />

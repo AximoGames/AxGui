@@ -5,6 +5,7 @@
     <OutputType>Exe</OutputType>
     <StartupObject />
     <CodeAnalysisRuleSet>..\..\props\default.ruleset</CodeAnalysisRuleSet>
+    <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
 
   <Import Project="..\..\props\SharedProjectSettings.props" />

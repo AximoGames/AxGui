@@ -66,20 +66,54 @@ namespace AxGui
 
         public void CopyTo(ElementStyle target)
         {
+            target._BoundingChanged = _BoundingChanged;
+
             target._Anchors = _Anchors;
+
             target._BorderColor = _BorderColor;
             target._BorderRadius = _BorderRadius;
             target._BorderStyle = _BorderStyle;
             target._BorderWidth = _BorderWidth;
-            target._BoundingChanged = _BoundingChanged;
+
             target._Margin = _Margin;
             target._MaxSize = _MaxSize;
             target._MinSize = _MinSize;
             target._Padding = _Padding;
+
             target._Size = _Size;
             target.Display = Display;
             target.Position = Position;
             target.Visibility = Visibility;
+        }
+
+        public static ElementStyle Combine(ElementStyle parent, ElementStyle child)
+        {
+            var target = new ElementStyle();
+            Combine(target, parent, child);
+            return target;
+        }
+
+        public static void Combine(ElementStyle target, ElementStyle parent, ElementStyle child)
+        {
+            target._BoundingChanged = true;
+
+            target._Anchors = BoxModelRect.Combine(parent._Anchors, child._Anchors);
+
+            target._BorderColor = BoxModelRect.Combine(parent._BorderColor, child._BorderColor);
+            target._BorderRadius = BoxModelRect.Combine(parent._BorderRadius, child._BorderRadius);
+            target._BorderWidth = BoxModelRect.Combine(parent._BorderWidth, child._BorderWidth);
+            target._BorderStyle = BoxModelRect.Combine(parent._BorderStyle, child._BorderStyle);
+
+            target._Margin = BoxModelRect.Combine(parent._Margin, child._Margin);
+            target._MaxSize = StyleSize.Combine(parent._MaxSize, child._MaxSize);
+            target._MinSize = StyleSize.Combine(parent._MinSize, child._MinSize);
+            target._Padding = BoxModelRect.Combine(parent._Padding, child._Padding);
+            target._Size = StyleSize.Combine(parent._Size, child._Size);
+
+            // TODO: Use StyleValue! For example StyleValue.As<StylePosition>().
+            target.Display = child.Display;
+            target.Position = child.Position;
+            target.Visibility = child.Visibility;
         }
 
         internal bool _BoundingChanged;
@@ -90,6 +124,7 @@ namespace AxGui
 
         private Action BoundingChangedDelegate;
 
+        // TODO: Use StyleValue! For example StyleValue.As<StylePosition>().
         public StylePosition Position;
         public StyleDisplay Display;
         public StyleVisibility Visibility;

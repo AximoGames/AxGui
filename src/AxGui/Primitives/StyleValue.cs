@@ -112,6 +112,14 @@ namespace AxGui
             return value;
         }
 
+        public static StyleValue Combine(StyleValue parent, StyleValue child)
+        {
+            if (child.Unit is StyleUnit.Unset or StyleUnit.Inherit)
+                return parent;
+
+            return child;
+        }
+
         public override string ToString()
         {
             return Unit switch

@@ -40,7 +40,9 @@ namespace AxGui.Test
             child.Style.BorderWidth = 5;
             child.Style.Width = 50;
             child.Style.Height = 30;
+
             Layout(el);
+
             Assert.Equal(new Box(15, 15, 65, 45), child.ClientRect);
         }
 
@@ -49,23 +51,25 @@ namespace AxGui.Test
         {
             var el = CreateRootElement();
 
+            var style = new ElementStyle
+            {
+                Position = StylePosition.Static,
+                Display = StyleDisplay.InlineBlock,
+                BorderWidth = 5,
+                Width = 50,
+                Height = 30,
+            };
+
             var child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 50;
-            child.Style.Height = 30;
+            child.SetStyle(style);
 
             child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 50;
-            child.Style.Height = 30;
+            child.SetStyle(style);
 
             Layout(el);
+
             Assert.Equal(new Box(75, 15, 125, 45), child.ClientRect);
         }
 
@@ -74,31 +78,31 @@ namespace AxGui.Test
         {
             var el = CreateRootElement();
 
+            var style = new ElementStyle
+            {
+                Position = StylePosition.Static,
+                Display = StyleDisplay.InlineBlock,
+                BorderWidth = 5,
+                Width = 200,
+            };
+
             var child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 30;
 
             child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 30;
 
             child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 30;
 
             Layout(el);
+
             Assert.Equal(new Box(15, 55, 215, 85), child.ClientRect);
         }
 
@@ -109,31 +113,31 @@ namespace AxGui.Test
 
             Element child;
 
+            var style = new ElementStyle
+            {
+                Position = StylePosition.Static,
+                Display = StyleDisplay.InlineBlock,
+                BorderWidth = 5,
+                Width = 200,
+            };
+
             var child1 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 30;
 
             var child2 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 50;
 
             var child3 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 30;
 
             Layout(el);
+
             Assert.Equal(new Box(15, 35, 215, 65), child1.ClientRect);
             Assert.Equal(new Box(15, 75, 215, 105), child3.ClientRect);
         }
@@ -145,31 +149,31 @@ namespace AxGui.Test
 
             Element child;
 
+            var style = new ElementStyle
+            {
+                Position = StylePosition.Static,
+                Display = StyleDisplay.InlineBlock,
+                BorderWidth = 5,
+                Width = 200,
+            };
+
             var child1 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 50;
 
             var child2 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 30;
 
             var child3 = child = new Element();
             el.AddChild(child);
-            child.Style.Position = StylePosition.Static;
-            child.Style.Display = StyleDisplay.InlineBlock;
-            child.Style.BorderWidth = 5;
-            child.Style.Width = 200;
+            child.SetStyle(style);
             child.Style.Height = 30;
 
             Layout(el);
+
             Assert.Equal(new Box(225, 35, 425, 65), child2.ClientRect);
             Assert.Equal(new Box(15, 75, 215, 105), child3.ClientRect);
         }

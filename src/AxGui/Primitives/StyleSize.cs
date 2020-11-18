@@ -75,6 +75,13 @@ namespace AxGui
 #pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
         }
 
+        public static StyleSize Combine(StyleSize parent, StyleSize child)
+        {
+            return new StyleSize(
+                StyleValue.Combine(parent.Width, child.Width),
+                StyleValue.Combine(parent.Height, child.Height));
+        }
+
     }
 
 }

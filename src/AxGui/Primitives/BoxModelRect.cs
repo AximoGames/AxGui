@@ -12,6 +12,16 @@ namespace AxGui
     public struct BoxModelRect : IEquatable<BoxModelRect>
     {
 
+        public BoxModelRect(StyleValue left, StyleValue top, StyleValue right, StyleValue bottom)
+        {
+            _Left = left;
+            _Top = top;
+            _Right = right;
+            _Bottom = bottom;
+
+            ParentChanged = null;
+        }
+
         internal Action? ParentChanged;
 
         private void Changed()
@@ -199,6 +209,16 @@ namespace AxGui
                     _ => throw new NotSupportedException(),
                 };
             }
+        }
+
+        public static BoxModelRect Combine(BoxModelRect parent, BoxModelRect child)
+        {
+            BoxModelRect target = default;
+            target.Left = StyleValue.Combine(parent.Left, child.Left);
+            target.Top = StyleValue.Combine(parent.Top, child.Top);
+            target.Right = StyleValue.Combine(parent.Right, child.Right);
+            target.Bottom = StyleValue.Combine(parent.Bottom, child.Bottom);
+            return target;
         }
 
     }
