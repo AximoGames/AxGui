@@ -83,10 +83,11 @@ namespace AxGui.Sample.OpenGL
         private Stopwatch FPSCounter;
         private CommandRecorder Recorder;
         private CommandExecutor Executor;
+        private Element el;
 
         private void BuildUI()
         {
-            var el = new Element();
+            el = new Element();
             el.Data = "root";
 
             el.Style.Display = StyleDisplay.Block;
@@ -159,8 +160,6 @@ namespace AxGui.Sample.OpenGL
             layouter.Process(el);
 
             Recorder = new CommandRecorder();
-            Recorder.Record(el);
-
             Executor = new CommandExecutor();
         }
 
@@ -176,7 +175,8 @@ namespace AxGui.Sample.OpenGL
                 grContext.ResetContext();
 
                 var canvas = surface.Canvas;
-                canvas.Clear(new SKColor(128, 0, 128));
+
+                Recorder.Record(el);
                 Executor.Execute(Recorder, canvas);
 
                 canvas.Flush();

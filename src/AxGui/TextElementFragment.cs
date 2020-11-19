@@ -15,18 +15,18 @@ namespace AxGui
             Paint = paint;
             Text = value;
             Font = font;
+            TextBlob = SKTextBlob.Create(Text, Font);
         }
 
         internal readonly SKPaint Paint;
         internal readonly string Text;
-        private SKTextBlob? TextBlob;
+        private SKTextBlob TextBlob;
         public SKPoint DrawPosition;
         private readonly SKFont Font;
 
         public override void Render(RenderContext ctx)
         {
             RenderBorderAndBackground(ctx);
-            TextBlob = SKTextBlob.Create(Text, Font);
             var clientRectInner = ClientRect.Substract(1);
 
             ctx.Commands.Add(new DrawActionCommand(x =>

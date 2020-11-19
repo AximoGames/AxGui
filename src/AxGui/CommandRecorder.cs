@@ -14,6 +14,7 @@ namespace AxGui
 
         public void Record(Element root)
         {
+            RenderContext.Reset();
             root.CallRender(RenderContext);
         }
 
