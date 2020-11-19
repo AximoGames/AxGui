@@ -71,7 +71,7 @@ namespace AxGui
             }
             else if (value.EndsWith("px", StringComparison.InvariantCulture))
             {
-                v.Number = float.Parse(value.AsSpan(0, value.Length - 1), provider: CultureInfo.InvariantCulture.NumberFormat);
+                v.Number = float.Parse(value.AsSpan(0, value.Length - 2), provider: CultureInfo.InvariantCulture.NumberFormat);
                 v.Unit = StyleUnit.Number;
             }
             else if (value == "auto")

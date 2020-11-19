@@ -1,0 +1,15 @@
+﻿.root {
+    width: 100px;
+    height: 30px;
+    margin: 5px;
+    padding: 5px;
+    border-width: 1px;
+}
+
+.button {
+    width: 100px;
+    height: 30px;
+    margin: 5px;
+    padding: 5px;
+    border-width: 1px;
+}

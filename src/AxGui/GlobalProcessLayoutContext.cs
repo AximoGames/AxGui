@@ -10,6 +10,7 @@ namespace AxGui
     public class GlobalProcessLayoutContext
     {
         public Box GlobalViewPort;
+        public StyleCollection? Styles;
     }
 
 }

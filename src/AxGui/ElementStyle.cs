@@ -69,18 +69,18 @@ namespace AxGui
             target._BoundingChanged = _BoundingChanged;
 
             target._Anchors = _Anchors;
-
+            target._Margin = _Margin;
             target._BorderColor = _BorderColor;
-            target._BorderRadius = _BorderRadius;
             target._BorderStyle = _BorderStyle;
             target._BorderWidth = _BorderWidth;
-
-            target._Margin = _Margin;
-            target._MaxSize = _MaxSize;
-            target._MinSize = _MinSize;
             target._Padding = _Padding;
 
+            target._MaxSize = _MaxSize;
+            target._MinSize = _MinSize;
             target._Size = _Size;
+
+            target._BorderRadius = _BorderRadius;
+
             target.Display = Display;
             target.Position = Position;
             target.Visibility = Visibility;
@@ -98,22 +98,45 @@ namespace AxGui
             target._BoundingChanged = true;
 
             target._Anchors = BoxModelRect.Combine(parent._Anchors, child._Anchors);
-
+            target._Margin = BoxModelRect.Combine(parent._Margin, child._Margin);
             target._BorderColor = BoxModelRect.Combine(parent._BorderColor, child._BorderColor);
-            target._BorderRadius = BoxModelRect.Combine(parent._BorderRadius, child._BorderRadius);
             target._BorderWidth = BoxModelRect.Combine(parent._BorderWidth, child._BorderWidth);
             target._BorderStyle = BoxModelRect.Combine(parent._BorderStyle, child._BorderStyle);
+            target._Padding = BoxModelRect.Combine(parent._Padding, child._Padding);
 
-            target._Margin = BoxModelRect.Combine(parent._Margin, child._Margin);
             target._MaxSize = StyleSize.Combine(parent._MaxSize, child._MaxSize);
             target._MinSize = StyleSize.Combine(parent._MinSize, child._MinSize);
-            target._Padding = BoxModelRect.Combine(parent._Padding, child._Padding);
             target._Size = StyleSize.Combine(parent._Size, child._Size);
+
+            target._BorderRadius = StyleValue.Combine(parent._BorderRadius, child._BorderRadius);
 
             // TODO: Use StyleValue! For example StyleValue.As<StylePosition>().
             target.Display = child.Display;
             target.Position = child.Position;
             target.Visibility = child.Visibility;
+        }
+
+        internal static void SetRule(ElementStyle target, ExCSS.StyleDeclaration parent)
+        {
+            target._BoundingChanged = true;
+
+            target._Anchors = new BoxModelRect(parent.Left, parent.Top, parent.Right, parent.Bottom);
+            target._Margin = BoxModelRect.Combine(parent.Margin, new BoxModelRect(parent.MarginLeft, parent.MarginTop, parent.MarginRight, parent.MarginBottom));
+            target._BorderColor = BoxModelRect.Combine(parent.BorderColor, new BoxModelRect(parent.BorderLeftColor, parent.BorderTopColor, parent.BorderRightColor, parent.BorderBottomColor));
+            target._BorderWidth = BoxModelRect.Combine(parent.BorderWidth, new BoxModelRect(parent.BorderLeftWidth, parent.BorderTopWidth, parent.BorderRightWidth, parent.BorderBottomWidth));
+            target._BorderStyle = BoxModelRect.Combine(parent.BorderStyle, new BoxModelRect(parent.BorderLeftStyle, parent.BorderTopStyle, parent.BorderRightStyle, parent.BorderBottomStyle));
+            target._Padding = BoxModelRect.Combine(parent.Padding, new BoxModelRect(parent.PaddingLeft, parent.PaddingTop, parent.PaddingRight, parent.PaddingBottom));
+
+            target._MaxSize = new StyleSize(parent.MaxWidth, parent.MaxHeight);
+            target._MinSize = new StyleSize(parent.MinWidth, parent.MinHeight);
+            target._Size = new StyleSize(parent.Width, parent.Height);
+
+            target._BorderRadius = parent.BorderRadius;
+
+            // TODO: Use StyleValue! For example StyleValue.As<StylePosition>().
+            //target.Display = child.Display;
+            //target.Position = child.Position;
+            //target.Visibility = child.Visibility;
         }
 
         internal bool _BoundingChanged;
@@ -212,7 +235,7 @@ namespace AxGui
             {
                 if (_Anchors == value)
                     return;
-                _Anchors = value.Clone();
+                _Anchors = value;
                 _Anchors.ParentChanged = BoundingChangedDelegate;
                 BoundingChanged();
             }
@@ -226,7 +249,7 @@ namespace AxGui
             {
                 if (_Margin == value)
                     return;
-                _Margin = value.Clone();
+                _Margin = value;
                 _Margin.ParentChanged = BoundingChangedDelegate;
                 BoundingChanged();
             }
@@ -240,7 +263,7 @@ namespace AxGui
             {
                 if (_Padding == value)
                     return;
-                _Padding = value.Clone();
+                _Padding = value;
                 _Padding.ParentChanged = BoundingChangedDelegate;
                 BoundingChanged();
             }
@@ -268,7 +291,7 @@ namespace AxGui
             {
                 if (_BorderColor == value)
                     return;
-                _BorderColor = value.Clone();
+                _BorderColor = value;
             }
         }
 
@@ -280,19 +303,19 @@ namespace AxGui
             {
                 if (_BorderColor == value)
                     return;
-                _BorderColor = value.Clone();
+                _BorderColor = value;
             }
         }
 
-        internal BoxModelRect _BorderRadius;
-        public BoxModelRect BorderRadius
+        internal StyleValue _BorderRadius;
+        public StyleValue BorderRadius
         {
             get => _BorderRadius;
             set
             {
                 if (_BorderRadius == value)
                     return;
-                _BorderRadius = value.Clone();
+                _BorderRadius = value;
             }
         }
 

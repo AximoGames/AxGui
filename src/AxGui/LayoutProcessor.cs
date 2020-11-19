@@ -11,9 +11,11 @@ namespace AxGui
     {
         private readonly GlobalProcessLayoutContext ctx = new GlobalProcessLayoutContext();
         public Box ViewPort;
+        public StyleCollection Styles = new StyleCollection();
         public void Process(Element root)
         {
             ctx.GlobalViewPort = ViewPort;
+            ctx.Styles = Styles;
             root.ProcessLayoutContext.LocalViewPort = ViewPort;
             root.CallComputeStyle(ctx);
             root.CallComputeChildBoundsOffers(ctx);

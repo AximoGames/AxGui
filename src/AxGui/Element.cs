@@ -24,6 +24,8 @@ namespace AxGui
         /// </summary>
         public object? Data;
 
+        public string? CssClass;
+
         /// <summary>
         /// Logical childs, for example items in a scroll view.
         /// </summary>
@@ -66,6 +68,13 @@ namespace AxGui
         {
             var style = Style;
             var resolved = ResolvedStyle;
+
+            if (!string.IsNullOrEmpty(CssClass))
+            {
+                var classStyle = ctx.GlobalContext!.Styles!.GetRuleByClass(CssClass);
+                if (classStyle != null)
+                    style = ElementStyle.Combine(classStyle.Style, style);
+            }
 
             if (style._BoundingChanged)
             {

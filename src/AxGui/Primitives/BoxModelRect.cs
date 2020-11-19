@@ -22,6 +22,26 @@ namespace AxGui
             ParentChanged = null;
         }
 
+        public BoxModelRect(StyleValue leftRight, StyleValue topBottom)
+        {
+            _Left = leftRight;
+            _Top = topBottom;
+            _Right = leftRight;
+            _Bottom = topBottom;
+
+            ParentChanged = null;
+        }
+
+        public BoxModelRect(StyleValue value)
+        {
+            _Left = value;
+            _Top = value;
+            _Right = value;
+            _Bottom = value;
+
+            ParentChanged = null;
+        }
+
         internal Action? ParentChanged;
 
         private void Changed()
@@ -154,13 +174,17 @@ namespace AxGui
 
         public static implicit operator BoxModelRect(string value)
         {
-            return new BoxModelRect
-            {
-                Left = value,
-                Top = value,
-                Right = value,
-                Bottom = value,
-            };
+            var parts = value.Split(" ");
+            if (parts.Length == 1)
+                return new BoxModelRect(parts[0]);
+
+            if (parts.Length == 2)
+                return new BoxModelRect(parts[0], parts[1]);
+
+            if (parts.Length == 4)
+                return new BoxModelRect(parts[0], parts[1], parts[2], parts[3]);
+
+            return new BoxModelRect();
         }
 
         //public StyleValue GetMin(Axis axis)
