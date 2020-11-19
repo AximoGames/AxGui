@@ -15,20 +15,35 @@ namespace AxGui
     public class TextElement : Element
     {
         public string? Content;
-        private readonly SKPaint Paint = new SKPaint();
-        public float TextSize { get => Paint.TextSize; set => Paint.TextSize = value; }
-        public float TextHeight => Paint.FontMetrics.Descent - Paint.FontMetrics.Ascent;
+        private SKPaint Paint;
+        private SKFont Font;
+        private SKFontMetrics FontMetrics;
+
+        public float TextSize
+        {
+            get => Font.Size;
+            set
+            {
+                Font.Size = value;
+                Paint.TextSize = value;
+                Font.GetFontMetrics(out FontMetrics);
+            }
+        }
+
+        public float TextHeight => FontMetrics.Descent - FontMetrics.Ascent;
 
         public TextElement()
         {
-            Paint = new SKPaint(new SKFont(FontManager.DefaultTypeFace));
+            Font = new SKFont(FontManager.DefaultTypeFace);
+            Paint = new SKPaint(Font);
+            TextSize = Font.Size;
+            Font.GetFontMetrics(out FontMetrics);
             PassThrough = true;
         }
 
         protected internal override void ComputeBoundsSelf(ProcessLayoutContext ctx)
         {
             base.ComputeBoundsSelf(ctx);
-
             Children.Clear();
 
             var span = Content.AsSpan();
@@ -68,7 +83,7 @@ namespace AxGui
                 var texHeight = TextHeight;
 
                 var finalText = new string(span.Slice(0, num));
-                var f = new TextElementFragment(finalText, Paint);
+                var f = new TextElementFragment(finalText, Paint, Font!);
                 ResolvedStyle.CopyTo(f.ResolvedStyle);
                 measuredWidth = Paint.MeasureText(finalText);
                 //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);

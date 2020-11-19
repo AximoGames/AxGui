@@ -10,28 +10,28 @@ namespace AxGui
     internal class TextElementFragment : Element
     {
 
-        public TextElementFragment(string value, SKPaint paint)
+        public TextElementFragment(string value, SKPaint paint, SKFont font)
         {
             Paint = paint;
             Text = value;
+            Font = font;
         }
 
         internal readonly SKPaint Paint;
         internal readonly string Text;
+        private SKTextBlob? TextBlob;
         public SKPoint DrawPosition;
+        private readonly SKFont Font;
 
         public override void Render(RenderContext ctx)
         {
             RenderBorderAndBackground(ctx);
-
+            TextBlob = SKTextBlob.Create(Text, Font);
             var clientRectInner = ClientRect.Substract(1);
-            //var textY = (((-Paint.FontMetrics.Ascent + Paint.FontMetrics.Descent) / 2) - Paint.FontMetrics.Descent);
-
-            //var fontHeight = Paint.FontMetrics.Descent - Paint.FontMetrics.Ascent;
 
             ctx.Commands.Add(new DrawActionCommand(x =>
             {
-                x.Canvas.DrawText(Text, ClientRect.Left + DrawPosition.X, ClientRect.Top + DrawPosition.Y, Paint);
+                x.Canvas.DrawText(TextBlob, ClientRect.Left + DrawPosition.X, ClientRect.Top + DrawPosition.Y, Paint);
             }));
         }
 

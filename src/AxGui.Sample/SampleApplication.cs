@@ -75,10 +75,94 @@ namespace AxGui.Sample.OpenGL
             InitSkia();
             FPSCounter = new Stopwatch();
             FPSCounter.Start();
+
+            BuildUI();
         }
 
         private SKPaint Paint;
         private Stopwatch FPSCounter;
+        private CommandRecorder Recorder;
+        private CommandExecutor Executor;
+
+        private void BuildUI()
+        {
+            var el = new Element();
+            el.Data = "root";
+
+            el.Style.Display = StyleDisplay.Block;
+            el.Style.Position = StylePosition.Absolute;
+            el.Style.Height = 320;
+            el.Style.Width = 220;
+            el.Style.BorderWidth = 5;
+            el.Style.Padding = 5;
+
+            Element child;
+            Element box;
+
+            var box1 = box = new Element();
+            box.Data = "b1";
+            box.Style.Display = StyleDisplay.Block;
+            box.Style.Position = StylePosition.Static;
+            box.Style.Width = 20;
+            box.Style.Height = 20;
+            el.AddChild(box);
+
+            var child1 = child = new TextElement();
+            child.Data = "child";
+            child.Style.Width = 5;
+            child.Style.Height = 30;
+            child.Style.Display = StyleDisplay.Inline;
+            child.Style.Position = StylePosition.Static;
+            (child as TextElement).Content = "Testduck Testduck2 Testduck3";
+            (child as TextElement).TextSize = 20;
+            el.AddChild(child);
+
+            var box2 = box = new Element();
+            box.Data = "b1";
+            box.Style.Display = StyleDisplay.InlineBlock;
+            box.Style.Position = StylePosition.Static;
+            box.Style.Width = 20;
+            box.Style.Height = 20;
+            el.AddChild(box);
+
+            var child2 = child = new TextElement();
+            child.Data = "child2";
+            child.Style.Width = 5;
+            child.Style.Height = 30;
+            child.Style.Display = StyleDisplay.Inline;
+            child.Style.Position = StylePosition.Static;
+            (child as TextElement).Content = "Testduck4 Testduck5 Testduck6";
+            (child as TextElement).TextSize = 20;
+            el.AddChild(child);
+
+            var box3 = box = new Element();
+            box.Data = "b3";
+            box.Style.Display = StyleDisplay.Block;
+            box.Style.Position = StylePosition.Static;
+            box.Style.Width = 20;
+            box.Style.Height = 20;
+            el.AddChild(box);
+
+            var child3 = child = new TextElement();
+            child.Data = "child3";
+            child.Style.Height = 30;
+            child.Style.Width = 5;
+            child.Style.Display = StyleDisplay.Inline;
+            child.Style.Position = StylePosition.Static;
+            (child as TextElement).Content = "Testduck4 Testduck5 Test|ö|└|²³|ₚ|☑|😂";
+            (child as TextElement).TextSize = 20;
+            el.AddChild(child);
+
+            var layouter = new LayoutProcessor();
+            layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);
+            //layouter.ViewPort = new Box(0, 0, ClientSize.X, 20);
+            layouter.Process(el);
+
+            Recorder = new CommandRecorder();
+            Recorder.Record(el);
+
+            Executor = new CommandExecutor();
+        }
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
@@ -93,89 +177,7 @@ namespace AxGui.Sample.OpenGL
 
                 var canvas = surface.Canvas;
                 canvas.Clear(new SKColor(128, 0, 128));
-                //canvas.Translate(20, 20);
-                //Paint.Color = new SKColor(0, 0, 200);
-                //Paint.TextSize = 64;
-                //canvas.DrawText("Hello", 0, 64, Paint);
-                //canvas.DrawRect(0, 0, 100, 100, Paint);
-
-                var el = new Element();
-                el.Data = "root";
-
-                el.Style.Display = StyleDisplay.Block;
-                el.Style.Position = StylePosition.Absolute;
-                el.Style.Height = 320;
-                el.Style.Width = 220;
-                el.Style.BorderWidth = 5;
-                el.Style.Padding = 5;
-
-                Element child;
-                Element box;
-
-                var box1 = box = new Element();
-                box.Data = "b1";
-                box.Style.Display = StyleDisplay.Block;
-                box.Style.Position = StylePosition.Static;
-                box.Style.Width = 20;
-                box.Style.Height = 20;
-                el.AddChild(box);
-
-                var child1 = child = new TextElement();
-                child.Data = "child";
-                child.Style.Width = 5;
-                child.Style.Height = 30;
-                child.Style.Display = StyleDisplay.Inline;
-                child.Style.Position = StylePosition.Static;
-                (child as TextElement).Content = "Testduck Testduck2 Testduck3";
-                (child as TextElement).TextSize = 20;
-                el.AddChild(child);
-
-                var box2 = box = new Element();
-                box.Data = "b1";
-                box.Style.Display = StyleDisplay.InlineBlock;
-                box.Style.Position = StylePosition.Static;
-                box.Style.Width = 20;
-                box.Style.Height = 20;
-                el.AddChild(box);
-
-                var child2 = child = new TextElement();
-                child.Data = "child2";
-                child.Style.Width = 5;
-                child.Style.Height = 30;
-                child.Style.Display = StyleDisplay.Inline;
-                child.Style.Position = StylePosition.Static;
-                (child as TextElement).Content = "Testduck4 Testduck5 Testduck6";
-                (child as TextElement).TextSize = 20;
-                el.AddChild(child);
-
-                var box3 = box = new Element();
-                box.Data = "b3";
-                box.Style.Display = StyleDisplay.Block;
-                box.Style.Position = StylePosition.Static;
-                box.Style.Width = 20;
-                box.Style.Height = 20;
-                el.AddChild(box);
-
-                var child3 = child = new TextElement();
-                child.Data = "child3";
-                child.Style.Height = 30;
-                child.Style.Width = 5;
-                child.Style.Display = StyleDisplay.Inline;
-                child.Style.Position = StylePosition.Static;
-                (child as TextElement).Content = "Testduck4 Testduck5 Test|ö|└|²³|ₚ|☑|😂";
-                (child as TextElement).TextSize = 20;
-                el.AddChild(child);
-
-                var layouter = new LayoutProcessor();
-                layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);
-                //layouter.ViewPort = new Box(0, 0, ClientSize.X, 20);
-                layouter.Process(el);
-
-                var recorder = new CommandRecorder();
-                recorder.Record(el);
-
-                var executor = new CommandExecutor();
-                executor.Execute(recorder, canvas);
+                Executor.Execute(Recorder, canvas);
 
                 canvas.Flush();
             }
