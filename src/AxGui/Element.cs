@@ -38,10 +38,18 @@ namespace AxGui
         internal RenderContext RenderContext = new RenderContext();
         internal ProcessLayoutContext ProcessLayoutContext = new ProcessLayoutContext();
 
+        public readonly string? TagName;
+
         public Element()
         {
             Children = new List<Element>();
             ChildrenInternal = Children;
+            TagName = null;
+        }
+
+        internal Element(string tagName) : this()
+        {
+            TagName = tagName;
         }
 
         public void AddChild(Element el)
@@ -469,6 +477,10 @@ namespace AxGui
             var label = Data?.ToString();
             if (label != null)
                 label = "[" + label + "] ";
+
+            if (!string.IsNullOrEmpty(TagName))
+                label = "<" + TagName + "> " + label;
+
             return label + GetType().Name;
         }
 

@@ -15,8 +15,14 @@ namespace AxGui
 
     public class Document
     {
-        public Element Body = new Element();
+        public Element Body = new Element("body");
         public StyleCollection Styles = new StyleCollection();
+
+        public static Document FromString(string content)
+        {
+            using var fs = new StringReader(content);
+            return FromStream(fs);
+        }
 
         public static Document FromFile(string path)
         {
@@ -59,8 +65,21 @@ namespace AxGui
         public static Document FromXml(XDocument doc)
         {
             var d = new Document();
-            var root = new Element();
+            var root = new Element("html");
             FromXml(d, doc.Elements().First(), root);
+
+            if (root.Children[0].TagName == "body")
+            {
+                d.Body = root.Children[0];
+            }
+            else
+            {
+                foreach (var child in root.Children)
+                {
+                    d.Body.AddChild(child);
+                }
+            }
+
             return d;
         }
 
@@ -68,7 +87,7 @@ namespace AxGui
         {
             foreach (var xmlEl in xmlParent.Elements())
             {
-                var el = new Element();
+                var el = new Element(xmlEl.Name.LocalName);
                 parent.AddChild(el);
 
                 FromXml(d, xmlEl, el);
