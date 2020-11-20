@@ -29,12 +29,12 @@ namespace AxGui
             return col;
         }
 
-        public StyleRule GetRuleByClass(string cssClass)
+        public StyleRule? GetRuleByClass(string cssClass)
         {
             return GetRuleBySelector("." + cssClass);
         }
 
-        public StyleRule GetRuleBySelector(string selector) => Rules.LastOrDefault(x => x.Selector == selector);
+        public StyleRule? GetRuleBySelector(string selector) => Rules.LastOrDefault(x => x.Selector == selector);
 
     }
 

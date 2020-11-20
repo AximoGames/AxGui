@@ -88,6 +88,8 @@ namespace AxGui.Sample.OpenGL
 
         private void BuildUI()
         {
+            Document.FromFile("Test.html");
+
             var styles = StyleCollection.FromFile("Theme.css");
 
             el = new Element();
