@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using SkiaSharp;
@@ -68,9 +69,10 @@ namespace AxGui
             var root = new Element("html");
             FromXml(d, doc.Elements().First(), root);
 
-            if (root.Children[0].TagName == "body")
+            var b = root.Children.FirstOrDefault(c => c.TagName == "body");
+            if (b != null)
             {
-                d.Body = root.Children[0];
+                d.Body = b;
             }
             else
             {
@@ -85,12 +87,43 @@ namespace AxGui
 
         private static void FromXml(Document d, XElement xmlParent, Element parent)
         {
-            foreach (var xmlEl in xmlParent.Elements())
+            foreach (var node in xmlParent.Nodes())
             {
-                var el = new Element(xmlEl.Name.LocalName);
-                parent.AddChild(el);
+                if (node is XElement xmlEl)
+                {
+                    var tagName = xmlEl.Name.LocalName;
+                    if (tagName.ToLower() == "style")
+                    {
+                        var styleContent = (xmlEl.FirstNode as XCData)?.Value;
+                        var collection = StyleCollection.FromString(styleContent);
+                        d.Styles.Rules.AddRange(collection.Rules);
+                    }
+                    else
+                    {
+                        var el = Element.Create(tagName);
 
-                FromXml(d, xmlEl, el);
+                        foreach (var attr in xmlEl.Attributes())
+                            el.SetAttribute(attr.Name.LocalName, attr.Value);
+
+                        parent.AddChild(el);
+                        FromXml(d, xmlEl, el);
+                    }
+                }
+                else if (node is XText t)
+                {
+                    if (parent is TextElement pt)
+                    {
+                        pt.Content = t.Value;
+                    }
+                    else
+                    {
+                        var el = new TextElement()
+                        {
+                            Content = t.Value,
+                        };
+                        parent.AddChild(el);
+                    }
+                }
             }
         }
 

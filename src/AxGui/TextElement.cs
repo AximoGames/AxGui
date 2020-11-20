@@ -44,7 +44,11 @@ namespace AxGui
 
         public float TextHeight => FontMetrics.Descent - FontMetrics.Ascent;
 
-        public TextElement()
+        public TextElement() : this(null)
+        {
+        }
+
+        internal TextElement(string? tagName)
         {
             Font = new SKFont(FontManager.DefaultTypeFace);
             Paint = new SKPaint(Font);

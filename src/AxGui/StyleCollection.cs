@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace AxGui
 {
@@ -13,11 +14,25 @@ namespace AxGui
 
         public List<StyleRule> Rules = new List<StyleRule>();
 
+        public static StyleCollection FromString(string? content)
+        {
+            if (content == null)
+                return new StyleCollection();
+
+            using var fs = new MemoryStream(Encoding.UTF8.GetBytes(content));
+            return FromStream(fs);
+        }
+
         public static StyleCollection FromFile(string path)
         {
-            var parser = new ExCSS.StylesheetParser();
             using var fs = File.OpenRead(path);
-            var sheet = parser.Parse(fs);
+            return FromStream(fs);
+        }
+
+        public static StyleCollection FromStream(Stream stream)
+        {
+            var parser = new ExCSS.StylesheetParser();
+            var sheet = parser.Parse(stream);
 
             var col = new StyleCollection();
             foreach (ExCSS.StyleRule rule in sheet.StyleRules)

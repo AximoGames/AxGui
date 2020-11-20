@@ -40,22 +40,43 @@ namespace AxGui
 
         public readonly string? TagName;
 
-        public Element()
+        public Element() : this(null)
+        {
+        }
+
+        internal Element(string? tagName)
         {
             Children = new List<Element>();
             ChildrenInternal = Children;
-            TagName = null;
+            TagName = tagName;
         }
 
-        internal Element(string tagName) : this()
+        public static Element Create(string tagName)
         {
-            TagName = tagName;
+            switch (tagName.ToLower())
+            {
+                case "span":
+                    return new TextElement();
+                default:
+                    return new Element(tagName);
+            }
         }
 
         public void AddChild(Element el)
         {
             el.Parent = this;
             Children.Add(el);
+        }
+
+        public void SetAttribute(string name, string value)
+        {
+            switch (name.ToLower())
+            {
+                case "style":
+                    var style = ElementStyle.FromString(value);
+                    ElementStyle.Combine(Style, Style, style);
+                    break;
+            }
         }
 
         /* Order:
