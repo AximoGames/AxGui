@@ -110,10 +110,9 @@ namespace AxGui
 
             target._BorderRadius = StyleValue.Combine(parent._BorderRadius, child._BorderRadius);
 
-            // TODO: Use StyleValue! For example StyleValue.As<StylePosition>().
-            target.Display = child.Display;
-            target.Position = child.Position;
-            target.Visibility = child.Visibility;
+            target.Display = StyleHelper.CombineEnum(parent.Display, child.Display);
+            target.Position = StyleHelper.CombineEnum(parent.Position, child.Position);
+            target.Visibility = StyleHelper.CombineEnum(parent.Visibility, child.Visibility);
         }
 
         internal static void SetRule(ElementStyle target, ExCSS.StyleDeclaration parent)
@@ -133,10 +132,27 @@ namespace AxGui
 
             target._BorderRadius = parent.BorderRadius;
 
-            // TODO: Use StyleValue! For example StyleValue.As<StylePosition>().
-            //target.Display = child.Display;
-            //target.Position = child.Position;
-            //target.Visibility = child.Visibility;
+            target.Display = StyleHelper.ParseEnum<StyleDisplay>(parent.Display);
+            target.Position = StyleHelper.ParseEnum<StylePosition>(parent.Position);
+            target.Visibility = StyleHelper.ParseEnum<StyleVisibility>(parent.Visibility);
+        }
+
+        public static ElementStyle FromString(string styleBlock)
+        {
+            if (!styleBlock.Contains("{"))
+                styleBlock = "a {" + styleBlock + "}";
+
+            var parser = new ExCSS.StylesheetParser();
+            var sheet = parser.Parse(styleBlock);
+
+            var style = new ElementStyle();
+            foreach (ExCSS.StyleRule rule in sheet.StyleRules)
+            {
+                SetRule(style, rule.Style);
+                break;
+            }
+
+            return style;
         }
 
         internal bool _BoundingChanged;

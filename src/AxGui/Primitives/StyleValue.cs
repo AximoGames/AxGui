@@ -124,9 +124,9 @@ namespace AxGui
         {
             return Unit switch
             {
-                StyleUnit.Number => Number.ToString("F1"),
-                StyleUnit.Pixel => Number.ToString("F1") + " px",
-                StyleUnit.Percentage => Number.ToString("F1") + " %",
+                StyleUnit.Number => Number.ToString("F1", CultureInfo.InvariantCulture),
+                StyleUnit.Pixel => Number.ToString("F1", CultureInfo.InvariantCulture) + "px",
+                StyleUnit.Percentage => Number.ToString("F1", CultureInfo.InvariantCulture) + " %",
 #pragma warning disable HAA0102 // Non-overridden virtual method call on value type
                 _ => Unit.ToString(),
 #pragma warning restore HAA0102 // Non-overridden virtual method call on value type

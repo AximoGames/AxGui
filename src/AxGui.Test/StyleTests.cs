@@ -10,6 +10,20 @@ namespace AxGui.Test
     {
 
         [Fact]
+        public void ParseWidth()
+        {
+            var style = ElementStyle.FromString("width:10px");
+            Assert.Equal("10px", style.Width);
+        }
+
+        [Fact]
+        public void ParseDisplay()
+        {
+            var style = ElementStyle.FromString("display:inline-block");
+            Assert.Equal(StyleDisplay.InlineBlock, style.Display);
+        }
+
+        [Fact]
         public void Combine()
         {
             var parent = new ElementStyle
