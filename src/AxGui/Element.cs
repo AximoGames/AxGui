@@ -57,6 +57,8 @@ namespace AxGui
             {
                 case "span":
                     return new TextElement();
+                case "body":
+                    return new Element(tagName) { CssClass = "body" };
                 default:
                     return new Element(tagName);
             }
@@ -75,6 +77,9 @@ namespace AxGui
                 case "style":
                     var style = ElementStyle.FromString(value);
                     ElementStyle.Combine(Style, Style, style);
+                    break;
+                case "class":
+                    CssClass = value;
                     break;
             }
         }
@@ -101,6 +106,11 @@ namespace AxGui
             if (!string.IsNullOrEmpty(CssClass))
             {
                 var classStyle = ctx.GlobalContext!.Styles!.GetRuleByClass(CssClass);
+                var tagStyle = ctx.GlobalContext!.Styles!.GetRuleByTag(TagName);
+
+                if (tagStyle != null)
+                    style = ElementStyle.Combine(tagStyle.Style, style);
+
                 if (classStyle != null)
                     style = ElementStyle.Combine(classStyle.Style, style);
             }

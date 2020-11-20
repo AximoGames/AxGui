@@ -27,7 +27,7 @@ namespace AxGui
 
         public static Document FromFile(string path)
         {
-            using var fs = File.OpenRead(path);
+            using var fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             return FromStream(fs);
         }
 
@@ -50,6 +50,9 @@ namespace AxGui
             doc.PreserveWhitespace = true;
             doc.XmlResolver = null;
             doc.Load(sgmlReader);
+
+            if (doc.FirstChild == null)
+                return new Document();
 
             return FromXml(XDocument.Parse(doc.OuterXml));
 

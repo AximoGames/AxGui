@@ -77,6 +77,10 @@ namespace AxGui.Sample.OpenGL
             FPSCounter = new Stopwatch();
             FPSCounter.Start();
 
+            Watcher = new FileSystemWatcher("../../..");
+            Watcher.Changed += (s, e) => BuildUI();
+            Watcher.EnableRaisingEvents = true;
+
             BuildUI();
         }
 
@@ -86,18 +90,23 @@ namespace AxGui.Sample.OpenGL
         private CommandExecutor Executor;
         private Element el;
 
+        FileSystemWatcher Watcher;
+
         private void BuildUI()
         {
-            Document.FromFile("Test.html");
+            var doc = Document.FromFile("../../../Test.html");
 
-            var styles = StyleCollection.FromFile("Theme.css");
+            var styles = StyleCollection.FromFile("../../../Theme.css");
 
-            el = new Element();
-            el.Data = "root";
+            el = doc.Body;
+            //var styles = doc.Styles;
 
-            el.Style.Display = StyleDisplay.Block;
-            el.Style.Position = StylePosition.Absolute;
-            el.CssClass = "root";
+            //el = new Element();
+            //el.Data = "root";
+
+            //el.Style.Display = StyleDisplay.Block;
+            //el.Style.Position = StylePosition.Absolute;
+            //el.CssClass = "root";
 
             var layouter = new LayoutProcessor();
             layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);

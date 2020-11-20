@@ -25,7 +25,7 @@ namespace AxGui
 
         public static StyleCollection FromFile(string path)
         {
-            using var fs = File.OpenRead(path);
+            using var fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             return FromStream(fs);
         }
 
@@ -46,7 +46,18 @@ namespace AxGui
 
         public StyleRule? GetRuleByClass(string cssClass)
         {
+            if (string.IsNullOrEmpty(cssClass))
+                return null;
+
             return GetRuleBySelector("." + cssClass);
+        }
+
+        public StyleRule? GetRuleByTag(string cssClass)
+        {
+            if (string.IsNullOrEmpty(cssClass))
+                return null;
+
+            return GetRuleBySelector(cssClass);
         }
 
         public StyleRule? GetRuleBySelector(string selector) => Rules.LastOrDefault(x => x.Selector == selector);

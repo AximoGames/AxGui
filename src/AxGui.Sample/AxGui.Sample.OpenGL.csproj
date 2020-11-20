@@ -20,12 +20,4 @@
   <ItemGroup>
     <ProjectReference Include="..\AxGui\AxGui.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="Test.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Theme.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

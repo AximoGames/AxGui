@@ -10,6 +10,13 @@ namespace AxGui.Test
     {
 
         [Fact]
+        public void ParseEmptyDocument()
+        {
+            var doc = Document.FromString("");
+            Assert.Empty(doc.Body.Children);
+        }
+
+        [Fact]
         public void ParseDocument()
         {
             var html = @"
@@ -61,6 +68,7 @@ namespace AxGui.Test
             var doc = Document.FromString(html);
             Assert.Equal(".testClass", doc.Styles.GetRuleByClass("testClass")?.Selector);
             Assert.Equal("div", doc.Body.Children[0].TagName);
+            Assert.Equal(1, doc.Body.Children.Count);
         }
 
         [Fact]
