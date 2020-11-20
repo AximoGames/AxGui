@@ -35,8 +35,10 @@ namespace AxGui.Sample.OpenGL
                 return;
 
             CurrentSize = e.Size;
+            Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
 
             InitSkia();
+
         }
 
         private Vector2i CurrentSize;
@@ -70,8 +72,10 @@ namespace AxGui.Sample.OpenGL
 
         protected override void OnLoad()
         {
-            CurrentSize = ClientSize;
+            //CurrentSize = ClientSize;
             //VSync = VSyncMode.On;
+
+            CurrentSize = ClientSize;
 
             InitSkia();
             FPSCounter = new Stopwatch();
@@ -86,6 +90,7 @@ namespace AxGui.Sample.OpenGL
 
         private SKPaint Paint;
         private Stopwatch FPSCounter;
+        private LayoutProcessor Layouter;
         private CommandRecorder Recorder;
         private CommandExecutor Executor;
         private Element el;
@@ -108,11 +113,9 @@ namespace AxGui.Sample.OpenGL
             //el.Style.Position = StylePosition.Absolute;
             //el.CssClass = "root";
 
-            var layouter = new LayoutProcessor();
-            layouter.ViewPort = new Box(0, 0, ClientSize.X, ClientSize.Y);
-            layouter.Styles = styles;
-            //layouter.ViewPort = new Box(0, 0, ClientSize.X, 20);
-            layouter.Process(el);
+            Layouter = new LayoutProcessor();
+            Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
+            Layouter.Styles = styles;
 
             Recorder = new CommandRecorder();
             Executor = new CommandExecutor();
@@ -120,7 +123,7 @@ namespace AxGui.Sample.OpenGL
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
-            GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
+            GL.Viewport(0, 0, (int)CurrentSize.X, (int)CurrentSize.Y);
             GL.ClearColor(Color4.Beige);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
@@ -131,6 +134,7 @@ namespace AxGui.Sample.OpenGL
 
                 var canvas = surface.Canvas;
 
+                Layouter.Process(el);
                 Recorder.Record(el);
                 Executor.Execute(Recorder, canvas);
 
