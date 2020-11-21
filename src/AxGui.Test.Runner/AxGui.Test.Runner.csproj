@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject>AxGui.Sample.OpenGL.Program</StartupObject>
+    <CodeAnalysisRuleSet>..\..\props\default.ruleset</CodeAnalysisRuleSet>
+    <PublishReadyToRun>true</PublishReadyToRun>
+  </PropertyGroup>
+
+  <Import Project="..\..\props\SharedProjectSettings.props" />
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.80.2" />
+    <PackageReference Include="Svg.Skia" Version="0.4.1" />
+
+    <PackageReference Include="OpenTK" Version="4.0.0-pre9.1" />
+
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AxGui.Test\AxGui.Test.csproj" />
+    <ProjectReference Include="..\AxGui\AxGui.csproj" />
+  </ItemGroup>
+</Project>

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace AxGui.Test
 {
-    public class BoxModelChildTests
+    public class BoxModelChildTests : TestBase
     {
 
         private Element CreateRootElement()
@@ -20,13 +20,6 @@ namespace AxGui.Test
             el.Style.BorderColor = 5;
             el.Style.Padding = 5;
             return el;
-        }
-
-        private void Layout(Element el, Box? viewport = null)
-        {
-            var layouter = new LayoutProcessor();
-            layouter.ViewPort = viewport ?? new Box(0, 0, 640, 360);
-            layouter.Process(el);
         }
 
         [Fact]

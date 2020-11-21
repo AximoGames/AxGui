@@ -427,6 +427,8 @@ namespace AxGui
             }
         }
 
+        internal bool DebugBorders = true;
+
         private protected static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
         private protected static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
         private protected static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
@@ -456,8 +458,6 @@ namespace AxGui
                 ctx.AddRenderContext(PostRenderContext);
             }
         }
-
-        internal bool DebugBorders;
 
         private SKPaint Paint = new SKPaint();
         protected void RenderBorderAndBackground(RenderContext ctx)
@@ -615,7 +615,7 @@ namespace AxGui
                 label = "[" + label + "] ";
 
             if (!string.IsNullOrEmpty(TagName))
-                label = "<" + TagName + "> " + label;
+                label = "<" + TagName + (string.IsNullOrEmpty(CssClass) ? "" : " ." + CssClass) + "> " + label;
 
             return label + GetType().Name;
         }

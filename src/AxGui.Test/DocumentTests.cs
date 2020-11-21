@@ -6,7 +6,7 @@ using Xunit;
 
 namespace AxGui.Test
 {
-    public class DocumentTests
+    public class DocumentTests : TestBase
     {
 
         [Fact]

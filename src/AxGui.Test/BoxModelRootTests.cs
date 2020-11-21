@@ -6,7 +6,21 @@ using Xunit;
 
 namespace AxGui.Test
 {
-    public class BoxModelRootTests
+
+    public class TestBase
+    {
+        public Element? RootElement;
+
+        protected void Layout(Element el, Box? viewport = null)
+        {
+            RootElement = el;
+            var layouter = new LayoutProcessor();
+            layouter.ViewPort = viewport ?? new Box(0, 0, 640, 360);
+            layouter.Process(el);
+        }
+    }
+
+    public class BoxModelRootTests : TestBase
     {
 
         private Element CreateElement()
@@ -17,13 +31,6 @@ namespace AxGui.Test
             el.Style.Width = 200;
             el.Style.Height = 100;
             return el;
-        }
-
-        private void Layout(Element el, Box? viewport = null)
-        {
-            var layouter = new LayoutProcessor();
-            layouter.ViewPort = viewport ?? new Box(0, 0, 640, 360);
-            layouter.Process(el);
         }
 
         [Fact]

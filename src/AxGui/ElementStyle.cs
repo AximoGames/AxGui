@@ -17,6 +17,7 @@ namespace AxGui
         Block,
         InlineBlock,
         Inline,
+        //Flex,
         None,
     }
 

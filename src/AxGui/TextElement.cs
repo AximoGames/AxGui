@@ -100,6 +100,8 @@ namespace AxGui
                         }
                     }
 
+                    //if (num > 0)
+                    //{
                     var texHeight = TextHeight;
 
                     var finalText = new string(span.Slice(0, num));
@@ -119,6 +121,7 @@ namespace AxGui
                     f.DrawPosition.Y = TextSize + ((h - TextHeight) / 2);
 
                     AddChild(f);
+                    //}
 
                     posY += Paint.TextSize;
                     if (span.Length == num)
