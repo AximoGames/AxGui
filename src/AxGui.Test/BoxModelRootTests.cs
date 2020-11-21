@@ -30,7 +30,7 @@ namespace AxGui.Test
         public void MarginCheck()
         {
             var el = CreateElement();
-            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Anchors = new StyleRect { Top = 5 };
             el.Style.Margin = 5;
             //el.Style.BorderWidth = 5;
             //el.Style.Anchors.Bottom = 20;
@@ -45,7 +45,7 @@ namespace AxGui.Test
         public void MarginClientTopBottomEquals()
         {
             var el = CreateElement();
-            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Anchors = new StyleRect { Top = 5 };
 
             Layout(el);
             Assert.Equal(100, el.ClientRect.Height);
@@ -57,7 +57,7 @@ namespace AxGui.Test
         public void MarginClientSet()
         {
             var el = CreateElement();
-            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Anchors = new StyleRect { Top = 5 };
             el.Style.Margin = 5;
 
             Layout(el);
@@ -70,7 +70,7 @@ namespace AxGui.Test
         public void BorderPaddingClientEquals()
         {
             var el = CreateElement();
-            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Anchors = new StyleRect { Top = 5 };
             el.Style.Margin = 5;
 
             Layout(el);
@@ -82,7 +82,7 @@ namespace AxGui.Test
         public void MinHeight()
         {
             var el = CreateElement();
-            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Anchors = new StyleRect { Top = 5 };
             el.Style.Margin = 5;
             el.Style.BorderWidth = 5;
             el.Style.Padding = 5;
@@ -96,7 +96,7 @@ namespace AxGui.Test
         public void AnchorTopBottom()
         {
             var el = CreateElement();
-            el.Style.Anchors = new BoxModelRect { Top = 5, Bottom = 5 };
+            el.Style.Anchors = new StyleRect { Top = 5, Bottom = 5 };
             el.Style.Margin = 5;
             el.Style.BorderWidth = 5;
             el.Style.Padding = 5;
@@ -109,7 +109,7 @@ namespace AxGui.Test
         public void PercentHeight()
         {
             var el = CreateElement();
-            el.Style.Anchors = new BoxModelRect { Top = 5 };
+            el.Style.Anchors = new StyleRect { Top = 5 };
             el.Style.Margin = 5;
             el.Style.BorderWidth = 5;
             el.Style.Padding = 5;

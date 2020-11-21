@@ -98,12 +98,12 @@ namespace AxGui
         {
             target._BoundingChanged = true;
 
-            target._Anchors = BoxModelRect.Combine(parent._Anchors, child._Anchors);
-            target._Margin = BoxModelRect.Combine(parent._Margin, child._Margin);
-            target._BorderColor = BoxModelRect.Combine(parent._BorderColor, child._BorderColor);
-            target._BorderWidth = BoxModelRect.Combine(parent._BorderWidth, child._BorderWidth);
-            target._BorderStyle = BoxModelRect.Combine(parent._BorderStyle, child._BorderStyle);
-            target._Padding = BoxModelRect.Combine(parent._Padding, child._Padding);
+            target._Anchors = StyleRect.Combine(parent._Anchors, child._Anchors);
+            target._Margin = StyleRect.Combine(parent._Margin, child._Margin);
+            target._BorderColor = StyleRect.Combine(parent._BorderColor, child._BorderColor);
+            target._BorderWidth = StyleRect.Combine(parent._BorderWidth, child._BorderWidth);
+            target._BorderStyle = StyleRect.Combine(parent._BorderStyle, child._BorderStyle);
+            target._Padding = StyleRect.Combine(parent._Padding, child._Padding);
 
             target._MaxSize = StyleSize.Combine(parent._MaxSize, child._MaxSize);
             target._MinSize = StyleSize.Combine(parent._MinSize, child._MinSize);
@@ -121,12 +121,12 @@ namespace AxGui
         {
             target._BoundingChanged = true;
 
-            target._Anchors = new BoxModelRect(parent.Left, parent.Top, parent.Right, parent.Bottom);
-            target._Margin = BoxModelRect.Combine(parent.Margin, new BoxModelRect(parent.MarginLeft, parent.MarginTop, parent.MarginRight, parent.MarginBottom));
-            target._BorderColor = BoxModelRect.Combine(parent.BorderColor, new BoxModelRect(parent.BorderLeftColor, parent.BorderTopColor, parent.BorderRightColor, parent.BorderBottomColor));
-            target._BorderWidth = BoxModelRect.Combine(parent.BorderWidth, new BoxModelRect(parent.BorderLeftWidth, parent.BorderTopWidth, parent.BorderRightWidth, parent.BorderBottomWidth));
-            target._BorderStyle = BoxModelRect.Combine(parent.BorderStyle, new BoxModelRect(parent.BorderLeftStyle, parent.BorderTopStyle, parent.BorderRightStyle, parent.BorderBottomStyle));
-            target._Padding = BoxModelRect.Combine(parent.Padding, new BoxModelRect(parent.PaddingLeft, parent.PaddingTop, parent.PaddingRight, parent.PaddingBottom));
+            target._Anchors = new StyleRect(parent.Left, parent.Top, parent.Right, parent.Bottom);
+            target._Margin = StyleRect.Combine(parent.Margin, new StyleRect(parent.MarginLeft, parent.MarginTop, parent.MarginRight, parent.MarginBottom));
+            target._BorderColor = StyleRect.Combine(parent.BorderColor, new StyleRect(parent.BorderLeftColor, parent.BorderTopColor, parent.BorderRightColor, parent.BorderBottomColor));
+            target._BorderWidth = StyleRect.Combine(parent.BorderWidth, new StyleRect(parent.BorderLeftWidth, parent.BorderTopWidth, parent.BorderRightWidth, parent.BorderBottomWidth));
+            target._BorderStyle = StyleRect.Combine(parent.BorderStyle, new StyleRect(parent.BorderLeftStyle, parent.BorderTopStyle, parent.BorderRightStyle, parent.BorderBottomStyle));
+            target._Padding = StyleRect.Combine(parent.Padding, new StyleRect(parent.PaddingLeft, parent.PaddingTop, parent.PaddingRight, parent.PaddingBottom));
 
             target._MaxSize = new StyleSize(parent.MaxWidth, parent.MaxHeight);
             target._MinSize = new StyleSize(parent.MinWidth, parent.MinHeight);
@@ -252,8 +252,8 @@ namespace AxGui
             set => MaxSize = new StyleSize(_MaxSize.Width, value);
         }
 
-        internal BoxModelRect _Anchors;
-        public BoxModelRect Anchors
+        internal StyleRect _Anchors;
+        public StyleRect Anchors
         {
             get => _Anchors;
             set
@@ -266,8 +266,8 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _Margin;
-        public BoxModelRect Margin
+        internal StyleRect _Margin;
+        public StyleRect Margin
         {
             get => _Margin;
             set
@@ -280,8 +280,8 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _Padding;
-        public BoxModelRect Padding
+        internal StyleRect _Padding;
+        public StyleRect Padding
         {
             get => _Padding;
             set
@@ -294,8 +294,8 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _BorderWidth;
-        public BoxModelRect BorderWidth
+        internal StyleRect _BorderWidth;
+        public StyleRect BorderWidth
         {
             get => _BorderWidth;
             set
@@ -308,8 +308,8 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _BorderColor;
-        public BoxModelRect BorderColor
+        internal StyleRect _BorderColor;
+        public StyleRect BorderColor
         {
             get => _BorderColor;
             set
@@ -320,8 +320,8 @@ namespace AxGui
             }
         }
 
-        internal BoxModelRect _BorderStyle;
-        public BoxModelRect BorderStyle
+        internal StyleRect _BorderStyle;
+        public StyleRect BorderStyle
         {
             get => _BorderColor;
             set

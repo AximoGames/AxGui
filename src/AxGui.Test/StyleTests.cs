@@ -37,7 +37,7 @@ namespace AxGui.Test
         {
             var parent = new ElementStyle
             {
-                Anchors = new BoxModelRect
+                Anchors = new StyleRect
                 {
                     Left = 10,
                     Top = 20,
@@ -46,7 +46,7 @@ namespace AxGui.Test
 
             var child = new ElementStyle
             {
-                Anchors = new BoxModelRect
+                Anchors = new StyleRect
                 {
                     Right = 30,
                     Bottom = 40,
@@ -54,7 +54,7 @@ namespace AxGui.Test
             };
 
             var combined = ElementStyle.Combine(parent, child);
-            Assert.Equal(new BoxModelRect(10, 20, 30, 40), combined.Anchors);
+            Assert.Equal(new StyleRect(10, 20, 30, 40), combined.Anchors);
         }
 
     }

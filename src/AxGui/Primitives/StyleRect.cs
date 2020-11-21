@@ -9,10 +9,10 @@ using SkiaSharp;
 namespace AxGui
 {
 
-    public struct BoxModelRect : IEquatable<BoxModelRect>
+    public struct StyleRect : IEquatable<StyleRect>
     {
 
-        public BoxModelRect(StyleValue left, StyleValue top, StyleValue right, StyleValue bottom)
+        public StyleRect(StyleValue left, StyleValue top, StyleValue right, StyleValue bottom)
         {
             _Left = left;
             _Top = top;
@@ -22,7 +22,7 @@ namespace AxGui
             ParentChanged = null;
         }
 
-        public BoxModelRect(StyleValue leftRight, StyleValue topBottom)
+        public StyleRect(StyleValue leftRight, StyleValue topBottom)
         {
             _Left = leftRight;
             _Top = topBottom;
@@ -32,7 +32,7 @@ namespace AxGui
             ParentChanged = null;
         }
 
-        public BoxModelRect(StyleValue value)
+        public StyleRect(StyleValue value)
         {
             _Left = value;
             _Top = value;
@@ -101,9 +101,9 @@ namespace AxGui
             }
         }
 
-        public BoxModelRect Clone()
+        public StyleRect Clone()
         {
-            return new BoxModelRect
+            return new StyleRect
             {
                 Left = Left,
                 Top = Top,
@@ -112,9 +112,9 @@ namespace AxGui
             };
         }
 
-        internal BoxModelRect Normalize(ProcessLayoutContext ctx)
+        internal StyleRect Normalize(ProcessLayoutContext ctx)
         {
-            return new BoxModelRect
+            return new StyleRect
             {
                 Left = Left.Normalize(ctx, Axis.X),
                 Top = Top.Normalize(ctx, Axis.Y),
@@ -123,24 +123,24 @@ namespace AxGui
             };
         }
 
-        public static bool operator ==(BoxModelRect x, BoxModelRect y)
+        public static bool operator ==(StyleRect x, StyleRect y)
         {
             return x.Left == y.Left && x.Top == y.Top && x.Right == y.Right && x.Bottom == y.Bottom;
         }
 
-        public static bool operator !=(BoxModelRect x, BoxModelRect y)
+        public static bool operator !=(StyleRect x, StyleRect y)
         {
             return !(x == y);
         }
 
-        public static bool Equals(BoxModelRect left, BoxModelRect right)
+        public static bool Equals(StyleRect left, StyleRect right)
         {
             return left == right;
         }
 
         public override bool Equals(object? obj)
         {
-            if (!(obj is BoxModelRect m))
+            if (!(obj is StyleRect m))
                 return false;
 
             return this == m;
@@ -151,7 +151,7 @@ namespace AxGui
             return HashCode.Combine(Left, Top, Right, Bottom);
         }
 
-        public bool Equals(BoxModelRect other)
+        public bool Equals(StyleRect other)
         {
             return this == other;
         }
@@ -161,9 +161,9 @@ namespace AxGui
             return new Box(Left.Number, Top.Number, Right.Number, Bottom.Number);
         }
 
-        public static implicit operator BoxModelRect(float value)
+        public static implicit operator StyleRect(float value)
         {
-            return new BoxModelRect
+            return new StyleRect
             {
                 Left = value,
                 Top = value,
@@ -172,22 +172,22 @@ namespace AxGui
             };
         }
 
-        public static implicit operator BoxModelRect(string value)
+        public static implicit operator StyleRect(string value)
         {
             if (value.Contains(","))
-                return new BoxModelRect(value);
+                return new StyleRect(value);
 
             var parts = value.Split(" ");
             if (parts.Length == 1)
-                return new BoxModelRect(parts[0]);
+                return new StyleRect(parts[0]);
 
             if (parts.Length == 2)
-                return new BoxModelRect(parts[0], parts[1]);
+                return new StyleRect(parts[0], parts[1]);
 
             if (parts.Length == 4)
-                return new BoxModelRect(parts[0], parts[1], parts[2], parts[3]);
+                return new StyleRect(parts[0], parts[1], parts[2], parts[3]);
 
-            return new BoxModelRect();
+            return new StyleRect();
         }
 
         //public StyleValue GetMin(Axis axis)
@@ -238,9 +238,9 @@ namespace AxGui
             }
         }
 
-        public static BoxModelRect Combine(BoxModelRect parent, BoxModelRect child)
+        public static StyleRect Combine(StyleRect parent, StyleRect child)
         {
-            BoxModelRect target = default;
+            StyleRect target = default;
             target.Left = StyleValue.Combine(parent.Left, child.Left);
             target.Top = StyleValue.Combine(parent.Top, child.Top);
             target.Right = StyleValue.Combine(parent.Right, child.Right);
