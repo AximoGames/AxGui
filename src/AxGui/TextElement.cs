@@ -100,28 +100,28 @@ namespace AxGui
                         }
                     }
 
-                    //if (num > 0)
-                    //{
-                    var texHeight = TextHeight;
+                    if (num > 0)
+                    {
+                        var texHeight = TextHeight;
 
-                    var finalText = new string(span.Slice(0, num));
-                    var f = new TextElementFragment(finalText, Paint, Font!);
-                    ResolvedStyle.CopyTo(f.ResolvedStyle);
-                    measuredWidth = Paint.MeasureText(finalText);
-                    //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);
-                    f.ResolvedStyle.Width = measuredWidth;
+                        var finalText = new string(span.Slice(0, num));
+                        var f = new TextElementFragment(finalText, Paint, Font!);
+                        ResolvedStyle.CopyTo(f.ResolvedStyle);
+                        measuredWidth = Paint.MeasureText(finalText);
+                        //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);
+                        f.ResolvedStyle.Width = measuredWidth;
 
-                    if (f.ResolvedStyle.Height.Unit == StyleUnit.Unset)
-                        f.ResolvedStyle.Height = TextHeight;
+                        if (f.ResolvedStyle.Height.Unit == StyleUnit.Unset)
+                            f.ResolvedStyle.Height = TextHeight;
 
-                    f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
-                    f.ResolvedStyle.Position = StylePosition.Static;
+                        f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
+                        f.ResolvedStyle.Position = StylePosition.Static;
 
-                    var h = f.ResolvedStyle.Height.Number;
-                    f.DrawPosition.Y = TextSize + ((h - TextHeight) / 2);
+                        var h = f.ResolvedStyle.Height.Number;
+                        f.DrawPosition.Y = TextSize + ((h - TextHeight) / 2);
 
-                    AddChild(f);
-                    //}
+                        AddChild(f);
+                    }
 
                     posY += Paint.TextSize;
                     if (span.Length == num)

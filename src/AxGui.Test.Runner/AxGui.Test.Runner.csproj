@@ -3,7 +3,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
-    <StartupObject>AxGui.Sample.OpenGL.Program</StartupObject>
+    <StartupObject>AxGui.Test.Runner.Program</StartupObject>
     <CodeAnalysisRuleSet>..\..\props\default.ruleset</CodeAnalysisRuleSet>
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
