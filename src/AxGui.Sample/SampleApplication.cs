@@ -124,7 +124,7 @@ namespace AxGui.Sample.OpenGL
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             GL.Viewport(0, 0, (int)CurrentSize.X, (int)CurrentSize.Y);
-            GL.ClearColor(Color4.Beige);
+            GL.ClearColor(new Color4(0, 0, 0, 1));
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             using (new SKAutoCanvasRestore(surface.Canvas, true))

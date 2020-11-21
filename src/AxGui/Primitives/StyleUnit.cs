@@ -40,7 +40,7 @@ namespace AxGui
         Number,
         Pixel,
         Percentage,
-        //String,
+        String,
         Auto,
         Color,
     }

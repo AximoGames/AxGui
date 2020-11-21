@@ -52,6 +52,14 @@ namespace AxGui
             return GetRuleBySelector("." + cssClass);
         }
 
+        public StyleRule? GetRuleById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return null;
+
+            return GetRuleBySelector("#" + id);
+        }
+
         public StyleRule? GetRuleByTag(string cssClass)
         {
             if (string.IsNullOrEmpty(cssClass))

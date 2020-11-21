@@ -145,9 +145,16 @@ namespace AxGui
             }
             else
             {
-                v.Number = float.Parse(value, provider: CultureInfo.InvariantCulture.NumberFormat);
-                v.Number2 = v.Number;
-                v.Unit = StyleUnit.Number;
+                if (float.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture.NumberFormat, out v.Number))
+                {
+                    v.Number2 = v.Number;
+                    v.Unit = StyleUnit.Number;
+                }
+                else
+                {
+                    v.Value = value;
+                    v.Unit = StyleUnit.String;
+                }
             }
 
             return v;

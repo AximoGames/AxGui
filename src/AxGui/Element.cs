@@ -109,17 +109,18 @@ namespace AxGui
             var style = Style;
             var resolved = ResolvedStyle;
 
-            if (!string.IsNullOrEmpty(CssClass))
-            {
-                var classStyle = ctx.GlobalContext!.Styles!.GetRuleByClass(CssClass);
-                var tagStyle = ctx.GlobalContext!.Styles!.GetRuleByTag(TagName);
+            var classStyle = ctx.GlobalContext!.Styles!.GetRuleByClass(CssClass);
+            var tagStyle = ctx.GlobalContext!.Styles!.GetRuleByTag(TagName);
+            var idStyle = ctx.GlobalContext!.Styles!.GetRuleById(Id);
 
-                if (tagStyle != null)
-                    style = ElementStyle.Combine(tagStyle.Style, style);
+            if (idStyle != null)
+                style = ElementStyle.Combine(idStyle.Style, style);
 
-                if (classStyle != null)
-                    style = ElementStyle.Combine(classStyle.Style, style);
-            }
+            if (classStyle != null)
+                style = ElementStyle.Combine(classStyle.Style, style);
+
+            if (tagStyle != null)
+                style = ElementStyle.Combine(tagStyle.Style, style);
 
             if (style._BoundingChanged)
             {
