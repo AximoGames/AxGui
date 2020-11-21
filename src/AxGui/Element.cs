@@ -124,12 +124,12 @@ namespace AxGui
             if (tagStyle != null)
                 ElementStyle.Combine(style, tagStyle.Style, style);
 
-            ResolveStyle(ctx);
+            //ResolveStyle(ctx);
 
             ComputeStyleChildren(ctx);
         }
 
-        private void ResolveStyle(ProcessLayoutContext ctx)
+        protected virtual void ResolveStyle(ProcessLayoutContext ctx)
         {
             var style = TempStyle;
             var resolved = ResolvedStyle;
@@ -203,6 +203,7 @@ namespace AxGui
             c.RowPosition = default;
             c.RowHeight = default;
             c.RowElements.Clear();
+            ResolveStyle(c);
             ComputeBounds(c);
         }
 
@@ -210,6 +211,10 @@ namespace AxGui
         {
             if (PassThrough)
                 return;
+
+            //var dump = ObjectDumper.Dump(ResolvedStyle);
+            //ResolveStyle(ctx);
+            //dump = ObjectDumper.Dump(ResolvedStyle);
 
             //OuterRect = ctx.LocalViewPort;
 

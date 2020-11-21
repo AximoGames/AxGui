@@ -28,6 +28,11 @@ namespace AxGui
         public SKPoint DrawPosition;
         private readonly SKFont Font;
 
+        protected override void ResolveStyle(ProcessLayoutContext ctx)
+        {
+            // do not call the base
+        }
+
         public override void Render(RenderContext ctx)
         {
             RenderBorderAndBackground(ctx);

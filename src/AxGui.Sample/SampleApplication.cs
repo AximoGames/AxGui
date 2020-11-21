@@ -96,82 +96,13 @@ namespace AxGui.Sample.OpenGL
 
         private void BuildUI()
         {
-            //var doc = Document.FromFile("../../../Test.html");
-            //var styles = StyleCollection.FromFile("../../../Theme.css");
-            //el = doc.Body;
-
-            //--
-
-            el = new Element();
-            el.Style.Display = StyleDisplay.Block;
-            el.Style.Position = StylePosition.Absolute;
-            el.Style.Height = 320;
-            el.Style.Width = 220;
-            el.Style.BorderWidth = 5;
-            el.Style.Padding = 5;
-
-            Element child;
-            Element box;
-
-            var box1 = box = new Element();
-            box.Data = "b1";
-            box.Style.Display = StyleDisplay.Block;
-            box.Style.Position = StylePosition.Static;
-            box.Style.Width = 20;
-            box.Style.Height = 20;
-            el.AddChild(box);
-
-            var child1 = child = new TextElement();
-            child.Data = "child";
-            child.Style.Width = 5;
-            child.Style.Height = 30;
-            child.Style.Display = StyleDisplay.Inline;
-            child.Style.Position = StylePosition.Static;
-            (child as TextElement).Content = "Testduck Testduck2 Testduck3";
-            (child as TextElement).TextSize = 20;
-            el.AddChild(child);
-
-            var box2 = box = new Element();
-            box.Data = "b1";
-            box.Style.Display = StyleDisplay.InlineBlock;
-            box.Style.Position = StylePosition.Static;
-            box.Style.Width = 20;
-            box.Style.Height = 20;
-            el.AddChild(box);
-
-            var child2 = child = new TextElement();
-            child.Data = "child2";
-            child.Style.Width = 5;
-            child.Style.Height = 30;
-            child.Style.Display = StyleDisplay.Inline;
-            child.Style.Position = StylePosition.Static;
-            (child as TextElement).Content = "Testduck4 Testduck5 Testduck6";
-            (child as TextElement).TextSize = 20;
-            el.AddChild(child);
-
-            var box3 = box = new Element();
-            box.Data = "b3";
-            box.Style.Display = StyleDisplay.Block;
-            box.Style.Position = StylePosition.Static;
-            box.Style.Width = 20;
-            box.Style.Height = 20;
-            el.AddChild(box);
-
-            var child3 = child = new TextElement();
-            child.Data = "child3";
-            child.Style.Height = 30;
-            child.Style.Width = 5;
-            child.Style.Display = StyleDisplay.Inline;
-            child.Style.Position = StylePosition.Static;
-            (child as TextElement).Content = "Testduck4 Testduck5 Testxk|²³|ₚ|ganz6";
-            (child as TextElement).TextSize = 20;
-            el.AddChild(child);
-
-            //--
+            var doc = Document.FromFile("../../../Test.html");
+            var styles = StyleCollection.FromFile("../../../Theme.css");
+            el = doc.Body;
 
             Layouter = new LayoutProcessor();
             Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
-            //Layouter.Styles = styles;
+            Layouter.Styles = styles;
 
             Recorder = new CommandRecorder();
             Executor = new CommandExecutor();
@@ -181,7 +112,7 @@ namespace AxGui.Sample.OpenGL
         {
             GL.Viewport(0, 0, (int)CurrentSize.X, (int)CurrentSize.Y);
             //GL.ClearColor(new Color4(0, 0, 0, 1));
-            //GL.ClearColor(new Color4(1, 0, 0, 1));
+            GL.ClearColor(Color4.Beige);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             using (new SKAutoCanvasRestore(surface.Canvas, true))

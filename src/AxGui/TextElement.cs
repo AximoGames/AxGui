@@ -59,7 +59,7 @@ namespace AxGui
 
         protected internal override void ComputeBoundsSelf(ProcessLayoutContext ctx)
         {
-            base.ComputeBoundsSelf(ctx);
+            //ResolveStyle(ctx);
 
             if (ContentChanged)
             {
