@@ -73,18 +73,18 @@ namespace AxGui
             target._BorderColor = _BorderColor;
             target._BorderStyle = _BorderStyle;
             target._BorderWidth = _BorderWidth;
+            target._BorderRadius = _BorderRadius;
             target._Padding = _Padding;
 
             target._MaxSize = _MaxSize;
             target._MinSize = _MinSize;
             target._Size = _Size;
 
-            target._BorderRadius = _BorderRadius;
+            target._BackgroundColor = _BackgroundColor;
 
             target.Display = Display;
             target.Position = Position;
             target.Visibility = Visibility;
-            target._BackgroundColor = _BackgroundColor;
         }
 
         public static ElementStyle Combine(ElementStyle parent, ElementStyle child)
@@ -103,18 +103,18 @@ namespace AxGui
             target._BorderColor = StyleRect.Combine(parent._BorderColor, child._BorderColor);
             target._BorderWidth = StyleRect.Combine(parent._BorderWidth, child._BorderWidth);
             target._BorderStyle = StyleRect.Combine(parent._BorderStyle, child._BorderStyle);
+            target._BorderRadius = StyleCorners.Combine(parent._BorderRadius, child._BorderRadius);
             target._Padding = StyleRect.Combine(parent._Padding, child._Padding);
 
             target._MaxSize = StyleSize.Combine(parent._MaxSize, child._MaxSize);
             target._MinSize = StyleSize.Combine(parent._MinSize, child._MinSize);
             target._Size = StyleSize.Combine(parent._Size, child._Size);
 
-            target._BorderRadius = StyleValue.Combine(parent._BorderRadius, child._BorderRadius);
+            target._BackgroundColor = StyleValue.Combine(parent._BackgroundColor, child._BackgroundColor);
 
             target.Display = StyleHelper.CombineEnum(parent.Display, child.Display);
             target.Position = StyleHelper.CombineEnum(parent.Position, child.Position);
             target.Visibility = StyleHelper.CombineEnum(parent.Visibility, child.Visibility);
-            target._BackgroundColor = StyleValue.Combine(parent._BackgroundColor, child._BackgroundColor);
         }
 
         internal static void SetRule(ElementStyle target, ExCSS.StyleDeclaration parent)
@@ -126,13 +126,13 @@ namespace AxGui
             target._BorderColor = StyleRect.Combine(parent.BorderColor, new StyleRect(parent.BorderLeftColor, parent.BorderTopColor, parent.BorderRightColor, parent.BorderBottomColor));
             target._BorderWidth = StyleRect.Combine(parent.BorderWidth, new StyleRect(parent.BorderLeftWidth, parent.BorderTopWidth, parent.BorderRightWidth, parent.BorderBottomWidth));
             target._BorderStyle = StyleRect.Combine(parent.BorderStyle, new StyleRect(parent.BorderLeftStyle, parent.BorderTopStyle, parent.BorderRightStyle, parent.BorderBottomStyle));
+            target._BorderRadius = StyleCorners.Combine(parent.BorderRadius, new StyleCorners(parent.BorderTopLeftRadius, parent.BorderTopRightRadius, parent.BorderBottomLeftRadius, parent.BorderBottomRightRadius));
             target._Padding = StyleRect.Combine(parent.Padding, new StyleRect(parent.PaddingLeft, parent.PaddingTop, parent.PaddingRight, parent.PaddingBottom));
 
             target._MaxSize = new StyleSize(parent.MaxWidth, parent.MaxHeight);
             target._MinSize = new StyleSize(parent.MinWidth, parent.MinHeight);
             target._Size = new StyleSize(parent.Width, parent.Height);
 
-            target._BorderRadius = parent.BorderRadius;
             target._BackgroundColor = parent.BackgroundColor;
 
             target.Display = StyleHelper.ParseEnum<StyleDisplay>(parent.Display);
@@ -332,8 +332,8 @@ namespace AxGui
             }
         }
 
-        internal StyleValue _BorderRadius;
-        public StyleValue BorderRadius
+        internal StyleCorners _BorderRadius;
+        public StyleCorners BorderRadius
         {
             get => _BorderRadius;
             set

@@ -4,7 +4,7 @@
     margin: auto;
     position: absolute;
     display: block;
-    border-width: 1px;
+    border-width: 0px;
     border-color: #00ff90;
 }
 
@@ -13,9 +13,10 @@
     height: 50px;
     position: absolute;
     display: block;
-    border-width: 20px;
+    border-width: 8px;
     background-color: #ff4488;
-    border-color: rgba(10, 66, 104, 0.5);
+    border-color: rgba(5, 100, 163, 0.8);
+    border-radius: 10px;
 }
 
 body {

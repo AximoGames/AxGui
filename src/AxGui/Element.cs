@@ -137,6 +137,7 @@ namespace AxGui
             resolved.Visibility = style.Visibility;
             resolved.BorderColor = style.BorderColor;
             resolved.BackgroundColor = style.BackgroundColor;
+            resolved.BorderRadius = style.BorderRadius;
 
             ComputeStyleChildren(ctx);
         }
@@ -486,33 +487,64 @@ namespace AxGui
             {
                 var borderWidth = ResolvedStyle._BorderWidth.Top.Number;
                 var borderColor = ResolvedStyle._BorderColor.Top.Color;
+                var borderRadius = ResolvedStyle._BorderRadius.TopLeft.Size;
+                var bgColor = ResolvedStyle._BackgroundColor.Color;
+                var bgRect = ClientRect;
 
-                if (borderWidth > 0 && borderColor.Alpha > 0)
+                if (borderRadius == Size.Zero)
                 {
-                    ctx.Commands.Add(new DrawActionCommand(x =>
+
+                    if (borderWidth > 0 && borderColor.Alpha > 0)
                     {
-                        Paint.Style = SKPaintStyle.Stroke;
-                        Paint.StrokeWidth = borderWidth;
-                        Paint.Color = borderColor;
+                        ctx.Commands.Add(new DrawActionCommand(x =>
+                        {
+                            Paint.Style = SKPaintStyle.Stroke;
+                            Paint.StrokeWidth = borderWidth;
+                            Paint.Color = borderColor;
 
-                        x.Canvas.DrawRect(BorderRect.Substract(borderWidth / 2).ToSKRect(), Paint);
-                    }));
+                            x.Canvas.DrawRect(BorderRect.Substract(borderWidth / 2).ToSKRect(), Paint);
+                        }));
+                    }
+
+                    if (ResolvedStyle._BackgroundColor.Unit == StyleUnit.Color)
+                    {
+                        if (bgColor.Alpha > 0)
+                        {
+                            ctx.Commands.Add(new DrawActionCommand(x =>
+                            {
+                                Paint.Style = SKPaintStyle.Fill;
+                                Paint.Color = bgColor;
+                                x.Canvas.DrawRect(bgRect.ToSKRect(), Paint);
+                            }));
+                        }
+                    }
+
                 }
-
-                if (ResolvedStyle._BackgroundColor.Unit == StyleUnit.Color)
+                else
                 {
-                    var bgRect = ClientRect;
-                    var bgColor = ResolvedStyle._BackgroundColor.Color;
+
                     if (bgColor.Alpha > 0)
                     {
                         ctx.Commands.Add(new DrawActionCommand(x =>
                         {
                             Paint.Style = SKPaintStyle.Fill;
                             Paint.Color = bgColor;
-                            x.Canvas.DrawRect(bgRect.ToSKRect(), Paint);
+                            x.Canvas.DrawRoundRect(ClientRect.ToSKRect(), (borderRadius - (borderWidth / 2)).ToSKSize(), Paint);
+                        }));
+                    }
+
+                    if (borderWidth > 0 && borderColor.Alpha > 0)
+                    {
+                        ctx.Commands.Add(new DrawActionCommand(x =>
+                        {
+                            Paint.Style = SKPaintStyle.Stroke;
+                            Paint.StrokeWidth = borderWidth;
+                            Paint.Color = borderColor;
+                            x.Canvas.DrawRoundRect(BorderRect.Substract(borderWidth / 2).ToSKRect(), borderRadius.ToSKSize(), Paint);
                         }));
                     }
                 }
+
             }
         }
 

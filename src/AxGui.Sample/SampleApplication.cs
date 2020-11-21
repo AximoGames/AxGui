@@ -102,7 +102,7 @@ namespace AxGui.Sample.OpenGL
 
             el = doc.Body;
 
-            doc.GetElementById("dialog").ScrollOffset.Y = 10;
+            //doc.GetElementById("dialog").ScrollOffset.Y = 10;
 
             //var styles = doc.Styles;
 

@@ -12,46 +12,35 @@ using SkiaSharp;
 namespace AxGui
 {
 
-    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    [StructLayout(LayoutKind.Explicit, Size = 20)]
     public unsafe struct StyleValue : IEquatable<StyleValue>
     {
+        public static readonly StyleValue Unset;
+
         [FieldOffset(0)]
         public float Number; // 4 bytes
         [FieldOffset(4)]
-        public StyleUnit Unit; // 4 bytes
+        public float Number2; // 4 bytes, Placeholder
+
         [FieldOffset(8)]
         public string Value; // 8 bytes
 
+        [FieldOffset(16)]
+        public StyleUnit Unit; // 4 bytes
+
+        // --- Unions ---
         [FieldOffset(0)]
         public SKColor Color; // 4 bytes
 
-        //public SKColor Color
-        //{
-        //    get
-        //    {
-        //        if (Unit != StyleUnit.Color)
-        //            return SKColor.Empty;
+        [FieldOffset(0)]
+        public Point Point; // 4 bytes
 
-        //        fixed (float* storagePtr = &Number)
-        //        {
-        //            SKColor* colorPtr = (SKColor*)storagePtr;
-        //            return *colorPtr;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        Unit = StyleUnit.Color;
-        //        fixed (float* storagePtr = &Number)
-        //        {
-        //            SKColor* colorPtr = (SKColor*)storagePtr;
-        //            *colorPtr = value;
-        //        }
-        //    }
-        //}
+        [FieldOffset(0)]
+        public Size Size; // 4 bytes
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Number, Unit);
+            return HashCode.Combine(Number, Number2, Unit);
         }
 
         public override bool Equals(object? obj)
@@ -69,7 +58,7 @@ namespace AxGui
 
         public static bool operator ==(StyleValue x, StyleValue y)
         {
-            return x.Unit == y.Unit && x.Number == y.Number;
+            return x.Unit == y.Unit && x.Number == y.Number && x.Number2 == y.Number2;
         }
 
         public static bool operator !=(StyleValue x, StyleValue y)
@@ -87,6 +76,7 @@ namespace AxGui
             return new StyleValue
             {
                 Number = value,
+                Number2 = value,
                 Unit = StyleUnit.Pixel,
             };
         }
@@ -100,12 +90,24 @@ namespace AxGui
             if (value.EndsWith("%", StringComparison.InvariantCulture))
             {
                 v.Number = float.Parse(value.AsSpan(0, value.Length - 1), provider: CultureInfo.InvariantCulture.NumberFormat);
+                v.Number2 = v.Number;
                 v.Unit = StyleUnit.Percentage;
             }
             else if (value.EndsWith("px", StringComparison.InvariantCulture))
             {
-                v.Number = float.Parse(value.AsSpan(0, value.Length - 2), provider: CultureInfo.InvariantCulture.NumberFormat);
-                v.Unit = StyleUnit.Number;
+                if (value.Contains(" "))
+                {
+                    var parts = value.Split(" ");
+                    v.Number = float.Parse(parts[0].AsSpan(0, parts[0].Length - 2), provider: CultureInfo.InvariantCulture.NumberFormat);
+                    v.Number2 = float.Parse(parts[1].AsSpan(0, parts[1].Length - 2), provider: CultureInfo.InvariantCulture.NumberFormat);
+                    v.Unit = StyleUnit.Pixel;
+                }
+                else
+                {
+                    v.Number = float.Parse(value.AsSpan(0, value.Length - 2), provider: CultureInfo.InvariantCulture.NumberFormat);
+                    v.Number2 = v.Number;
+                    v.Unit = StyleUnit.Pixel;
+                }
             }
             else if (value == "auto")
             {
@@ -144,6 +146,7 @@ namespace AxGui
             else
             {
                 v.Number = float.Parse(value, provider: CultureInfo.InvariantCulture.NumberFormat);
+                v.Number2 = v.Number;
                 v.Unit = StyleUnit.Number;
             }
 
@@ -157,6 +160,8 @@ namespace AxGui
             {
                 case StyleUnit.Percentage:
                     value.Number = (ctx.LocalViewPort.Size(axis) / 100) * Number;
+                    if (value.Number2 != 0)
+                        value.Number2 = (ctx.LocalViewPort.Size(axis) / 100) * Number2;
                     value.Unit = StyleUnit.Pixel;
                     break;
             }

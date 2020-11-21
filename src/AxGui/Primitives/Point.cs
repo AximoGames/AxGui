@@ -3,13 +3,18 @@
 
 using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace AxGui
 {
+
+    [StructLayout(LayoutKind.Explicit, Size = 8)]
     public struct Point : IEquatable<Point>
     {
-        public float X { get; set; }
-        public float Y { get; set; }
+        [FieldOffset(0)]
+        public float X;
+        [FieldOffset(4)]
+        public float Y;
 
         public static readonly Point Zero;
 
@@ -51,8 +56,8 @@ namespace AxGui
         {
             return new Point
             {
-                Y = value,
                 X = value,
+                Y = value,
             };
         }
 
