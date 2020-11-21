@@ -13,7 +13,7 @@ namespace AxGui.Test
         public void ParseEmptyDocument()
         {
             var doc = Document.FromString("");
-            Assert.Empty(doc.Body.Children);
+            Assert.Empty(doc._Body.Children);
         }
 
         [Fact]
@@ -29,8 +29,8 @@ namespace AxGui.Test
 
             var doc = Document.FromString(html);
 
-            Assert.Empty(doc.Body.Children[0].Children);
-            Assert.Equal("div", doc.Body.Children[0].TagName);
+            Assert.Empty(doc._Body.Children[0].Children);
+            Assert.Equal("div", doc._Body.Children[0].TagName);
         }
 
         [Fact]
@@ -43,9 +43,9 @@ namespace AxGui.Test
 
             var doc = Document.FromString(html);
 
-            Assert.Empty(doc.Body.Children[0].Children);
-            Assert.Equal(2, doc.Body.Children.Count);
-            Assert.Equal("div", doc.Body.Children[1].TagName);
+            Assert.Empty(doc._Body.Children[0].Children);
+            Assert.Equal(2, doc._Body.Children.Count);
+            Assert.Equal("div", doc._Body.Children[1].TagName);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace AxGui.Test
         {
             var html = @"<div style='width:10px'></div>";
             var doc = Document.FromString(html);
-            Assert.Equal("10px", doc.Body.Children[0].Style.Width);
+            Assert.Equal("10px", doc._Body.Children[0].Style.Width);
         }
 
         [Fact]
@@ -67,8 +67,8 @@ namespace AxGui.Test
 </html>";
             var doc = Document.FromString(html);
             Assert.Equal(".testClass", doc.Styles.GetRuleByClass("testClass")?.Selector);
-            Assert.Equal("div", doc.Body.Children[0].TagName);
-            Assert.Equal(1, doc.Body.Children.Count);
+            Assert.Equal("div", doc._Body.Children[0].TagName);
+            Assert.Equal(1, doc._Body.Children.Count);
         }
 
         [Fact]
@@ -80,11 +80,11 @@ abc
 
             var doc = Document.FromString(html);
 
-            Assert.IsType<TextElement>(doc.Body.Children[0]);
-            Assert.Empty(doc.Body.Children[0].Children);
+            Assert.IsType<TextElement>(doc._Body.Children[0]);
+            Assert.Empty(doc._Body.Children[0].Children);
             Assert.Equal(@"
 abc
- def", (doc.Body.Children[0] as TextElement)?.Content?.Replace("\n", "\r\n"));
+ def", (doc._Body.Children[0] as TextElement)?.Content?.Replace("\n", "\r\n"));
         }
 
     }

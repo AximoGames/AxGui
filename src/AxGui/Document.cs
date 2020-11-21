@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,8 +17,38 @@ namespace AxGui
 
     public class Document
     {
-        public Element Body = new Element("body");
+        internal Element _Body;
+        public Element Body
+        {
+            get => _Body;
+            set
+            {
+                _Body = value;
+                GetElementByIdEnumerator = new ElementEnumerator(_Body);
+            }
+        }
+
         public StyleCollection Styles = new StyleCollection();
+
+        public Document()
+        {
+            _Body = new Element("body");
+            GetElementByIdEnumerator = new ElementEnumerator(_Body);
+        }
+
+        public IEnumerable<Element> All => _Body.GetNodesWithSelf();
+
+        private IEnumerator<Element> GetElementByIdEnumerator;
+        public Element? GetElementById(string id)
+        {
+            GetElementByIdEnumerator.Reset();
+            while (GetElementByIdEnumerator.MoveNext())
+            {
+                if (GetElementByIdEnumerator.Current.Id == id)
+                    return GetElementByIdEnumerator.Current;
+            }
+            return null;
+        }
 
         public static Document FromString(string content)
         {
@@ -81,7 +112,7 @@ namespace AxGui
             {
                 foreach (var child in root.Children)
                 {
-                    d.Body.AddChild(child);
+                    d._Body.AddChild(child);
                 }
             }
 

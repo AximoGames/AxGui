@@ -15,6 +15,7 @@ namespace AxGui
         public readonly ElemenetAttributs Attributes = new ElemenetAttributs();
         public readonly ElementStyle Style = new ElementStyle();
         public readonly ElementStyle ResolvedStyle = new ElementStyle();
+        public Point ScrollOffset;
 
         public Element? Parent;
         private protected bool PassThrough;
@@ -25,6 +26,7 @@ namespace AxGui
         public object? Data;
 
         public string? CssClass;
+        public string? Id;
 
         /// <summary>
         /// Logical childs, for example items in a scroll view.
@@ -36,6 +38,7 @@ namespace AxGui
         /// </summary>
         internal List<Element> ChildrenInternal;
         internal RenderContext RenderContext = new RenderContext();
+        private RenderContext PostRenderContext = new RenderContext();
         internal ProcessLayoutContext ProcessLayoutContext = new ProcessLayoutContext();
 
         public readonly string? TagName;
@@ -80,6 +83,9 @@ namespace AxGui
                     break;
                 case "class":
                     CssClass = value;
+                    break;
+                case "id":
+                    Id = value;
                     break;
             }
         }
@@ -439,7 +445,14 @@ namespace AxGui
             c.GlobalContext = ctx;
             ctx.AddRenderContext(c);
             c.Reset(); // TODO: Flag "AutoReset true/false"
+            PostRenderContext.Reset();
             Render(c);
+
+            if (c.AfterChildCommands.Count > 0)
+            {
+                PostRenderContext.Commands.AddRange(c.AfterChildCommands);
+                ctx.AddRenderContext(PostRenderContext);
+            }
         }
 
         internal bool DebugBorders;
@@ -513,10 +526,29 @@ namespace AxGui
 
         protected internal virtual void RenderChildren(RenderContext ctx)
         {
+            var scroll = ScrollOffset != Point.Zero;
+            if (scroll)
+            {
+                ctx.Commands.Add(new DrawActionCommand(x =>
+                {
+                    x.Canvas.Save();
+                    x.Canvas.ClipRect(ClientRect.ToSKRect());
+                    x.Canvas.Translate(new SKPoint(-ScrollOffset.X, -ScrollOffset.Y));
+                }));
+            }
+
             var length = Children.Count;
             var children = Children;
             for (var i = 0; i < length; i++)
                 children[i].CallRender(ctx.GlobalContext!);
+
+            if (scroll)
+            {
+                ctx.AfterChildCommands.Add(new DrawActionCommand(x =>
+                {
+                    x.Canvas.Restore();
+                }));
+            }
         }
 
         private protected Box GetParentBlockBox(ProcessLayoutContext ctx)
@@ -555,6 +587,8 @@ namespace AxGui
             return label + GetType().Name;
         }
 
+        #region Disposing
+
         protected virtual void Dispose(bool disposing)
         {
             if (Disposed)
@@ -581,6 +615,18 @@ namespace AxGui
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        #endregion
+
+        internal IEnumerable<Element> GetNodesWithSelf()
+        {
+            yield return this;
+
+            foreach (var child in Children)
+                foreach (var itm in child.GetNodesWithSelf())
+                    yield return itm;
+        }
+
     }
 
 }

@@ -18,6 +18,7 @@ namespace AxGui
         internal bool HasCommands => Commands.Count > 0 || AdditionalCommandLists.Count > 0;
 
         public readonly DrawCommands Commands = new DrawCommands();
+        public readonly DrawCommands AfterChildCommands = new DrawCommands();
         public readonly List<DrawCommands> AdditionalCommandLists = new List<DrawCommands>();
         internal GlobalRenderContext? GlobalContext;
 

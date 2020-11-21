@@ -38,7 +38,6 @@ namespace AxGui.Sample.OpenGL
             Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
 
             InitSkia();
-
         }
 
         private Vector2i CurrentSize;
@@ -72,10 +71,8 @@ namespace AxGui.Sample.OpenGL
 
         protected override void OnLoad()
         {
-            //CurrentSize = ClientSize;
-            //VSync = VSyncMode.On;
-
             CurrentSize = ClientSize;
+            //VSync = VSyncMode.On;
 
             InitSkia();
             FPSCounter = new Stopwatch();
@@ -104,6 +101,9 @@ namespace AxGui.Sample.OpenGL
             var styles = StyleCollection.FromFile("../../../Theme.css");
 
             el = doc.Body;
+
+            doc.GetElementById("dialog").ScrollOffset.Y = 10;
+
             //var styles = doc.Styles;
 
             //el = new Element();
