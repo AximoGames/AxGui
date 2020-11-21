@@ -14,6 +14,7 @@ namespace AxGui
     {
         public readonly ElemenetAttributs Attributes = new ElemenetAttributs();
         public readonly ElementStyle Style = new ElementStyle();
+        private readonly ElementStyle TempStyle = new ElementStyle();
         public readonly ElementStyle ResolvedStyle = new ElementStyle();
         public Point ScrollOffset;
 
@@ -106,7 +107,8 @@ namespace AxGui
 
         protected internal virtual void ComputeStyle(ProcessLayoutContext ctx)
         {
-            var style = Style;
+            Style.CopyTo(TempStyle);
+            var style = TempStyle;
             var resolved = ResolvedStyle;
 
             var classStyle = ctx.GlobalContext!.Styles!.GetRuleByClass(CssClass);
@@ -114,13 +116,23 @@ namespace AxGui
             var idStyle = ctx.GlobalContext!.Styles!.GetRuleById(Id);
 
             if (idStyle != null)
-                style = ElementStyle.Combine(idStyle.Style, style);
+                ElementStyle.Combine(style, idStyle.Style, style);
 
             if (classStyle != null)
-                style = ElementStyle.Combine(classStyle.Style, style);
+                ElementStyle.Combine(style, classStyle.Style, style);
 
             if (tagStyle != null)
-                style = ElementStyle.Combine(tagStyle.Style, style);
+                ElementStyle.Combine(style, tagStyle.Style, style);
+
+            ResolveStyle(ctx);
+
+            ComputeStyleChildren(ctx);
+        }
+
+        private void ResolveStyle(ProcessLayoutContext ctx)
+        {
+            var style = TempStyle;
+            var resolved = ResolvedStyle;
 
             if (style._BoundingChanged)
             {
@@ -139,8 +151,6 @@ namespace AxGui
             resolved.BorderColor = style.BorderColor;
             resolved.BackgroundColor = style.BackgroundColor;
             resolved.BorderRadius = style.BorderRadius;
-
-            ComputeStyleChildren(ctx);
         }
 
         protected internal virtual void ComputeStyleChildren(ProcessLayoutContext ctx)

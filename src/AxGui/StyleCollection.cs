@@ -44,7 +44,7 @@ namespace AxGui
             return col;
         }
 
-        public StyleRule? GetRuleByClass(string cssClass)
+        public StyleRule? GetRuleByClass(string? cssClass)
         {
             if (string.IsNullOrEmpty(cssClass))
                 return null;
@@ -52,7 +52,7 @@ namespace AxGui
             return GetRuleBySelector("." + cssClass);
         }
 
-        public StyleRule? GetRuleById(string id)
+        public StyleRule? GetRuleById(string? id)
         {
             if (string.IsNullOrEmpty(id))
                 return null;
@@ -60,7 +60,7 @@ namespace AxGui
             return GetRuleBySelector("#" + id);
         }
 
-        public StyleRule? GetRuleByTag(string cssClass)
+        public StyleRule? GetRuleByTag(string? cssClass)
         {
             if (string.IsNullOrEmpty(cssClass))
                 return null;
@@ -68,7 +68,7 @@ namespace AxGui
             return GetRuleBySelector(cssClass);
         }
 
-        public StyleRule? GetRuleBySelector(string selector) => Rules.LastOrDefault(x => x.Selector == selector);
+        public StyleRule? GetRuleBySelector(string? selector) => Rules.LastOrDefault(x => x.Selector == selector);
 
     }
 
