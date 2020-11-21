@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using SkiaSharp;
 using Xunit;
 
 namespace AxGui.Test
@@ -21,6 +22,14 @@ namespace AxGui.Test
         {
             var style = ElementStyle.FromString("display:inline-block");
             Assert.Equal(StyleDisplay.InlineBlock, style.Display);
+        }
+
+
+        [Fact]
+        public void ParseColor()
+        {
+            var style = ElementStyle.FromString("border-top-color:#010203");
+            Assert.Equal(new SKColor(1, 2, 3), style.BorderColor.Top.Color);
         }
 
         [Fact]

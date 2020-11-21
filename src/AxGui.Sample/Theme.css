@@ -4,6 +4,18 @@
     margin: auto;
     position: absolute;
     display: block;
+    border-width: 1px;
+    border-color: #00ff90;
+}
+
+.item {
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    display: block;
+    border-width: 20px;
+    background-color: #ff4488;
+    border-color: rgba(10, 66, 104, 0.5);
 }
 
 body {

@@ -84,6 +84,7 @@ namespace AxGui
             target.Display = Display;
             target.Position = Position;
             target.Visibility = Visibility;
+            target._BackgroundColor = _BackgroundColor;
         }
 
         public static ElementStyle Combine(ElementStyle parent, ElementStyle child)
@@ -113,6 +114,7 @@ namespace AxGui
             target.Display = StyleHelper.CombineEnum(parent.Display, child.Display);
             target.Position = StyleHelper.CombineEnum(parent.Position, child.Position);
             target.Visibility = StyleHelper.CombineEnum(parent.Visibility, child.Visibility);
+            target._BackgroundColor = StyleValue.Combine(parent._BackgroundColor, child._BackgroundColor);
         }
 
         internal static void SetRule(ElementStyle target, ExCSS.StyleDeclaration parent)
@@ -131,6 +133,7 @@ namespace AxGui
             target._Size = new StyleSize(parent.Width, parent.Height);
 
             target._BorderRadius = parent.BorderRadius;
+            target._BackgroundColor = parent.BackgroundColor;
 
             target.Display = StyleHelper.ParseEnum<StyleDisplay>(parent.Display);
             target.Position = StyleHelper.ParseEnum<StylePosition>(parent.Position);
@@ -163,10 +166,16 @@ namespace AxGui
 
         private Action BoundingChangedDelegate;
 
-        // TODO: Use StyleValue! For example StyleValue.As<StylePosition>().
         public StylePosition Position;
         public StyleDisplay Display;
         public StyleVisibility Visibility;
+
+        internal StyleValue _BackgroundColor;
+        internal StyleValue BackgroundColor
+        {
+            get => _BackgroundColor;
+            set => _BackgroundColor = value;
+        }
 
         internal StyleSize _Size;
         public StyleSize Size

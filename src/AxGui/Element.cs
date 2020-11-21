@@ -129,6 +129,8 @@ namespace AxGui
             resolved.Position = style.Position;
             resolved.Display = style.Display;
             resolved.Visibility = style.Visibility;
+            resolved.BorderColor = style.BorderColor;
+            resolved.BackgroundColor = style.BackgroundColor;
 
             ComputeStyleChildren(ctx);
         }
@@ -440,27 +442,65 @@ namespace AxGui
             Render(c);
         }
 
+        internal bool DebugBorders;
+
+        private SKPaint Paint = new SKPaint();
         protected void RenderBorderAndBackground(RenderContext ctx)
         {
-            var marginRectInner = MarginRect.Substract(DebugBorderWidth);
-            var borderRectInner = BorderRect.Substract(DebugBorderWidth);
-            var paddingRectInner = PaddingRect.Substract(DebugBorderWidth);
-
-            var clientRectInner = ClientRect.Substract(DebugBorderWidth);
-            ctx.Commands.Add(new DrawActionCommand(x =>
+            if (DebugBorders)
             {
-                x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint_Border);
-                x.Canvas.DrawRect(marginRectInner.ToSKRect(), DebugMarginPaint);
+                var marginRectInner = MarginRect.Substract(DebugBorderWidth);
+                var borderRectInner = BorderRect.Substract(DebugBorderWidth);
+                var paddingRectInner = PaddingRect.Substract(DebugBorderWidth);
+                var clientRectInner = ClientRect.Substract(DebugBorderWidth);
 
-                x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint_Border);
-                x.Canvas.DrawRect(borderRectInner.ToSKRect(), DebugBorderPaint);
+                ctx.Commands.Add(new DrawActionCommand(x =>
+                {
+                    x.Canvas.DrawRect(MarginRect.ToSKRect(), DebugMarginPaint_Border);
+                    x.Canvas.DrawRect(marginRectInner.ToSKRect(), DebugMarginPaint);
 
-                x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint_Border);
-                x.Canvas.DrawRect(paddingRectInner.ToSKRect(), DebugPaddingPaint);
+                    x.Canvas.DrawRect(BorderRect.ToSKRect(), DebugBorderPaint_Border);
+                    x.Canvas.DrawRect(borderRectInner.ToSKRect(), DebugBorderPaint);
 
-                x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint_Border);
-                x.Canvas.DrawRect(clientRectInner.ToSKRect(), DebugClientPaint);
-            }));
+                    x.Canvas.DrawRect(PaddingRect.ToSKRect(), DebugPaddingPaint_Border);
+                    x.Canvas.DrawRect(paddingRectInner.ToSKRect(), DebugPaddingPaint);
+
+                    x.Canvas.DrawRect(ClientRect.ToSKRect(), DebugClientPaint_Border);
+                    x.Canvas.DrawRect(clientRectInner.ToSKRect(), DebugClientPaint);
+                }));
+            }
+            else
+            {
+                var borderWidth = ResolvedStyle._BorderWidth.Top.Number;
+                var borderColor = ResolvedStyle._BorderColor.Top.Color;
+
+                if (borderWidth > 0 && borderColor.Alpha > 0)
+                {
+                    ctx.Commands.Add(new DrawActionCommand(x =>
+                    {
+                        Paint.Style = SKPaintStyle.Stroke;
+                        Paint.StrokeWidth = borderWidth;
+                        Paint.Color = borderColor;
+
+                        x.Canvas.DrawRect(BorderRect.Substract(borderWidth / 2).ToSKRect(), Paint);
+                    }));
+                }
+
+                if (ResolvedStyle._BackgroundColor.Unit == StyleUnit.Color)
+                {
+                    var bgRect = ClientRect;
+                    var bgColor = ResolvedStyle._BackgroundColor.Color;
+                    if (bgColor.Alpha > 0)
+                    {
+                        ctx.Commands.Add(new DrawActionCommand(x =>
+                        {
+                            Paint.Style = SKPaintStyle.Fill;
+                            Paint.Color = bgColor;
+                            x.Canvas.DrawRect(bgRect.ToSKRect(), Paint);
+                        }));
+                    }
+                }
+            }
         }
 
         public virtual void Render(RenderContext ctx)

@@ -42,6 +42,7 @@ namespace AxGui
         Percentage,
         //String,
         Auto,
+        Color,
     }
 
 }

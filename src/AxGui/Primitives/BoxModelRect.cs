@@ -174,6 +174,9 @@ namespace AxGui
 
         public static implicit operator BoxModelRect(string value)
         {
+            if (value.Contains(","))
+                return new BoxModelRect(value);
+
             var parts = value.Split(" ");
             if (parts.Length == 1)
                 return new BoxModelRect(parts[0]);
