@@ -23,7 +23,7 @@ namespace AxGui
         public float Number2; // 4 bytes, Placeholder
 
         [FieldOffset(8)]
-        public string Value; // 8 bytes
+        public string String; // 8 bytes
 
         [FieldOffset(16)]
         public StyleUnit Unit; // 4 bytes
@@ -153,7 +153,7 @@ namespace AxGui
                 }
                 else
                 {
-                    v.Value = value;
+                    v.String = value;
                     v.Unit = StyleUnit.String;
                 }
             }

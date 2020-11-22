@@ -104,7 +104,10 @@ namespace AxGui.Sample.OpenGL
             Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
             Layouter.Styles = styles;
 
-            Recorder = new CommandRecorder();
+            Recorder = new CommandRecorder
+            {
+                //DebugBorders = true,
+            };
             Executor = new CommandExecutor();
         }
 

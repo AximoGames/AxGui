@@ -47,6 +47,13 @@ namespace AxGui
             Font.GetFontMetrics(out FontMetrics);
         }
 
+        private void SetFont(string fontName)
+        {
+            Font.Typeface = FontManager.FindTypeface(fontName);
+            Font.GetFontMetrics(out FontMetrics);
+            Paint.Typeface = Font.Typeface;
+        }
+
         public float TextHeight => FontMetrics.Descent - FontMetrics.Ascent;
 
         public TextElement() : this(null)
@@ -73,6 +80,9 @@ namespace AxGui
 
             if (ResolvedStyle.FontSize.Unit != StyleUnit.Unset)
                 TextSize = ResolvedStyle.FontSize.Number;
+
+            if (ResolvedStyle.FontFamily.Unit != StyleUnit.Unset)
+                SetFont(ResolvedStyle.FontFamily.String);
 
             if (ResolvedStyle.Color.Unit == StyleUnit.Unset)
                 ResolvedStyle.Color = new StyleValue { Unit = StyleUnit.Color, Color = new SKColor(0, 0, 0) };

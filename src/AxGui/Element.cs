@@ -153,6 +153,7 @@ namespace AxGui
             resolved._BorderRadius = style._BorderRadius;
             resolved._Color = style._Color;
             resolved._FontSize = style._FontSize;
+            resolved._FontFamily = style._FontFamily;
 
             resolved.Position = style.Position;
             resolved.Display = style.Display;

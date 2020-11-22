@@ -16,16 +16,37 @@ namespace AxGui
     {
 
         internal static SKTypeface DefaultTypeFace { get; }
+        internal static SKTypeface DefaultSymbolTypeFace { get; }
+
+        internal static SKTypeface FindTypeface(string? fontFamily)
+        {
+            if (fontFamily == null)
+                return DefaultTypeFace;
+
+            switch (fontFamily.ToLower())
+            {
+                case "symbol":
+                case "dejavu":
+                    return DefaultSymbolTypeFace;
+                default:
+                    return DefaultTypeFace;
+                    return DefaultTypeFace;
+            }
+        }
 
         static FontManager()
         {
-            DefaultTypeFace = LoadEmbeddedTypeFace();
+            DefaultTypeFace = LoadEmbeddedTypeFace("Roboto-Regular.ttf.gz");
+            DefaultSymbolTypeFace = LoadEmbeddedTypeFace("DejaVuSans.ttf.gz");
+
+            //DefaultSymbolTypeFace = DefaultTypeFace;
+            //DefaultTypeFace = DefaultSymbolTypeFace;
         }
 
-        private static SKTypeface LoadEmbeddedTypeFace()
+        private static SKTypeface LoadEmbeddedTypeFace(string fontPath)
         {
             var fileProvider = new EmbeddedFileProvider(typeof(TextElement).Assembly);
-            var fileInfo = fileProvider.GetFileInfo("Roboto-Regular.ttf.gz");
+            var fileInfo = fileProvider.GetFileInfo(fontPath);
             using var stream = fileInfo.CreateReadStream();
             using GZipStream decompressionStream = new GZipStream(stream, CompressionMode.Decompress);
             return SKTypeface.FromStream(decompressionStream);
