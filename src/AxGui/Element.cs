@@ -281,7 +281,8 @@ namespace AxGui
                         Box absAnchors = el.ClientRect;
                         var absCenter = absAnchors.Center;
 
-                        absAnchors.Width = relSize.Width + decorationSize.Width;
+                        if (ResolvedStyle.Position != StylePosition.Static || ResolvedStyle.Display != StyleDisplay.Block)
+                            absAnchors.Width = relSize.Width + decorationSize.Width;
                         absAnchors.Height = relSize.Height + decorationSize.Height;
 
                         var pc = el.ProcessLayoutContext;

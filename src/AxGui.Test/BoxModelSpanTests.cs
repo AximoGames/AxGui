@@ -90,7 +90,7 @@ namespace AxGui.Test
 
             var box1 = box = new Element();
             box.Data = "b1";
-            box.Style.Display = StyleDisplay.Block;
+            box.Style.Display = StyleDisplay.InlineBlock;
             box.Style.Position = StylePosition.Static;
             box.Style.Width = 20;
             box.Style.Height = 20;
@@ -126,9 +126,9 @@ namespace AxGui.Test
 
             var box3 = box = new Element();
             box.Data = "b3";
-            box.Style.Display = StyleDisplay.Block;
+            box.Style.Display = StyleDisplay.InlineBlock;
             box.Style.Position = StylePosition.Static;
-            box.Style.Width = 20;
+            box.Style.Width = 30;
             box.Style.Height = 20;
             el.AddChild(box);
 

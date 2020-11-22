@@ -40,6 +40,23 @@ namespace AxGui.Test
         }
 
         [Fact]
+        public void Div()
+        {
+            var el = CreateRootElement();
+            var child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 50;
+            child.Style.Height = 30;
+
+            Layout(el);
+
+            Assert.Equal(new Box(15, 15, 505, 45), child.ClientRect);
+        }
+
+        [Fact]
         public void Child2()
         {
             var el = CreateRootElement();
