@@ -73,6 +73,32 @@ namespace AxGui.Test
             Assert.Equal(new Box(15, 15, 505, 45), child.ClientRect);
         }
 
+        public void DivNested()
+        {
+            var el = CreateRootElement();
+            Element child;
+
+            var child1 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 50;
+            child.Style.Height = 30;
+
+            var child2 = child = new Element();
+            child1.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 50;
+            child.Style.Height = 10;
+
+            Layout(el);
+
+            Assert.Equal(new Box(20, 20, 500, 30), child2.ClientRect);
+        }
+
         [Fact]
         public void Child2()
         {

@@ -14,13 +14,11 @@
 .item {
     /* width: 100%; */
     height: 50px;
-    position: static;
-    display: block;
-    border-width: 8px;
+    border-bottom-width: 8px;
     background-color: #ff4488;
-    border-color: rgba(5, 100, 163, 0.8);
-    border-style: solid;
-    border-radius: 10px;
+    border-bottom-color: rgba(5, 100, 163, 0.8);
+    border-bottom-style: solid;
+    /* border-radius: 10px; */
     box-sizing: border-box;
 }
 
@@ -31,6 +29,16 @@ body {
     padding: 0px;
     border-width: 0px;
     background-color: #000;
+}
+
+div {
+    position: static;
+    display: block;
+}
+
+span {
+    position: static;
+    display: inline;
 }
 
 .button {

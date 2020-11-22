@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using SkiaSharp;
 
@@ -612,11 +613,15 @@ namespace AxGui
         private protected Element? GetParentBlockElement(ProcessLayoutContext ctx)
         {
             var p = Parent;
+            //return p;
 
             while (p != null)
             {
-                if (p.ResolvedStyle.Position == StylePosition.Absolute)
+                if (!p.PassThrough)
                     return p;
+
+                //if (p.ResolvedStyle.Position == StylePosition.Absolute)
+                //    return p;
 
                 p = p.Parent;
             }

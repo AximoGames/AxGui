@@ -90,8 +90,8 @@ namespace AxGui.Test.Runner
 
         private void BuildUI()
         {
-            var test = new BoxModelSpanTests();
-            test.Flow();
+            var test = new BoxModelChildTests();
+            test.DivNested();
             el = test.RootElement;
 
             //Layouter = new LayoutProcessor();
