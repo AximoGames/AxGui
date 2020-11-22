@@ -35,12 +35,6 @@
     background-color: #ff4488;
     border-bottom-color: rgba(5, 100, 163, 0.8);
     border-bottom-style: solid;
-
-    justify-content: center;
-    align-items: center;
-    /* temporary fix: */
-    text-align: center;
-    vertical-align: middle;
 }
 
 .title {

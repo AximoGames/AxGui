@@ -304,7 +304,7 @@ namespace AxGui
                         Box absAnchors = el.ClientRect;
                         var absCenter = absAnchors.Center;
 
-                        if (!ResolvedStyle.Display.IsBlock())
+                        if (!ResolvedStyle.Display.IsBlock() || ResolvedStyle.Width.Unit != StyleUnit.Unset)
                             absAnchors.Width = relSize.Width + decorationSize.Width;
                         absAnchors.Height = relSize.Height + decorationSize.Height;
 
