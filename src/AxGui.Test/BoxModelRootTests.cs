@@ -7,19 +7,6 @@ using Xunit;
 namespace AxGui.Test
 {
 
-    public class TestBase
-    {
-        public Element? RootElement;
-
-        protected void Layout(Element el, Box? viewport = null)
-        {
-            RootElement = el;
-            var layouter = new LayoutProcessor();
-            layouter.ViewPort = viewport ?? new Box(0, 0, 640, 360);
-            layouter.Process(el);
-        }
-    }
-
     public class BoxModelRootTests : TestBase
     {
 

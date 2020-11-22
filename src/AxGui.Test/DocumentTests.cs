@@ -82,9 +82,9 @@ abc
 
             Assert.IsType<TextElement>(doc._Body.Children[0]);
             Assert.Empty(doc._Body.Children[0].Children);
-            Assert.Equal(@"
+            AssertEqualsNormalizeLineBreaks(@"
 abc
- def", (doc._Body.Children[0] as TextElement)?.Content?.Replace("\n", "\r\n"));
+ def", (doc._Body.Children[0] as TextElement)?.Content);
         }
 
     }
