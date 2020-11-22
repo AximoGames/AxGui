@@ -15,6 +15,16 @@ namespace AxGui
         {
             return value is StyleDisplay.Block or StyleDisplay.Flex or StyleDisplay.Grid;
         }
+
+        public static bool IsInlineBlock(this StyleDisplay value)
+        {
+            return value is StyleDisplay.InlineFlex or StyleDisplay.InlineBlock;
+        }
+
+        public static bool IsFlex(this StyleDisplay value)
+        {
+            return value is StyleDisplay.Flex or StyleDisplay.InlineFlex;
+        }
     }
 
 }

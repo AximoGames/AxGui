@@ -31,11 +31,12 @@
 }
 
 .top-button {
-    /* width: 100%; */
-    display: flex;
+    width: 100px;
+    display: inline-flex;
     height: 30px;
     margin-bottom: 3px;
     padding: 3px;
+    margin-right: 3px;
     border-width: 1px;
     background-color: #1c3a54;
     border-color: #36546e;

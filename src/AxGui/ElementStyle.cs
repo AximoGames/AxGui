@@ -15,10 +15,11 @@ namespace AxGui
         Inherit,
 
         Block,
-        InlineBlock,
-        Inline,
         Flex,
         Grid,
+        Inline,
+        InlineBlock,
+        InlineFlex,
         None,
     }
 

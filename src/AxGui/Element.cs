@@ -477,7 +477,7 @@ namespace AxGui
 
         protected internal virtual void JustifyChildren(ProcessLayoutContext ctx)
         {
-            if (ResolvedStyle.Display == StyleDisplay.Flex)
+            if (ResolvedStyle.Display.IsFlex())
             {
                 if (ResolvedStyle.JustifyContent == StyleJustifyContenet.Center)
                 {
