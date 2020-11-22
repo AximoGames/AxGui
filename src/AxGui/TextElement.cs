@@ -34,15 +34,17 @@ namespace AxGui
         public float TextSize
         {
             get => Font.Size;
-            private set
-            {
-                if (Font.Size == value)
-                    return;
+            private set => SetFontSize(value);
+        }
 
-                Font.Size = value;
-                Paint.TextSize = value;
-                Font.GetFontMetrics(out FontMetrics);
-            }
+        private void SetFontSize(float value)
+        {
+            if (Font.Size == value)
+                return;
+
+            Font.Size = value;
+            Paint.TextSize = value;
+            Font.GetFontMetrics(out FontMetrics);
         }
 
         public float TextHeight => FontMetrics.Descent - FontMetrics.Ascent;

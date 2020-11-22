@@ -107,6 +107,7 @@ namespace AxGui
             target._Size = _Size;
 
             target._BackgroundColor = _BackgroundColor;
+            target._Color = _Color;
             target._FontSize = _FontSize;
 
             target.Display = Display;
@@ -141,6 +142,7 @@ namespace AxGui
             target._Size = StyleSize.Combine(parent._Size, child._Size);
 
             target._BackgroundColor = StyleValue.Combine(parent._BackgroundColor, child._BackgroundColor);
+            target._Color = StyleValue.Combine(parent._Color, child._Color);
             target._FontSize = StyleValue.Combine(parent._FontSize, child._FontSize);
 
             target.Display = StyleHelper.CombineEnum(parent.Display, child.Display);
@@ -168,6 +170,7 @@ namespace AxGui
             target._Size = new StyleSize(parent.Width, parent.Height);
 
             target._BackgroundColor = parent.BackgroundColor;
+            target._Color = parent.Color;
             target._FontSize = parent.FontSize;
 
             target.Display = StyleHelper.ParseEnum<StyleDisplay>(parent.Display);
@@ -222,6 +225,13 @@ namespace AxGui
         {
             get => _FontSize;
             set => _FontSize = value;
+        }
+
+        internal StyleValue _Color;
+        internal StyleValue Color
+        {
+            get => _Color;
+            set => _Color = value;
         }
 
         internal StyleValue _BackgroundColor;

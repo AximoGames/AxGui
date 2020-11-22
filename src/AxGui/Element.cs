@@ -148,10 +148,11 @@ namespace AxGui
                 resolved._Anchors = style._Anchors.Normalize(ctx);
             }
 
-            resolved.BorderColor = style.BorderColor;
-            resolved.BackgroundColor = style.BackgroundColor;
-            resolved.BorderRadius = style.BorderRadius;
-            resolved.FontSize = style.FontSize;
+            resolved._BorderColor = style._BorderColor;
+            resolved._BackgroundColor = style._BackgroundColor;
+            resolved._BorderRadius = style._BorderRadius;
+            resolved._Color = style._Color;
+            resolved._FontSize = style._FontSize;
 
             resolved.Position = style.Position;
             resolved.Display = style.Display;
@@ -517,7 +518,7 @@ namespace AxGui
             return GetChildsBounds();
         }
 
-        internal bool DebugBorders = true;
+        internal bool DebugBorders;
 
         private protected static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
         private protected static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
@@ -580,7 +581,7 @@ namespace AxGui
                 var borderColor = ResolvedStyle._BorderColor.Top.Color;
                 var borderRadius = ResolvedStyle._BorderRadius.TopLeft.Size;
                 var bgColor = ResolvedStyle._BackgroundColor.Color;
-                var bgRect = ClientRect;
+                var bgRect = PaddingRect;
 
                 if (borderRadius == Size.Zero)
                 {
@@ -620,7 +621,7 @@ namespace AxGui
                         {
                             Paint.Style = SKPaintStyle.Fill;
                             Paint.Color = bgColor;
-                            x.Canvas.DrawRoundRect(ClientRect.ToSKRect(), (borderRadius - (borderWidth / 2)).ToSKSize(), Paint);
+                            x.Canvas.DrawRoundRect(bgRect.ToSKRect(), (borderRadius - (borderWidth / 2)).ToSKSize(), Paint);
                         }));
                     }
 

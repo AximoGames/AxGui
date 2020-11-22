@@ -37,9 +37,11 @@ namespace AxGui
         {
             RenderBorderAndBackground(ctx);
             var clientRectInner = ClientRect.Substract(1);
+            var color = ResolvedStyle.Color.Color;
 
             ctx.Commands.Add(new DrawActionCommand(x =>
             {
+                Paint.Color = color;
                 x.Canvas.DrawText(TextBlob, ClientRect.Left + DrawPosition.X, ClientRect.Top + DrawPosition.Y, Paint);
             }));
         }
