@@ -74,6 +74,9 @@ namespace AxGui
             if (ResolvedStyle.FontSize.Unit != StyleUnit.Unset)
                 TextSize = ResolvedStyle.FontSize.Number;
 
+            if (ResolvedStyle.Color.Unit == StyleUnit.Unset)
+                ResolvedStyle.Color = new StyleValue { Unit = StyleUnit.Color, Color = new SKColor(0, 0, 0) };
+
             if (ContentChanged)
             {
                 ContentChanged = false;
@@ -93,7 +96,7 @@ namespace AxGui
                     var spIdx = -1;
 
                     float measuredWidth;
-                    if (availableWidth == 0)
+                    if (availableWidth <= 0)
                         availableWidth = ctx.GlobalContext!.GlobalViewPort.Width;
                     var num = (int)Paint.BreakText(span, first ? availableWidth - parent.ProcessLayoutContext.RowPosition.X : availableWidth, out measuredWidth);
 

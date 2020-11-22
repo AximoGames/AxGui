@@ -88,6 +88,35 @@ namespace AxGui.Test
             Assert.Equal(new Box(15, 15, 115, 45), child.ClientRect);
         }
 
+        [Fact]
+        public void FlexGrow()
+        {
+            var el = CreateRootElement();
+            el.Style.Display = StyleDisplay.Flex;
+
+            Element child;
+
+            var child1 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.InlineBlock;
+            child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 100;
+            child.Style.Height = 30;
+
+            var child2 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.InlineBlock;
+            child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.FlexGrow = 1;
+            child.Style.Height = 30;
+
+            Layout(el);
+
+            Assert.Equal(new Box(125, 15, 505, 45), child2.ClientRect);
+        }
+
         public void DivNested()
         {
             var el = CreateRootElement();

@@ -309,10 +309,10 @@ namespace AxGui
                         Box absAnchors = el.ClientRect;
                         var absCenter = absAnchors.Center;
 
-                        if (!ResolvedStyle.Display.IsBlock() || ResolvedStyle.Width.Unit != StyleUnit.Unset)
+                        if (Parent.ResolvedStyle.Display == StyleDisplay.Flex && ResolvedStyle.FlexGrow.Number > 0)
+                            absAnchors.Width = el.ClientRect.Width - GetConsumedParentSize(ctx).Width; // Possible problem: it can still break, if it's 0.00001 px larger.
+                        else if (!ResolvedStyle.Display.IsBlock() || ResolvedStyle.Width.Unit != StyleUnit.Unset)
                             absAnchors.Width = relSize.Width + decorationSize.Width;
-                        //else if (Parent.ResolvedStyle.Display == StyleDisplay.Flex && ResolvedStyle.FlexGrow.Number > 0)
-                        //    absAnchors.Width = 400;
 
                         absAnchors.Height = relSize.Height + decorationSize.Height;
 
@@ -500,6 +500,48 @@ namespace AxGui
             }
         }
 
+        private Size GetConsumedParentSize(ProcessLayoutContext ctx)
+        {
+            if (Parent == null)
+                return default;
+
+            var childs = Parent.Children;
+            var len = childs.Count;
+            if (len == 0)
+                return default;
+
+            Size result = default;
+            for (var i = 0; i < len; i++)
+            {
+                var child = childs[i];
+                if (child == this)
+                    continue;
+                var style = child.TempStyle;
+
+                var size = style.Size.Normalize(ctx);
+
+                result.Width += style.Margin.Left.Normalize(ctx, Axis.X).Number;
+                result.Width += style.Margin.Right.Normalize(ctx, Axis.X).Number;
+                result.Height += style.Margin.Top.Normalize(ctx, Axis.Y).Number;
+                result.Height += style.Margin.Bottom.Normalize(ctx, Axis.Y).Number;
+
+                result.Width += style.BorderWidth.Left.Normalize(ctx, Axis.X).Number;
+                result.Width += style.BorderWidth.Right.Normalize(ctx, Axis.X).Number;
+                result.Height += style.BorderWidth.Top.Normalize(ctx, Axis.Y).Number;
+                result.Height += style.BorderWidth.Bottom.Normalize(ctx, Axis.Y).Number;
+
+                result.Width += style.Padding.Left.Normalize(ctx, Axis.X).Number;
+                result.Width += style.Padding.Right.Normalize(ctx, Axis.X).Number;
+                result.Height += style.Padding.Top.Normalize(ctx, Axis.Y).Number;
+                result.Height += style.Padding.Bottom.Normalize(ctx, Axis.Y).Number;
+
+                result.Width += style.Width.Normalize(ctx, Axis.X).Number;
+                result.Height += style.Height.Normalize(ctx, Axis.Y).Number;
+            }
+
+            return result;
+        }
+
         private Box GetChildsBounds()
         {
             var childs = Children;
@@ -522,8 +564,6 @@ namespace AxGui
             return GetChildsBounds();
         }
 
-        internal bool DebugBorders;
-
         private protected static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
         private protected static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
         private protected static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
@@ -542,6 +582,7 @@ namespace AxGui
         {
             var c = RenderContext;
             c.GlobalContext = ctx;
+            c.DebugBorders = ctx.DebugBorders;
             ctx.AddRenderContext(c);
             c.Reset(); // TODO: Flag "AutoReset true/false"
             PostRenderContext.Reset();
@@ -557,7 +598,7 @@ namespace AxGui
         private SKPaint Paint = new SKPaint();
         protected void RenderBorderAndBackground(RenderContext ctx)
         {
-            if (DebugBorders)
+            if (ctx.DebugBorders)
             {
                 var marginRectInner = MarginRect.Substract(DebugBorderWidth);
                 var borderRectInner = BorderRect.Substract(DebugBorderWidth);

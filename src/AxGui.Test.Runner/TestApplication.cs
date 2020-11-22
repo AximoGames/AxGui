@@ -90,15 +90,15 @@ namespace AxGui.Test.Runner
 
         private void BuildUI()
         {
-            var test = new BoxModelSpanTests();
-            test.CenterText();
+            var test = new BoxModelChildTests();
+            test.FlexGrow();
             el = test.RootElement;
 
             //Layouter = new LayoutProcessor();
             //Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
             ////Layouter.Styles = styles;
 
-            Recorder = new CommandRecorder();
+            Recorder = new CommandRecorder { DebugBorders = true };
             Executor = new CommandExecutor();
         }
 

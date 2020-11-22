@@ -11,6 +11,11 @@ namespace AxGui
     {
 
         internal readonly GlobalRenderContext RenderContext = new GlobalRenderContext();
+        public bool DebugBorders
+        {
+            get => RenderContext.DebugBorders;
+            set => RenderContext.DebugBorders = value;
+        }
 
         public void Record(Element root)
         {

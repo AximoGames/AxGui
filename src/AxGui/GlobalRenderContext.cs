@@ -10,6 +10,7 @@ namespace AxGui
     public class GlobalRenderContext
     {
         internal readonly List<RenderContext> RenderContextList = new List<RenderContext>();
+        internal bool DebugBorders;
 
         public void AddRenderContext(RenderContext ctx)
         {
