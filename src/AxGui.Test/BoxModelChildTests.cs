@@ -40,13 +40,30 @@ namespace AxGui.Test
         }
 
         [Fact]
-        public void Div()
+        public void DivStatic()
         {
             var el = CreateRootElement();
             var child = new Element();
             el.AddChild(child);
             child.Style.Display = StyleDisplay.Block;
             child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 50;
+            child.Style.Height = 30;
+
+            Layout(el);
+
+            Assert.Equal(new Box(15, 15, 505, 45), child.ClientRect);
+        }
+
+        [Fact]
+        public void DivRelative()
+        {
+            var el = CreateRootElement();
+            var child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Relative;
             child.Style.BorderWidth = 5;
             child.Style.Width = 50;
             child.Style.Height = 30;
