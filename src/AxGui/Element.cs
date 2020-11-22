@@ -108,6 +108,12 @@ namespace AxGui
 
         protected internal virtual void ComputeStyle(ProcessLayoutContext ctx)
         {
+            ComputeStyleSelf(ctx);
+            ComputeStyleChildren(ctx);
+        }
+
+        protected internal virtual void ComputeStyleSelf(ProcessLayoutContext ctx)
+        {
             Style.CopyTo(TempStyle);
             var style = TempStyle;
             var resolved = ResolvedStyle;
@@ -124,10 +130,6 @@ namespace AxGui
 
             if (tagStyle != null)
                 ElementStyle.Combine(style, tagStyle.Style, style);
-
-            //ResolveStyle(ctx);
-
-            ComputeStyleChildren(ctx);
         }
 
         protected virtual void ResolveStyle(ProcessLayoutContext ctx)
@@ -149,6 +151,7 @@ namespace AxGui
             resolved.BorderColor = style.BorderColor;
             resolved.BackgroundColor = style.BackgroundColor;
             resolved.BorderRadius = style.BorderRadius;
+            resolved.FontSize = style.FontSize;
 
             resolved.Position = style.Position;
             resolved.Display = style.Display;

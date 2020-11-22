@@ -36,8 +36,8 @@ namespace AxGui.Test
             child.Style.Height = 30;
             child.Style.Display = StyleDisplay.Inline;
             child.Style.Position = StylePosition.Static;
+            child.Style.FontSize = 20;
             (child as TextElement).Content = "Testduck Testduck2 Testduck3";
-            (child as TextElement).TextSize = 20;
             el.AddChild(child);
 
             Layout(el);
@@ -62,8 +62,8 @@ namespace AxGui.Test
             child.Style.Height = 30;
             child.Style.Display = StyleDisplay.Inline;
             child.Style.Position = StylePosition.Static;
+            child.Style.FontSize = 20;
             (child as TextElement).Content = "Testduck Testduck2 Testduck3";
-            (child as TextElement).TextSize = 20;
             el.AddChild(child);
 
             Layout(el);
@@ -95,8 +95,8 @@ namespace AxGui.Test
             child.Style.Height = 30;
             child.Style.Display = StyleDisplay.InlineBlock;
             child.Style.Position = StylePosition.Static;
+            child.Style.FontSize = 20;
             (child as TextElement).Content = "Testduck Testduck2 Testduck3";
-            (child as TextElement).TextSize = 20;
             el.AddChild(child);
 
             Layout(el);
@@ -129,8 +129,8 @@ namespace AxGui.Test
             child.Style.Height = 30;
             child.Style.Display = StyleDisplay.Inline;
             child.Style.Position = StylePosition.Static;
+            child.Style.FontSize = 20;
             (child as TextElement).Content = "Testduck Testduck2 Testduck3";
-            (child as TextElement).TextSize = 20;
             el.AddChild(child);
 
             var box2 = box = new Element();
@@ -147,8 +147,8 @@ namespace AxGui.Test
             child.Style.Height = 30;
             child.Style.Display = StyleDisplay.Inline;
             child.Style.Position = StylePosition.Static;
+            child.Style.FontSize = 20;
             (child as TextElement).Content = "Testduck4 Testduck5 Testduck6";
-            (child as TextElement).TextSize = 20;
             el.AddChild(child);
 
             var box3 = box = new Element();
@@ -165,8 +165,8 @@ namespace AxGui.Test
             child.Style.Width = 5;
             child.Style.Display = StyleDisplay.Inline;
             child.Style.Position = StylePosition.Static;
+            child.Style.FontSize = 20;
             (child as TextElement).Content = "Testduck4 Testduck5 Testxk|²³|ₚ|ganz6";
-            (child as TextElement).TextSize = 20;
             el.AddChild(child);
 
             Layout(el);

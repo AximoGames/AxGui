@@ -18,6 +18,7 @@ namespace AxGui
         InlineBlock,
         Inline,
         Flex,
+        Grid,
         None,
     }
 
@@ -106,6 +107,7 @@ namespace AxGui
             target._Size = _Size;
 
             target._BackgroundColor = _BackgroundColor;
+            target._FontSize = _FontSize;
 
             target.Display = Display;
             target.Position = Position;
@@ -139,6 +141,7 @@ namespace AxGui
             target._Size = StyleSize.Combine(parent._Size, child._Size);
 
             target._BackgroundColor = StyleValue.Combine(parent._BackgroundColor, child._BackgroundColor);
+            target._FontSize = StyleValue.Combine(parent._FontSize, child._FontSize);
 
             target.Display = StyleHelper.CombineEnum(parent.Display, child.Display);
             target.Position = StyleHelper.CombineEnum(parent.Position, child.Position);
@@ -165,6 +168,7 @@ namespace AxGui
             target._Size = new StyleSize(parent.Width, parent.Height);
 
             target._BackgroundColor = parent.BackgroundColor;
+            target._FontSize = parent.FontSize;
 
             target.Display = StyleHelper.ParseEnum<StyleDisplay>(parent.Display);
             target.Position = StyleHelper.ParseEnum<StylePosition>(parent.Position);
@@ -212,6 +216,13 @@ namespace AxGui
 
         public StyleJustifyContenet JustifyContent;
         public StyleAlignItems AlignItems;
+
+        internal StyleValue _FontSize;
+        internal StyleValue FontSize
+        {
+            get => _FontSize;
+            set => _FontSize = value;
+        }
 
         internal StyleValue _BackgroundColor;
         internal StyleValue BackgroundColor

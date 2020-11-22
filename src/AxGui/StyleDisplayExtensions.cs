@@ -13,7 +13,7 @@ namespace AxGui
     {
         public static bool IsBlock(this StyleDisplay value)
         {
-            return value is StyleDisplay.Block or StyleDisplay.Flex;
+            return value is StyleDisplay.Block or StyleDisplay.Flex or StyleDisplay.Grid;
         }
     }
 

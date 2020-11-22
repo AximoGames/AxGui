@@ -34,8 +34,11 @@ namespace AxGui
         public float TextSize
         {
             get => Font.Size;
-            set
+            private set
             {
+                if (Font.Size == value)
+                    return;
+
                 Font.Size = value;
                 Paint.TextSize = value;
                 Font.GetFontMetrics(out FontMetrics);
@@ -65,6 +68,9 @@ namespace AxGui
             //BorderRect = default;
             //PaddingRect = default;
             //ClientRect = default;
+
+            if (ResolvedStyle.FontSize.Unit != StyleUnit.Unset)
+                TextSize = ResolvedStyle.FontSize.Number;
 
             if (ContentChanged)
             {
