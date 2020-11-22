@@ -17,7 +17,7 @@ namespace AxGui
         Block,
         InlineBlock,
         Inline,
-        //Flex,
+        Flex,
         None,
     }
 
@@ -29,6 +29,30 @@ namespace AxGui
 
         Visible,
         Hidden,
+    }
+
+    /// <summary>
+    /// Horizontal align
+    /// </summary>
+    public enum StyleJustifyContenet
+    {
+        Unset,
+        Initial,
+        Inherit,
+
+        Center,
+    }
+
+    /// <summary>
+    /// Vertical align
+    /// </summary>
+    public enum StyleAlignItems
+    {
+        Unset,
+        Initial,
+        Inherit,
+
+        Center,
     }
 
     public enum StylePosition
@@ -86,6 +110,9 @@ namespace AxGui
             target.Display = Display;
             target.Position = Position;
             target.Visibility = Visibility;
+
+            target.JustifyContent = JustifyContent;
+            target.AlignItems = AlignItems;
         }
 
         public static ElementStyle Combine(ElementStyle parent, ElementStyle child)
@@ -116,6 +143,9 @@ namespace AxGui
             target.Display = StyleHelper.CombineEnum(parent.Display, child.Display);
             target.Position = StyleHelper.CombineEnum(parent.Position, child.Position);
             target.Visibility = StyleHelper.CombineEnum(parent.Visibility, child.Visibility);
+
+            target.JustifyContent = StyleHelper.CombineEnum(parent.JustifyContent, child.JustifyContent);
+            target.AlignItems = StyleHelper.CombineEnum(parent.AlignItems, child.AlignItems);
         }
 
         internal static void SetRule(ElementStyle target, ExCSS.StyleDeclaration parent)
@@ -139,6 +169,15 @@ namespace AxGui
             target.Display = StyleHelper.ParseEnum<StyleDisplay>(parent.Display);
             target.Position = StyleHelper.ParseEnum<StylePosition>(parent.Position);
             target.Visibility = StyleHelper.ParseEnum<StyleVisibility>(parent.Visibility);
+
+            target.JustifyContent = StyleHelper.ParseEnum<StyleJustifyContenet>(parent.JustifyContent);
+            target.AlignItems = StyleHelper.ParseEnum<StyleAlignItems>(parent.AlignContent);
+
+            // temporary fix
+            if (parent.TextAlign == "center")
+                target.JustifyContent = StyleJustifyContenet.Center;
+            if (parent.VerticalAlign == "middle")
+                target.AlignItems = StyleAlignItems.Center;
         }
 
         public static ElementStyle FromString(string styleBlock)
@@ -170,6 +209,9 @@ namespace AxGui
         public StylePosition Position;
         public StyleDisplay Display;
         public StyleVisibility Visibility;
+
+        public StyleJustifyContenet JustifyContent;
+        public StyleAlignItems AlignItems;
 
         internal StyleValue _BackgroundColor;
         internal StyleValue BackgroundColor

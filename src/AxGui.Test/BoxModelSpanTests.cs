@@ -48,6 +48,33 @@ namespace AxGui.Test
         }
 
         [Fact]
+        public void CenterText()
+        {
+            var el = CreateRootElement();
+            el.Style.Display = StyleDisplay.Flex;
+            el.Style.JustifyContent = StyleJustifyContenet.Center;
+            el.Style.AlignItems = StyleAlignItems.Center;
+
+            Element child;
+
+            var child1 = child = new TextElement();
+            child.Data = "child";
+            child.Style.Height = 30;
+            child.Style.Display = StyleDisplay.Inline;
+            child.Style.Position = StylePosition.Static;
+            (child as TextElement).Content = "Testduck Testduck2 Testduck3";
+            (child as TextElement).TextSize = 20;
+            el.AddChild(child);
+
+            Layout(el);
+
+            var txt = child.Children[1];
+
+            Assert.Equal(200, txt.ClientRect.Bottom);
+            Assert.InRange(txt.ClientRect.Left, 28, 31);
+        }
+
+        [Fact]
         public void InlineBlock()
         {
             var el = CreateRootElement();

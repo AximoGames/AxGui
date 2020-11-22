@@ -103,6 +103,7 @@
     <Rule Id="IDE0035" Action="None" />
     <Rule Id="IDE0035WithoutSuggestion" Action="Info" />
     <Rule Id="IDE0054" Action="Info" />
+    <Rule Id="IDE1006" Action="Error" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.Features" RuleNamespace="Microsoft.CodeAnalysis.Features">
     <Rule Id="IDE0044" Action="None" />

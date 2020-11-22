@@ -61,6 +61,11 @@ namespace AxGui
         {
             //ResolveStyle(ctx);
 
+            //MarginRect = default;
+            //BorderRect = default;
+            //PaddingRect = default;
+            //ClientRect = default;
+
             if (ContentChanged)
             {
                 ContentChanged = false;
@@ -80,6 +85,8 @@ namespace AxGui
                     var spIdx = -1;
 
                     float measuredWidth;
+                    if (availableWidth == 0)
+                        availableWidth = ctx.GlobalContext!.GlobalViewPort.Width;
                     var num = (int)Paint.BreakText(span, first ? availableWidth - parent.ProcessLayoutContext.RowPosition.X : availableWidth, out measuredWidth);
 
                     // detect space

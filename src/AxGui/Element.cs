@@ -146,12 +146,16 @@ namespace AxGui
                 resolved._Anchors = style._Anchors.Normalize(ctx);
             }
 
-            resolved.Position = style.Position;
-            resolved.Display = style.Display;
-            resolved.Visibility = style.Visibility;
             resolved.BorderColor = style.BorderColor;
             resolved.BackgroundColor = style.BackgroundColor;
             resolved.BorderRadius = style.BorderRadius;
+
+            resolved.Position = style.Position;
+            resolved.Display = style.Display;
+            resolved.Visibility = style.Visibility;
+
+            resolved.JustifyContent = style.JustifyContent;
+            resolved.AlignItems = style.AlignItems;
         }
 
         protected internal virtual void ComputeStyleChildren(ProcessLayoutContext ctx)
@@ -184,6 +188,24 @@ namespace AxGui
             BorderRect.TranslateY(value);
             PaddingRect.TranslateY(value);
             ClientRect.TranslateY(value);
+        }
+
+        private void TranslateChilds(float x, float y)
+        {
+            var childs = Children;
+            var len = childs.Count;
+            for (var i = 0; i < len; i++)
+                childs[i].TranslateWithChilds(x, y);
+        }
+
+        private void TranslateWithChilds(float x, float y)
+        {
+            Translate(x, y);
+
+            var childs = Children;
+            var len = childs.Count;
+            for (var i = 0; i < len; i++)
+                childs[i].TranslateWithChilds(x, y);
         }
 
         protected internal virtual void CallComputeChildBoundsOffers(GlobalProcessLayoutContext ctx)
@@ -282,12 +304,12 @@ namespace AxGui
                         Box absAnchors = el.ClientRect;
                         var absCenter = absAnchors.Center;
 
-                        if (ResolvedStyle.Display != StyleDisplay.Block)
+                        if (!ResolvedStyle.Display.IsBlock())
                             absAnchors.Width = relSize.Width + decorationSize.Width;
                         absAnchors.Height = relSize.Height + decorationSize.Height;
 
                         var pc = el.ProcessLayoutContext;
-                        if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right || ResolvedStyle.Display == StyleDisplay.Block) // OuterRect.Right
+                        if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right || ResolvedStyle.Display.IsBlock()) // OuterRect.Right
                         {
                             pc.RowElements.Clear();
                             pc.RowPosition.Y += pc.RowHeight;
@@ -427,6 +449,7 @@ namespace AxGui
         {
             ComputeBoundsSelf(ctx);
             ComputeBoundsChildren(ctx);
+            JustifyChildren(ctx);
         }
 
         protected internal virtual void ComputeBoundsChildren(ProcessLayoutContext ctx)
@@ -442,6 +465,53 @@ namespace AxGui
                 child.ProcessLayoutContext.LocalViewPort = ClientRect;
                 child.CallComputeBounds(ctx.GlobalContext!);
             }
+        }
+
+        protected internal virtual void JustifyChildren(ProcessLayoutContext ctx)
+        {
+            if (ResolvedStyle.Display == StyleDisplay.Flex)
+            {
+                if (ResolvedStyle.JustifyContent == StyleJustifyContenet.Center)
+                {
+                    var childBounds = GetChildsBounds();
+                    var offset = new Point();
+
+                    var space = ClientRect.Width - childBounds.Width;
+                    if (space > 0)
+                        offset.X = space / 2;
+
+                    space = ClientRect.Height - childBounds.Height;
+                    if (space > 0)
+                        offset.Y = space / 2;
+
+                    if (offset != Point.Zero)
+                    {
+                        TranslateChilds(offset.X, offset.Y);
+                    }
+                }
+            }
+        }
+
+        private Box GetChildsBounds()
+        {
+            var childs = Children;
+            var len = childs.Count;
+            if (len == 0)
+                return default;
+
+            Box box = childs[0].GetBorderBounds();
+            for (var i = 1; i < len; i++)
+                box = box.Union(childs[i].GetBorderBounds());
+
+            return box;
+        }
+
+        private Box GetBorderBounds()
+        {
+            if (!PassThrough)
+                return BorderRect;
+
+            return GetChildsBounds();
         }
 
         internal bool DebugBorders = true;
@@ -613,15 +683,11 @@ namespace AxGui
         private protected Element? GetParentBlockElement(ProcessLayoutContext ctx)
         {
             var p = Parent;
-            //return p;
 
             while (p != null)
             {
                 if (!p.PassThrough)
                     return p;
-
-                //if (p.ResolvedStyle.Position == StylePosition.Absolute)
-                //    return p;
 
                 p = p.Parent;
             }

@@ -132,6 +132,16 @@ namespace AxGui
         public Point RightTop => new Point(Right, Top);
         public Point RightBottom => new Point(Right, Bottom);
 
+        public Box Union(Box rect)
+        {
+            float left = Math.Min(Left, rect.Left);
+            float top = Math.Min(Top, rect.Top);
+            float right = Math.Max(Right, rect.Right);
+            float bottom = Math.Max(Bottom, rect.Bottom);
+
+            return new Box(left, top, right, bottom);
+        }
+
     }
 
 }
