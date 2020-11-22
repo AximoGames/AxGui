@@ -28,7 +28,7 @@ namespace AxGui.Test
         [Fact]
         public void ParseColor()
         {
-            var style = ElementStyle.FromString("border-top-color:#010203");
+            var style = ElementStyle.FromString("border-top-color: #010203");
             Assert.Equal(new SKColor(1, 2, 3), style.BorderColor.Top.Color);
         }
 

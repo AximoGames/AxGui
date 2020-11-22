@@ -31,7 +31,7 @@ namespace AxGui
 
         public static StyleCollection FromStream(Stream stream)
         {
-            var parser = new ExCSS.StylesheetParser();
+            var parser = new ExCSS.StylesheetParser(includeUnknownDeclarations: true);
             var sheet = parser.Parse(stream);
 
             var col = new StyleCollection();

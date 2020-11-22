@@ -160,6 +160,7 @@ namespace AxGui
 
             resolved.JustifyContent = style.JustifyContent;
             resolved.AlignItems = style.AlignItems;
+            resolved._FlexGrow = style._FlexGrow;
         }
 
         protected internal virtual void ComputeStyleChildren(ProcessLayoutContext ctx)
@@ -310,6 +311,9 @@ namespace AxGui
 
                         if (!ResolvedStyle.Display.IsBlock() || ResolvedStyle.Width.Unit != StyleUnit.Unset)
                             absAnchors.Width = relSize.Width + decorationSize.Width;
+                        //else if (Parent.ResolvedStyle.Display == StyleDisplay.Flex && ResolvedStyle.FlexGrow.Number > 0)
+                        //    absAnchors.Width = 400;
+
                         absAnchors.Height = relSize.Height + decorationSize.Height;
 
                         var pc = el.ProcessLayoutContext;

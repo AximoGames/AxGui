@@ -116,6 +116,7 @@ namespace AxGui
 
             target.JustifyContent = JustifyContent;
             target.AlignItems = AlignItems;
+            target._FlexGrow = _FlexGrow;
         }
 
         public static ElementStyle Combine(ElementStyle parent, ElementStyle child)
@@ -151,6 +152,7 @@ namespace AxGui
 
             target.JustifyContent = StyleHelper.CombineEnum(parent.JustifyContent, child.JustifyContent);
             target.AlignItems = StyleHelper.CombineEnum(parent.AlignItems, child.AlignItems);
+            target._FlexGrow = StyleValue.Combine(parent._FlexGrow, child._FlexGrow);
         }
 
         internal static void SetRule(ElementStyle target, ExCSS.StyleDeclaration parent)
@@ -179,6 +181,7 @@ namespace AxGui
 
             target.JustifyContent = StyleHelper.ParseEnum<StyleJustifyContenet>(parent.JustifyContent);
             target.AlignItems = StyleHelper.ParseEnum<StyleAlignItems>(parent.AlignContent);
+            target._FlexGrow = parent.FlexGrow;
 
             // temporary fix
             if (parent.TextAlign == "center")
@@ -192,7 +195,7 @@ namespace AxGui
             if (!styleBlock.Contains("{"))
                 styleBlock = "a {" + styleBlock + "}";
 
-            var parser = new ExCSS.StylesheetParser();
+            var parser = new ExCSS.StylesheetParser(includeUnknownDeclarations: true);
             var sheet = parser.Parse(styleBlock);
 
             var style = new ElementStyle();
@@ -219,6 +222,13 @@ namespace AxGui
 
         public StyleJustifyContenet JustifyContent;
         public StyleAlignItems AlignItems;
+
+        internal StyleValue _FlexGrow;
+        internal StyleValue FlexGrow
+        {
+            get => _FlexGrow;
+            set => _FlexGrow = value;
+        }
 
         internal StyleValue _FontSize;
         internal StyleValue FontSize

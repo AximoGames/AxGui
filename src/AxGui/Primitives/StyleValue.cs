@@ -127,7 +127,8 @@ namespace AxGui
             }
             else if (value.StartsWith("#"))
             {
-                SKColor.TryParse(value, out v.Color);
+                if (SKColor.TryParse(value, out v.Color))
+                    v.Unit = StyleUnit.Color;
             }
             else if (value.StartsWith("rgb("))
             {
