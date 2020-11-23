@@ -480,15 +480,18 @@ namespace AxGui
         {
             var childBounds = GetChildsBounds();
 
-            if (ResolvedStyle.Display.IsBlock())
+            // grow surrounding div
+            if (ResolvedStyle.Height.Unit == StyleUnit.Unset)
             {
-                if (ResolvedStyle.Height.Unit == StyleUnit.Unset)
-                {
-                    ClientRect.Height += childBounds.Height;
-                    PaddingRect.Height += childBounds.Height;
-                    BorderRect.Height += childBounds.Height;
-                    MarginRect.Height += childBounds.Height;
-                }
+                ClientRect.Height += childBounds.Height;
+                PaddingRect.Height += childBounds.Height;
+                BorderRect.Height += childBounds.Height;
+                MarginRect.Height += childBounds.Height;
+
+                // shift Descendant flow
+                var el = GetParentBlockElement(ctx);
+                if (el != null)
+                    el.ProcessLayoutContext.RowHeight += childBounds.Height;
             }
 
             if (ResolvedStyle.Display.IsFlex())
