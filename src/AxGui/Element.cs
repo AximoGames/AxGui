@@ -494,7 +494,7 @@ namespace AxGui
             var childBounds = GetChildsBounds();
 
             // grow surrounding div
-            if (ResolvedStyle.Height.Unit == StyleUnit.Unset)
+            if (ResolvedStyle.Height.Unit == StyleUnit.Unset && (ResolvedStyle.FlexGrow.Unit == StyleUnit.Unset || ResolvedStyle.FlexGrow.Number == 0))
             {
                 ClientRect.Height += childBounds.Height;
                 PaddingRect.Height += childBounds.Height;

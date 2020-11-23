@@ -21,7 +21,7 @@ namespace AxGui.Test.Runner
         private void BuildUI()
         {
             var test = new BoxModelChildTests();
-            test.FlexGrowColumn();
+            test.FlexGrowColumnWithChild();
             el = test.RootElement;
 
             //Layouter = new LayoutProcessor();
