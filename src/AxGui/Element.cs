@@ -488,10 +488,13 @@ namespace AxGui
                 BorderRect.Height += childBounds.Height;
                 MarginRect.Height += childBounds.Height;
 
-                // shift Descendant flow
-                var el = GetParentBlockElement(ctx);
-                if (el != null)
-                    el.ProcessLayoutContext.RowHeight += childBounds.Height;
+                if (ResolvedStyle.Display.IsBlock())
+                {
+                    // shift Descendant flow
+                    var el = GetParentBlockElement(ctx);
+                    if (el != null)
+                        el.ProcessLayoutContext.RowHeight += childBounds.Height;
+                }
             }
 
             if (ResolvedStyle.Display.IsFlex())
