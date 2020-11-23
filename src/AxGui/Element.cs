@@ -478,11 +478,23 @@ namespace AxGui
 
         protected internal virtual void JustifyChildren(ProcessLayoutContext ctx)
         {
+            var childBounds = GetChildsBounds();
+
+            if (ResolvedStyle.Display.IsBlock())
+            {
+                if (ResolvedStyle.Height.Unit == StyleUnit.Unset)
+                {
+                    ClientRect.Height += childBounds.Height;
+                    PaddingRect.Height += childBounds.Height;
+                    BorderRect.Height += childBounds.Height;
+                    MarginRect.Height += childBounds.Height;
+                }
+            }
+
             if (ResolvedStyle.Display.IsFlex())
             {
                 if (ResolvedStyle.JustifyContent == StyleJustifyContenet.Center)
                 {
-                    var childBounds = GetChildsBounds();
                     var offset = new Point();
 
                     var space = ClientRect.Width - childBounds.Width;
@@ -560,7 +572,7 @@ namespace AxGui
         private Box GetBorderBounds()
         {
             if (!PassThrough)
-                return BorderRect;
+                return MarginRect;
 
             return GetChildsBounds();
         }

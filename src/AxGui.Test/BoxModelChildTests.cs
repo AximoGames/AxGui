@@ -72,6 +72,31 @@ namespace AxGui.Test
         }
 
         [Fact]
+        public void DivGrowHeight()
+        {
+            var el = CreateRootElement();
+
+            Element child;
+
+            var child1 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Relative;
+            child.Style.BorderWidth = 5;
+
+            var child2 = child = new Element();
+            child1.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Relative;
+            child.Style.BorderWidth = 5;
+            child.Style.Height = 30;
+
+            Layout(el);
+
+            Assert.Equal(new Box(15, 15, 505, 55), child1.ClientRect);
+        }
+
+        [Fact]
         public void DivWidth()
         {
             var el = CreateRootElement();

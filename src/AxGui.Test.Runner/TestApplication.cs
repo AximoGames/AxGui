@@ -18,6 +18,20 @@ namespace AxGui.Test.Runner
     public class TestApplication : GameWindow
     {
 
+        private void BuildUI()
+        {
+            var test = new BoxModelChildTests();
+            test.DivGrowHeight();
+            el = test.RootElement;
+
+            //Layouter = new LayoutProcessor();
+            //Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
+            ////Layouter.Styles = styles;
+
+            Recorder = new CommandRecorder { DebugBorders = true };
+            Executor = new CommandExecutor();
+        }
+
         public TestApplication(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(gameWindowSettings, nativeWindowSettings)
         {
@@ -87,20 +101,6 @@ namespace AxGui.Test.Runner
         private CommandRecorder Recorder;
         private CommandExecutor Executor;
         private Element el;
-
-        private void BuildUI()
-        {
-            var test = new BoxModelChildTests();
-            test.FlexGrow();
-            el = test.RootElement;
-
-            //Layouter = new LayoutProcessor();
-            //Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);
-            ////Layouter.Styles = styles;
-
-            Recorder = new CommandRecorder { DebugBorders = true };
-            Executor = new CommandExecutor();
-        }
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
