@@ -316,15 +316,22 @@ namespace AxGui
 
                         if (Parent.ResolvedStyle.Display == StyleDisplay.Flex
                             && ResolvedStyle.FlexGrow.Number > 0
-                            && ResolvedStyle.FlexDirection == StyleFlexDirection.Row)
+                            && Parent.ResolvedStyle.FlexDirection == StyleFlexDirection.Row)
                             absAnchors.Width = el.ClientRect.Width - GetConsumedParentSize(ctx).Width; // Possible problem: it can still break, if it's 0.00001 px larger.
                         else if (!ResolvedStyle.Display.IsBlock() || ResolvedStyle.Width.Unit != StyleUnit.Unset)
                             absAnchors.Width = relSize.Width + decorationSize.Width;
 
-                        absAnchors.Height = relSize.Height + decorationSize.Height;
+                        if (Parent.ResolvedStyle.Display == StyleDisplay.Flex
+                            && ResolvedStyle.FlexGrow.Number > 0
+                            && Parent.ResolvedStyle.FlexDirection == StyleFlexDirection.Column)
+                            absAnchors.Height = el.ClientRect.Height - GetConsumedParentSize(ctx).Height; // Possible problem: it can still break, if it's 0.00001 px larger.
+                        else
+                            absAnchors.Height = relSize.Height + decorationSize.Height;
 
                         var pc = el.ProcessLayoutContext;
-                        if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right || ResolvedStyle.Display.IsBlock()) // OuterRect.Right
+                        if (absAnchors.Right + pc.RowPosition.X > el.ClientRect.Right
+                            || (ResolvedStyle.Display.IsBlock()
+                            && ResolvedStyle.FlexDirection == StyleFlexDirection.Row)) // OuterRect.Right
                         {
                             pc.RowElements.Clear();
                             pc.RowPosition.Y += pc.RowHeight;
@@ -543,25 +550,28 @@ namespace AxGui
                     continue;
                 var style = child.TempStyle;
 
-                var size = style.Size.Normalize(ctx);
+                //var size = style.Size.Normalize(ctx);
 
-                result.Width += style.Margin.Left.Normalize(ctx, Axis.X).Number;
-                result.Width += style.Margin.Right.Normalize(ctx, Axis.X).Number;
-                result.Height += style.Margin.Top.Normalize(ctx, Axis.Y).Number;
-                result.Height += style.Margin.Bottom.Normalize(ctx, Axis.Y).Number;
+                //result.Width += style.Margin.Left.Normalize(ctx, Axis.X).Number;
+                //result.Width += style.Margin.Right.Normalize(ctx, Axis.X).Number;
+                //result.Height += style.Margin.Top.Normalize(ctx, Axis.Y).Number;
+                //result.Height += style.Margin.Bottom.Normalize(ctx, Axis.Y).Number;
 
-                result.Width += style.BorderWidth.Left.Normalize(ctx, Axis.X).Number;
-                result.Width += style.BorderWidth.Right.Normalize(ctx, Axis.X).Number;
-                result.Height += style.BorderWidth.Top.Normalize(ctx, Axis.Y).Number;
-                result.Height += style.BorderWidth.Bottom.Normalize(ctx, Axis.Y).Number;
+                //result.Width += style.BorderWidth.Left.Normalize(ctx, Axis.X).Number;
+                //result.Width += style.BorderWidth.Right.Normalize(ctx, Axis.X).Number;
+                //result.Height += style.BorderWidth.Top.Normalize(ctx, Axis.Y).Number;
+                //result.Height += style.BorderWidth.Bottom.Normalize(ctx, Axis.Y).Number;
 
-                result.Width += style.Padding.Left.Normalize(ctx, Axis.X).Number;
-                result.Width += style.Padding.Right.Normalize(ctx, Axis.X).Number;
-                result.Height += style.Padding.Top.Normalize(ctx, Axis.Y).Number;
-                result.Height += style.Padding.Bottom.Normalize(ctx, Axis.Y).Number;
+                //result.Width += style.Padding.Left.Normalize(ctx, Axis.X).Number;
+                //result.Width += style.Padding.Right.Normalize(ctx, Axis.X).Number;
+                //result.Height += style.Padding.Top.Normalize(ctx, Axis.Y).Number;
+                //result.Height += style.Padding.Bottom.Normalize(ctx, Axis.Y).Number;
 
-                result.Width += style.Width.Normalize(ctx, Axis.X).Number;
-                result.Height += style.Height.Normalize(ctx, Axis.Y).Number;
+                //result.Width += style.Width.Normalize(ctx, Axis.X).Number;
+                //result.Height += style.Height.Normalize(ctx, Axis.Y).Number;
+
+                result.Width += child.MarginRect.Width;
+                result.Height += child.MarginRect.Height;
             }
 
             return result;

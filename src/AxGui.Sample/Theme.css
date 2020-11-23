@@ -57,12 +57,12 @@
     /* width: 100px; */
     height: 100%;
     padding: 3px;
-    display: inline-block;
+    /* display: block; */
     flex-grow: 1;
 
     background-color: #0f0;
-    /* display: flex; 
-    flex-direction: column; */
+    display: flex; 
+    flex-direction: column;
 }
 
 .menu-button-label {

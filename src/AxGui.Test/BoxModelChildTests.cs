@@ -180,7 +180,7 @@ namespace AxGui.Test
         }
 
         [Fact]
-        public void FlexGrow()
+        public void FlexGrowRow()
         {
             var el = CreateRootElement();
             el.Style.Display = StyleDisplay.Flex;
@@ -206,6 +206,36 @@ namespace AxGui.Test
             Layout(el);
 
             Assert.Equal(new Box(125, 15, 505, 45), child2.ClientRect);
+        }
+
+        [Fact]
+        public void FlexGrowColumn()
+        {
+            var el = CreateRootElement();
+            el.Style.Display = StyleDisplay.Flex;
+            el.Style.FlexDirection = StyleFlexDirection.Column;
+
+            Element child;
+
+            var child1 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.Width = 100;
+            child.Style.Height = 50;
+
+            var child2 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Static;
+            child.Style.BorderWidth = 5;
+            child.Style.FlexGrow = 1;
+            child.Style.Width = 100;
+
+            Layout(el);
+
+            Assert.Equal(new Box(15, 75, 115, 305), child2.ClientRect);
         }
 
         public void DivNested()
