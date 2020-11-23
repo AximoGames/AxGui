@@ -161,7 +161,11 @@ namespace AxGui
 
             resolved.JustifyContent = style.JustifyContent;
             resolved.AlignItems = style.AlignItems;
+            resolved.FlexDirection = style.FlexDirection;
             resolved._FlexGrow = style._FlexGrow;
+
+            if (resolved.FlexDirection == StyleFlexDirection.Unset)
+                resolved.FlexDirection = StyleFlexDirection.Row;
         }
 
         protected internal virtual void ComputeStyleChildren(ProcessLayoutContext ctx)
@@ -310,7 +314,9 @@ namespace AxGui
                         Box absAnchors = el.ClientRect;
                         var absCenter = absAnchors.Center;
 
-                        if (Parent.ResolvedStyle.Display == StyleDisplay.Flex && ResolvedStyle.FlexGrow.Number > 0)
+                        if (Parent.ResolvedStyle.Display == StyleDisplay.Flex
+                            && ResolvedStyle.FlexGrow.Number > 0
+                            && ResolvedStyle.FlexDirection == StyleFlexDirection.Row)
                             absAnchors.Width = el.ClientRect.Width - GetConsumedParentSize(ctx).Width; // Possible problem: it can still break, if it's 0.00001 px larger.
                         else if (!ResolvedStyle.Display.IsBlock() || ResolvedStyle.Width.Unit != StyleUnit.Unset)
                             absAnchors.Width = relSize.Width + decorationSize.Width;

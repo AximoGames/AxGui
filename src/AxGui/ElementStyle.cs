@@ -45,6 +45,16 @@ namespace AxGui
         Center,
     }
 
+    public enum StyleFlexDirection
+    {
+        Unset,
+        Initial,
+        Inherit,
+
+        Row,
+        Column,
+    }
+
     /// <summary>
     /// Vertical align
     /// </summary>
@@ -118,6 +128,7 @@ namespace AxGui
 
             target.JustifyContent = JustifyContent;
             target.AlignItems = AlignItems;
+            target.FlexDirection = FlexDirection;
             target._FlexGrow = _FlexGrow;
         }
 
@@ -155,6 +166,7 @@ namespace AxGui
 
             target.JustifyContent = StyleHelper.CombineEnum(parent.JustifyContent, child.JustifyContent);
             target.AlignItems = StyleHelper.CombineEnum(parent.AlignItems, child.AlignItems);
+            target.FlexDirection = StyleHelper.CombineEnum(parent.FlexDirection, child.FlexDirection);
             target._FlexGrow = StyleValue.Combine(parent._FlexGrow, child._FlexGrow);
         }
 
@@ -185,6 +197,7 @@ namespace AxGui
 
             target.JustifyContent = StyleHelper.ParseEnum<StyleJustifyContenet>(parent.JustifyContent);
             target.AlignItems = StyleHelper.ParseEnum<StyleAlignItems>(parent.AlignContent);
+            target.FlexDirection = StyleHelper.ParseEnum<StyleFlexDirection>(parent.FlexDirection);
             target._FlexGrow = parent.FlexGrow;
 
             // temporary fix
@@ -226,6 +239,7 @@ namespace AxGui
 
         public StyleJustifyContenet JustifyContent;
         public StyleAlignItems AlignItems;
+        public StyleFlexDirection FlexDirection;
 
         internal StyleValue _FlexGrow;
         internal StyleValue FlexGrow
