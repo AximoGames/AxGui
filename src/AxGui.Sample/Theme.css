@@ -106,3 +106,13 @@ span {
     padding: 5px;
     border-width: 1px;
 }
+
+.slider {
+    background-color: #f0f;
+    display: block;
+    height: 100%;
+    width: 20px;
+    margin-left: 100%;
+    position: relative;
+    left: -20px;
+}

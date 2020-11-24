@@ -363,6 +363,19 @@ namespace AxGui
                     }
                 }
 
+                Point translate = default;
+                if (ResolvedStyle._Anchors._Left.HasValue())
+                    translate.X += ResolvedStyle._Anchors._Left.Number;
+                else if (ResolvedStyle._Anchors._Right.HasValue())
+                    translate.X -= ResolvedStyle._Anchors._Right.Number;
+
+                if (ResolvedStyle._Anchors._Top.HasValue())
+                    translate.Y += ResolvedStyle._Anchors._Top.Number;
+                else if (ResolvedStyle._Anchors._Bottom.HasValue())
+                    translate.X -= ResolvedStyle._Anchors._Bottom.Number;
+
+                if (translate != Point.Zero)
+                    Translate(translate.X, translate.Y);
             }
             else // flow == false:
             {
@@ -599,15 +612,16 @@ namespace AxGui
             return GetChildsBounds();
         }
 
-        private protected static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82) };
-        private protected static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129) };
-        private protected static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127) };
-        private protected static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188) };
+        private const byte DebugAlpha = 255;
+        private protected static SKPaint DebugMarginPaint = new SKPaint { Color = new SKColor(174, 129, 82, DebugAlpha) };
+        private protected static SKPaint DebugBorderPaint = new SKPaint { Color = new SKColor(227, 195, 129, DebugAlpha) };
+        private protected static SKPaint DebugPaddingPaint = new SKPaint { Color = new SKColor(183, 196, 127, DebugAlpha) };
+        private protected static SKPaint DebugClientPaint = new SKPaint { Color = new SKColor(135, 178, 188, DebugAlpha) };
 
-        private protected static SKPaint DebugMarginPaint_Border = new SKPaint { Color = new SKColor(134, 89, 42) };
-        private protected static SKPaint DebugBorderPaint_Border = new SKPaint { Color = new SKColor(187, 155, 89) };
-        private protected static SKPaint DebugPaddingPaint_Border = new SKPaint { Color = new SKColor(143, 156, 87) };
-        private protected static SKPaint DebugClientPaint_Border = new SKPaint { Color = new SKColor(95, 138, 148) };
+        private protected static SKPaint DebugMarginPaint_Border = new SKPaint { Color = new SKColor(134, 89, 42, DebugAlpha) };
+        private protected static SKPaint DebugBorderPaint_Border = new SKPaint { Color = new SKColor(187, 155, 89, DebugAlpha) };
+        private protected static SKPaint DebugPaddingPaint_Border = new SKPaint { Color = new SKColor(143, 156, 87, DebugAlpha) };
+        private protected static SKPaint DebugClientPaint_Border = new SKPaint { Color = new SKColor(95, 138, 148, DebugAlpha) };
 
         private const float DebugBorderWidth = 1;
 

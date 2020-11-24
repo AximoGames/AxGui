@@ -365,6 +365,54 @@ namespace AxGui
             }
         }
 
+        public StyleValue Left
+        {
+            get => _Anchors._Left;
+            set
+            {
+                if (_Anchors._Left == value)
+                    return;
+                _Anchors._Left = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue Top
+        {
+            get => _Anchors._Top;
+            set
+            {
+                if (_Anchors._Top == value)
+                    return;
+                _Anchors._Top = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue Right
+        {
+            get => _Anchors._Right;
+            set
+            {
+                if (_Anchors._Right == value)
+                    return;
+                _Anchors._Right = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue Bottom
+        {
+            get => _Anchors._Bottom;
+            set
+            {
+                if (_Anchors._Bottom == value)
+                    return;
+                _Anchors._Bottom = value;
+                BoundingChanged();
+            }
+        }
+
         internal StyleRect _Margin;
         public StyleRect Margin
         {
