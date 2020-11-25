@@ -1,177 +1,177 @@
-﻿// This file is part of AxGUI. Web: https://github.com/AximoGames
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿//// This file is part of AxGUI. Web: https://github.com/AximoGames
+//// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using Microsoft.Extensions.FileProviders;
-using SkiaSharp;
+//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.IO.Compression;
+//using System.Linq;
+//using Microsoft.Extensions.FileProviders;
+//using SkiaSharp;
 
-namespace AxGui
-{
+//namespace AxGui
+//{
 
-    public class TextElement : Element
-    {
-        internal string? _Content;
-        public string? Content
-        {
-            get => _Content; set
-            {
-                if (_Content == value)
-                    return;
-                _Content = value;
-                ContentChanged = true;
-            }
-        }
+//    public class TextElement : Element
+//    {
+//        internal string? _Content;
+//        public string? Content
+//        {
+//            get => _Content; set
+//            {
+//                if (_Content == value)
+//                    return;
+//                _Content = value;
+//                ContentChanged = true;
+//            }
+//        }
 
-        private bool ContentChanged;
-        private SKPaint Paint;
-        private SKFont Font;
-        private SKFontMetrics FontMetrics;
+//        private bool ContentChanged;
+//        private SKPaint Paint;
+//        private SKFont Font;
+//        private SKFontMetrics FontMetrics;
 
-        public float TextSize
-        {
-            get => Font.Size;
-            private set => SetFontSize(value);
-        }
+//        public float TextSize
+//        {
+//            get => Font.Size;
+//            private set => SetFontSize(value);
+//        }
 
-        private void SetFontSize(float value)
-        {
-            if (Font.Size == value)
-                return;
+//        private void SetFontSize(float value)
+//        {
+//            if (Font.Size == value)
+//                return;
 
-            Font.Size = value;
-            Paint.TextSize = value;
-            Font.GetFontMetrics(out FontMetrics);
-        }
+//            Font.Size = value;
+//            Paint.TextSize = value;
+//            Font.GetFontMetrics(out FontMetrics);
+//        }
 
-        private void SetFont(string fontName)
-        {
-            Font.Typeface = FontManager.FindTypeface(fontName);
-            Font.GetFontMetrics(out FontMetrics);
-            Paint.Typeface = Font.Typeface;
-        }
+//        private void SetFont(string fontName)
+//        {
+//            Font.Typeface = FontManager.FindTypeface(fontName);
+//            Font.GetFontMetrics(out FontMetrics);
+//            Paint.Typeface = Font.Typeface;
+//        }
 
-        public float TextHeight => FontMetrics.Descent - FontMetrics.Ascent;
+//        public float TextHeight => FontMetrics.Descent - FontMetrics.Ascent;
 
-        public TextElement() : this(null)
-        {
-        }
+//        public TextElement() : this(null)
+//        {
+//        }
 
-        internal TextElement(string? tagName)
-        {
-            Font = new SKFont(FontManager.DefaultTypeFace);
-            Paint = new SKPaint(Font);
-            TextSize = Font.Size;
-            Font.GetFontMetrics(out FontMetrics);
-            PassThrough = true;
-        }
+//        internal TextElement(string? tagName)
+//        {
+//            Font = new SKFont(FontManager.DefaultTypeFace);
+//            Paint = new SKPaint(Font);
+//            TextSize = Font.Size;
+//            Font.GetFontMetrics(out FontMetrics);
+//            PassThrough = true;
+//        }
 
-        protected internal override void ComputeBoundsSelf(ProcessLayoutContext ctx)
-        {
-            //ResolveStyle(ctx);
+//        protected internal override void ComputeBoundsSelf(ProcessLayoutContext ctx)
+//        {
+//            //ResolveStyle(ctx);
 
-            //MarginRect = default;
-            //BorderRect = default;
-            //PaddingRect = default;
-            //ClientRect = default;
+//            //MarginRect = default;
+//            //BorderRect = default;
+//            //PaddingRect = default;
+//            //ClientRect = default;
 
-            if (ResolvedStyle.FontSize.Unit != StyleUnit.Unset)
-                TextSize = ResolvedStyle.FontSize.Number;
+//            if (ResolvedStyle.FontSize.Unit != StyleUnit.Unset)
+//                TextSize = ResolvedStyle.FontSize.Number;
 
-            if (ResolvedStyle.FontFamily.Unit != StyleUnit.Unset)
-                SetFont(ResolvedStyle.FontFamily.String);
+//            if (ResolvedStyle.FontFamily.Unit != StyleUnit.Unset)
+//                SetFont(ResolvedStyle.FontFamily.String);
 
-            if (ResolvedStyle.Color.Unit == StyleUnit.Unset)
-                ResolvedStyle.Color = new StyleValue { Unit = StyleUnit.Color, Color = new SKColor(0, 0, 0) };
+//            if (ResolvedStyle.Color.Unit == StyleUnit.Unset)
+//                ResolvedStyle.Color = new StyleValue { Unit = StyleUnit.Color, Color = new SKColor(0, 0, 0) };
 
-            if (ContentChanged)
-            {
-                ContentChanged = false;
-                Children.Clear();
+//            if (ContentChanged)
+//            {
+//                ContentChanged = false;
+//                Children.Clear();
 
-                var span = _Content.AsSpan();
+//                var span = _Content.AsSpan();
 
-                float posY = 0;
+//                float posY = 0;
 
-                var parent = GetParentBlockElement(ctx);
-                var availableWidth = parent!.ClientRect.Width;
+//                var parent = GetParentBlockElement(ctx);
+//                var availableWidth = parent!.ClientRect.Width;
 
-                bool first = true;
-                while (span.Length > 0)
-                {
-                    var brIdx = -1;
-                    var spIdx = -1;
+//                bool first = true;
+//                while (span.Length > 0)
+//                {
+//                    var brIdx = -1;
+//                    var spIdx = -1;
 
-                    float measuredWidth;
-                    if (availableWidth <= 0)
-                        availableWidth = ctx.GlobalContext!.GlobalViewPort.Width;
-                    var num = (int)Paint.BreakText(span, first ? availableWidth - parent.ProcessLayoutContext.RowPosition.X : availableWidth, out measuredWidth);
+//                    float measuredWidth;
+//                    if (availableWidth <= 0)
+//                        availableWidth = ctx.GlobalContext!.GlobalViewPort.Width;
+//                    var num = (int)Paint.BreakText(span, first ? availableWidth - parent.ProcessLayoutContext.RowPosition.X : availableWidth, out measuredWidth);
 
-                    // detect space
-                    if (num < span.Length)
-                    {
-                        if (ResolvedStyle.Display == StyleDisplay.InlineBlock)
-                        {
-                            num = span.Length;
-                        }
-                        else
-                        {
+//                    // detect space
+//                    if (num < span.Length)
+//                    {
+//                        if (ResolvedStyle.Display == StyleDisplay.InlineBlock)
+//                        {
+//                            num = span.Length;
+//                        }
+//                        else
+//                        {
 
-                            spIdx = span.Slice(0, num).LastIndexOf(' ');
-                            if (spIdx > -1)
-                                num = spIdx;
+//                            spIdx = span.Slice(0, num).LastIndexOf(' ');
+//                            if (spIdx > -1)
+//                                num = spIdx;
 
-                            // TODO: Decrease num, if there are more spaces: 'text    ' --> 'text'
-                        }
-                    }
+//                            // TODO: Decrease num, if there are more spaces: 'text    ' --> 'text'
+//                        }
+//                    }
 
-                    if (num > 0)
-                    {
-                        var texHeight = TextHeight;
+//                    if (num > 0)
+//                    {
+//                        var texHeight = TextHeight;
 
-                        var finalText = new string(span.Slice(0, num));
-                        var f = new TextElementFragment(finalText, Paint, Font!);
-                        ResolvedStyle.CopyTo(f.ResolvedStyle);
-                        measuredWidth = Paint.MeasureText(finalText);
-                        //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);
-                        f.ResolvedStyle.Width = measuredWidth;
+//                        var finalText = new string(span.Slice(0, num));
+//                        var f = new TextElementFragment(finalText, Paint, Font!);
+//                        ResolvedStyle.CopyTo(f.ResolvedStyle);
+//                        measuredWidth = Paint.MeasureText(finalText);
+//                        //f.DrawPosition = new SKPoint(ClientRect.Left, ClientRect.Top + posY + Paint.TextSize);
+//                        f.ResolvedStyle.Width = measuredWidth;
 
-                        if (f.ResolvedStyle.Height.Unit == StyleUnit.Unset)
-                            f.ResolvedStyle.Height = TextHeight;
+//                        if (f.ResolvedStyle.Height.Unit == StyleUnit.Unset)
+//                            f.ResolvedStyle.Height = TextHeight;
 
-                        f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
-                        f.ResolvedStyle.Position = StylePosition.Static;
+//                        f.ResolvedStyle.Display = StyleDisplay.InlineBlock;
+//                        f.ResolvedStyle.Position = StylePosition.Static;
 
-                        var h = f.ResolvedStyle.Height.Number;
-                        f.DrawPosition.Y = TextSize + ((h - TextHeight) / 2);
+//                        var h = f.ResolvedStyle.Height.Number;
+//                        f.DrawPosition.Y = TextSize + ((h - TextHeight) / 2);
 
-                        AddChild(f);
-                    }
+//                        AddChild(f);
+//                    }
 
-                    posY += Paint.TextSize;
-                    if (span.Length == num)
-                        break;
-                    span = span.Slice(spIdx == -1 ? num : num + 1);
+//                    posY += Paint.TextSize;
+//                    if (span.Length == num)
+//                        break;
+//                    span = span.Slice(spIdx == -1 ? num : num + 1);
 
-                    first = false;
-                    //break;
-                }
-            }
-        }
+//                    first = false;
+//                    //break;
+//                }
+//            }
+//        }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (Disposed)
-                return;
+//        protected override void Dispose(bool disposing)
+//        {
+//            if (Disposed)
+//                return;
 
-            Paint.Dispose();
+//            Paint.Dispose();
 
-            base.Dispose(disposing);
-        }
+//            base.Dispose(disposing);
+//        }
 
-    }
+//    }
 
-}
+//}

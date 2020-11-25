@@ -145,18 +145,18 @@ namespace AxGui
                 }
                 else if (node is XText t)
                 {
-                    if (parent is TextElement pt)
-                    {
-                        pt.Content = t.Value;
-                    }
-                    else
-                    {
-                        var el = new TextElement()
-                        {
-                            Content = t.Value,
-                        };
-                        parent.AddChild(el);
-                    }
+                    //if (parent is TextElement pt)
+                    //{
+                    //    pt.Content = t.Value;
+                    //}
+                    //else
+                    //{
+                    //    var el = new TextElement()
+                    //    {
+                    //        Content = t.Value,
+                    //    };
+                    //    parent.AddChild(el);
+                    //}
                 }
             }
         }

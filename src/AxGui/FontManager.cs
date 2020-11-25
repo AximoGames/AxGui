@@ -45,7 +45,7 @@ namespace AxGui
 
         private static SKTypeface LoadEmbeddedTypeFace(string fontPath)
         {
-            var fileProvider = new EmbeddedFileProvider(typeof(TextElement).Assembly);
+            var fileProvider = new EmbeddedFileProvider(typeof(FontManager).Assembly);
             var fileInfo = fileProvider.GetFileInfo(fontPath);
             using var stream = fileInfo.CreateReadStream();
             using GZipStream decompressionStream = new GZipStream(stream, CompressionMode.Decompress);

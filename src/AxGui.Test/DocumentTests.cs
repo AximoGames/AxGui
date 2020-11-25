@@ -71,21 +71,21 @@ namespace AxGui.Test
             Assert.Equal(1, doc._Body.Children.Count);
         }
 
-        [Fact]
-        public void ParseText()
-        {
-            var html = @"<span>
-abc
- def</span>";
+        //        [Fact]
+        //        public void ParseText()
+        //        {
+        //            var html = @"<span>
+        //abc
+        // def</span>";
 
-            var doc = Document.FromString(html);
+        //            var doc = Document.FromString(html);
 
-            Assert.IsType<TextElement>(doc._Body.Children[0]);
-            Assert.Empty(doc._Body.Children[0].Children);
-            AssertEqualsNormalizeLineBreaks(@"
-abc
- def", (doc._Body.Children[0] as TextElement)?.Content);
-        }
+        //            Assert.IsType<TextElement>(doc._Body.Children[0]);
+        //            Assert.Empty(doc._Body.Children[0].Children);
+        //            AssertEqualsNormalizeLineBreaks(@"
+        //abc
+        // def", (doc._Body.Children[0] as TextElement)?.Content);
+        //        }
 
     }
 }

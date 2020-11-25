@@ -19,7 +19,7 @@ namespace AxGui
             ctx.Styles = Styles;
             root.ProcessLayoutContext.LocalViewPort = ViewPort;
             root.CallComputeStyle(ctx);
-            root.CallComputeChildBoundsOffers(ctx);
+            //root.CallComputeChildBoundsOffers(ctx);
             root.CallComputeBounds(ctx);
         }
     }
