@@ -114,6 +114,7 @@ namespace AxGui.Sample.OpenGL
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             GL.Viewport(0, 0, (int)CurrentSize.X, (int)CurrentSize.Y);
+            GL.Scissor(0, 0, (int)CurrentSize.X, (int)CurrentSize.Y);
             //GL.ClearColor(new Color4(0, 0, 0, 1));
             GL.ClearColor(Color4.Beige);
             GL.Clear(ClearBufferMask.ColorBufferBit);

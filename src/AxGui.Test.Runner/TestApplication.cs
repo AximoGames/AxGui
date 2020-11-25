@@ -20,8 +20,8 @@ namespace AxGui.Test.Runner
 
         private void BuildUI()
         {
-            var test = new BoxModelChildTests();
-            test.DivAbsoluteWithRelativeParentLevel2();
+            var test = new BoxModelRootTests();
+            test.PercentAnchors();
             el = test.RootElement;
 
             //Layouter = new LayoutProcessor();
@@ -105,7 +105,7 @@ namespace AxGui.Test.Runner
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             GL.Viewport(0, 0, (int)CurrentSize.X, (int)CurrentSize.Y);
-            //GL.ClearColor(new Color4(0, 0, 0, 1));
+            GL.Scissor(0, 0, (int)CurrentSize.X, (int)CurrentSize.Y);
             GL.ClearColor(Color4.Beige);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 

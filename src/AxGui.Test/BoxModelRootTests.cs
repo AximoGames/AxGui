@@ -114,6 +114,34 @@ namespace AxGui.Test
         }
 
         [Fact]
+        public void PercentAnchors()
+        {
+            var el = new Element();
+            el.Id = "root";
+            el.Style.Display = StyleDisplay.Flex;
+            //el.Style.Position = StylePosition.Static;
+            el.Style.JustifyContent = StyleJustifyContenet.Center;
+            el.Style.AlignItems = StyleAlignItems.Center;
+            el.Style.BorderWidth = 0;
+            el.Style.Height = "100%";
+            el.Style.Width = "100%";
+            el.Style.Margin = 0;
+            el.Style.Padding = 0;
+
+            var child = new Element();
+            el.AddChild(child);
+            child.Id = "child1";
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Absolute;
+            child.Style.BorderWidth = 0;
+            child.Style.Height = "50%";
+            child.Style.Width = "50%";
+
+            Layout(el);
+            Assert.Equal(new Box(160, 90, 480, 270), child.ClientRect);
+        }
+
+        [Fact]
         public void CenterY()
         {
             var el = CreateElement();

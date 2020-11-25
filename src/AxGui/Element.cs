@@ -544,6 +544,10 @@ namespace AxGui
                         viewPort.Bottom += tmpViewPort.Height;
                         viewPort.Right += tmpViewPort.Right;
                     }
+                    else
+                    {
+                        viewPort = ClientRect;
+                    }
 
                     child.ProcessLayoutContext.LocalViewPort = viewPort;
                 }

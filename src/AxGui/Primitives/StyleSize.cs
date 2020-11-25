@@ -11,6 +11,7 @@ namespace AxGui
     {
         public readonly StyleValue Width;
         public readonly StyleValue Height;
+        public static readonly StyleSize Unset;
 
         public StyleSize(StyleValue width, StyleValue height)
         {
