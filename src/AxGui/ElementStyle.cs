@@ -417,6 +417,8 @@ namespace AxGui
 
         #endregion
 
+        #region Margin
+
         internal StyleRect _Margin;
         public StyleRect Margin
         {
@@ -479,6 +481,10 @@ namespace AxGui
             }
         }
 
+        #endregion
+
+        #region Padding
+
         internal StyleRect _Padding;
         public StyleRect Padding
         {
@@ -492,6 +498,56 @@ namespace AxGui
                 BoundingChanged();
             }
         }
+
+        public StyleValue PaddingLeft
+        {
+            get => _Padding._Left;
+            set
+            {
+                if (_Padding._Left == value)
+                    return;
+                _Padding._Left = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue PaddingTop
+        {
+            get => _Padding._Top;
+            set
+            {
+                if (_Padding._Top == value)
+                    return;
+                _Padding._Top = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue PaddingRight
+        {
+            get => _Padding._Right;
+            set
+            {
+                if (_Padding._Right == value)
+                    return;
+                _Padding._Right = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue PaddingBottom
+        {
+            get => _Padding._Bottom;
+            set
+            {
+                if (_Padding._Bottom == value)
+                    return;
+                _Padding._Bottom = value;
+                BoundingChanged();
+            }
+        }
+
+        #endregion
 
         internal StyleRect _BorderWidth;
         public StyleRect BorderWidth

@@ -12,6 +12,7 @@ namespace AxGui.Test
         private Element CreateRootElement()
         {
             var el = new Element();
+            el.Id = "root";
             el.Style.Display = StyleDisplay.Block;
             el.Style.Position = StylePosition.Absolute;
             el.Style.Width = 500;
@@ -108,31 +109,35 @@ namespace AxGui.Test
 
             var child1 = child = new Element();
             el.AddChild(child);
+            child.Id = "child1";
             child.Style.Display = StyleDisplay.Block;
             child.Style.Position = StylePosition.Relative;
             child.Style.BorderWidth = 5;
+            child.Style.PaddingTop = 90;
+            child.Style.PaddingLeft = 60;
 
             var child2 = child = new Element();
             child1.AddChild(child);
+            child.Id = "child2";
             child.Style.Display = StyleDisplay.Block;
             child.Style.Position = StylePosition.Static;
-            child.Style.MarginTop = 30;
-            child.Style.MarginLeft = 60;
             child.Style.BorderWidth = 5;
+            child.Style.Height = 30;
 
             var child3 = child = new Element();
             child2.AddChild(child);
+            child.Id = "child3";
             child.Style.Display = StyleDisplay.Block;
             child.Style.Position = StylePosition.Absolute;
             child.Style.Left = 50;
             child.Style.Top = 5;
             child.Style.Width = 20;
             child.Style.BorderWidth = 5;
-            child.Style.Height = 30;
+            child.Style.Height = "100%";
 
             Layout(el);
 
-            Assert.Equal(new Box(70, 25, 90, 55), child3.ClientRect);
+            Assert.Equal(new Box(130, 115, 150, 245), child3.ClientRect);
         }
 
         [Fact]
@@ -155,6 +160,7 @@ namespace AxGui.Test
             child.Style.MarginTop = 30;
             child.Style.MarginLeft = 60;
             child.Style.BorderWidth = 5;
+            child.Style.Height = 30;
 
             var child3 = child = new Element();
             child2.AddChild(child);
@@ -164,7 +170,7 @@ namespace AxGui.Test
             child.Style.Top = 5;
             child.Style.Width = 20;
             child.Style.BorderWidth = 5;
-            child.Style.Height = 30;
+            child.Style.Height = "100%";
 
             Layout(el);
 

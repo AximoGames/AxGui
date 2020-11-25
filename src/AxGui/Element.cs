@@ -41,7 +41,7 @@ namespace AxGui
         internal List<Element> ChildrenInternal;
         internal RenderContext RenderContext = new RenderContext();
         private RenderContext PostRenderContext = new RenderContext();
-        internal ProcessLayoutContext ProcessLayoutContext = new ProcessLayoutContext();
+        internal ProcessLayoutContext ProcessLayoutContext;
 
         public readonly string? TagName;
 
@@ -54,6 +54,7 @@ namespace AxGui
             Children = new List<Element>();
             ChildrenInternal = Children;
             TagName = tagName;
+            ProcessLayoutContext = new ProcessLayoutContext(this);
         }
 
         public static Element Create(string tagName)
@@ -513,7 +514,43 @@ namespace AxGui
             for (var i = 0; i < length; i++)
             {
                 var child = children[i];
-                child.ProcessLayoutContext.LocalViewPort = ClientRect;
+                if (child.TempStyle.Position == StylePosition.Absolute)
+                {
+                    var parent = child.GetRelativeParent(ctx);
+                    var viewPort = child.ClientRect;
+                    if (viewPort.Height == 0 || viewPort.Width == 0)
+                    {
+                        if (parent != null)
+                        {
+                            var realSize = parent.Children[0].MarginRect; // TODO: Fix that hack!
+                            if (viewPort.Height == 0)
+                            {
+                                viewPort.Top = realSize.Top;
+                                viewPort.Bottom = realSize.Bottom;
+                            }
+
+                            if (viewPort.Width == 0)
+                            {
+                                viewPort.Left = realSize.Left;
+                                viewPort.Right = realSize.Right;
+                            }
+                            //throw new NotImplementedException("not supported yet. Try explicit size in the mean time");
+                        }
+                    }
+                    if (parent != null)
+                    {
+                        var tmpViewPort = viewPort;
+                        viewPort = parent.PaddingRect;
+                        viewPort.Bottom += tmpViewPort.Height;
+                        viewPort.Right += tmpViewPort.Right;
+                    }
+
+                    child.ProcessLayoutContext.LocalViewPort = viewPort;
+                }
+                else
+                {
+                    child.ProcessLayoutContext.LocalViewPort = ClientRect;
+                }
                 child.CallComputeBounds(ctx.GlobalContext!);
             }
         }

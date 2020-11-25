@@ -21,7 +21,7 @@ namespace AxGui.Test.Runner
         private void BuildUI()
         {
             var test = new BoxModelChildTests();
-            test.DivAbsoluteWithRelativeParentLevel1();
+            test.DivAbsoluteWithRelativeParentLevel2();
             el = test.RootElement;
 
             //Layouter = new LayoutProcessor();

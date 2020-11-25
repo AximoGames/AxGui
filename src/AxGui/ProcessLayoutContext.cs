@@ -9,6 +9,12 @@ namespace AxGui
 
     public class ProcessLayoutContext
     {
+        public ProcessLayoutContext(Element element)
+        {
+            Element = element;
+        }
+
+        public Element Element;
         public Box LocalViewPort;
         internal GlobalProcessLayoutContext? GlobalContext;
         internal readonly List<Element> RowElements = new List<Element>();
