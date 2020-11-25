@@ -351,6 +351,8 @@ namespace AxGui
             set => MaxSize = new StyleSize(_MaxSize.Width, value);
         }
 
+        #region Anchors
+
         internal StyleRect _Anchors;
         public StyleRect Anchors
         {
@@ -413,6 +415,8 @@ namespace AxGui
             }
         }
 
+        #endregion
+
         internal StyleRect _Margin;
         public StyleRect Margin
         {
@@ -423,6 +427,54 @@ namespace AxGui
                     return;
                 _Margin = value;
                 _Margin.ParentChanged = BoundingChangedDelegate;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue MarginLeft
+        {
+            get => _Margin._Left;
+            set
+            {
+                if (_Margin._Left == value)
+                    return;
+                _Margin._Left = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue MarginTop
+        {
+            get => _Margin._Top;
+            set
+            {
+                if (_Margin._Top == value)
+                    return;
+                _Margin._Top = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue MarginRight
+        {
+            get => _Margin._Right;
+            set
+            {
+                if (_Margin._Right == value)
+                    return;
+                _Margin._Right = value;
+                BoundingChanged();
+            }
+        }
+
+        public StyleValue MarginBottom
+        {
+            get => _Margin._Bottom;
+            set
+            {
+                if (_Margin._Bottom == value)
+                    return;
+                _Margin._Bottom = value;
                 BoundingChanged();
             }
         }

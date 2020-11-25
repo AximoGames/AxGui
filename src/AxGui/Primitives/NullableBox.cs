@@ -9,14 +9,14 @@ using SkiaSharp;
 namespace AxGui
 {
 
-    public struct Box
+    public struct NullableBox
     {
-        public float Left;
-        public float Top;
-        public float Right;
-        public float Bottom;
+        public float? Left;
+        public float? Top;
+        public float? Right;
+        public float? Bottom;
 
-        public Box(float left, float top, float right, float bottom)
+        public NullableBox(float? left, float? top, float? right, float? bottom)
         {
             Left = left;
             Top = top;
@@ -24,18 +24,18 @@ namespace AxGui
             Bottom = bottom;
         }
 
-        public float TopBottom => Top + Bottom;
-        public float LeftRight => Left + Right;
+        public float? TopBottom => Top + Bottom;
+        public float? LeftRight => Left + Right;
 
-        public float GetMinMax(Axis ax)
+        public float? GetMinMax(Axis ax)
             => ax == Axis.X ? LeftRight : TopBottom;
 
-        public float Width
+        public float? Width
         {
             get => Right - Left;
             set => Right = Left + value;
         }
-        public float Height
+        public float? Height
         {
             get => Bottom - Top;
             set => Bottom = Top + value;
@@ -65,44 +65,39 @@ namespace AxGui
             TranslateY(p.Y);
         }
 
-        public Point Center
-        {
-            get => new Point(Left + (Width / 2), Top + (Height / 2));
-        }
+        //public Point Center
+        //{
+        //    get => new Point(Left + (Width / 2), Top + (Height / 2));
+        //}
 
-        public float Size(Axis axis)
+        public float? Size(Axis axis)
         {
             return axis == Axis.X ? Width : Height;
         }
 
-        public Box Substract(float value)
+        public NullableBox Substract(float value)
         {
-            return new Box(Left + value, Top + value, Right - value, Bottom - value);
+            return new NullableBox(Left + value, Top + value, Right - value, Bottom - value);
         }
 
-        public Box Substract(Box other)
+        public NullableBox Substract(NullableBox other)
         {
-            return new Box(Left + other.Left, Top + other.Top, Right - other.Right, Bottom - other.Bottom);
-        }
-
-        public static explicit operator NullableBox(Box value)
-        {
-            return new NullableBox(value.Left, value.Top, value.Right, value.Bottom);
+            return new NullableBox(Left + other.Left, Top + other.Top, Right - other.Right, Bottom - other.Bottom);
         }
 
         public SKRect ToSKRect()
         {
-            return new SKRect(Left, Top, Right, Bottom);
+            return new SKRect(Left ?? 0, Top ?? 0, Right ?? 0, Bottom ?? 0);
         }
 
         public override string ToString()
         {
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
+#pragma warning disable HAA0601 // Value type to reference type conversion causing NullableBoxing allocation
             return $"Left: {Left:F1}, Top: {Top:F1}, Right: {Right:F1}, Bottom: {Bottom:F1}, Width: {Width:F1}, Height: {Height:F1}";
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+#pragma warning restore HAA0601 // Value type to reference type conversion causing NullableBoxing allocation
         }
 
-        public float this[int index]
+        public float? this[int index]
         {
             get
             {
@@ -128,24 +123,24 @@ namespace AxGui
             }
         }
 
-        public Point Min => new Point(Left, Top);
-        public Point Max => new Point(Right, Bottom);
+        //public Point Min => new Point(Left, Top);
+        //public Point Max => new Point(Right, Bottom);
 
-        public Point LeftTop => new Point(Left, Top);
-        public Point LeftBottom => new Point(Left, Bottom);
+        //public Point LeftTop => new Point(Left, Top);
+        //public Point LeftBottom => new Point(Left, Bottom);
 
-        public Point RightTop => new Point(Right, Top);
-        public Point RightBottom => new Point(Right, Bottom);
+        //public Point RightTop => new Point(Right, Top);
+        //public Point RightBottom => new Point(Right, Bottom);
 
-        public Box Union(Box rect)
-        {
-            float left = Math.Min(Left, rect.Left);
-            float top = Math.Min(Top, rect.Top);
-            float right = Math.Max(Right, rect.Right);
-            float bottom = Math.Max(Bottom, rect.Bottom);
+        //public NullableBox Union(NullableBox rect)
+        //{
+        //    float left = Math.Min(Left, rect.Left);
+        //    float top = Math.Min(Top, rect.Top);
+        //    float right = Math.Max(Right, rect.Right);
+        //    float bottom = Math.Max(Bottom, rect.Bottom);
 
-            return new Box(left, top, right, bottom);
-        }
+        //    return new NullableBox(left, top, right, bottom);
+        //}
 
     }
 

@@ -112,7 +112,7 @@ span {
     display: block;
     height: 100%;
     width: 20px;
-    margin-left: 100%;
-    position: relative;
-    left: -20px;
+    /* margin-left: 100%; */
+    position: absolute;
+    top: 0px;
 }

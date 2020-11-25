@@ -100,6 +100,78 @@ namespace AxGui.Test
         }
 
         [Fact]
+        public void DivAbsoluteWithRelativeParentLevel2()
+        {
+            var el = CreateRootElement();
+
+            Element child;
+
+            var child1 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Relative;
+            child.Style.BorderWidth = 5;
+
+            var child2 = child = new Element();
+            child1.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Static;
+            child.Style.MarginTop = 30;
+            child.Style.MarginLeft = 60;
+            child.Style.BorderWidth = 5;
+
+            var child3 = child = new Element();
+            child2.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Absolute;
+            child.Style.Left = 50;
+            child.Style.Top = 5;
+            child.Style.Width = 20;
+            child.Style.BorderWidth = 5;
+            child.Style.Height = 30;
+
+            Layout(el);
+
+            Assert.Equal(new Box(70, 25, 90, 55), child3.ClientRect);
+        }
+
+        [Fact]
+        public void DivAbsoluteWithRelativeParentLevel1()
+        {
+            var el = CreateRootElement();
+
+            Element child;
+
+            var child1 = child = new Element();
+            el.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Relative;
+            child.Style.BorderWidth = 5;
+
+            var child2 = child = new Element();
+            child1.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Relative;
+            child.Style.MarginTop = 30;
+            child.Style.MarginLeft = 60;
+            child.Style.BorderWidth = 5;
+
+            var child3 = child = new Element();
+            child2.AddChild(child);
+            child.Style.Display = StyleDisplay.Block;
+            child.Style.Position = StylePosition.Absolute;
+            child.Style.Left = 50;
+            child.Style.Top = 5;
+            child.Style.Width = 20;
+            child.Style.BorderWidth = 5;
+            child.Style.Height = 30;
+
+            Layout(el);
+
+            Assert.Equal(new Box(135, 60, 155, 90), child3.ClientRect);
+        }
+
+        [Fact]
         public void DivGrowHeight()
         {
             var el = CreateRootElement();

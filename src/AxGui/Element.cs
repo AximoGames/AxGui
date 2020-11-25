@@ -381,6 +381,22 @@ namespace AxGui
             {
 
                 Box absAnchors = Parent != null ? Parent.ClientRect : ctx.GlobalContext!.GlobalViewPort;
+                if (ResolvedStyle.Position == StylePosition.Absolute)
+                {
+                    var parentAnchors = GetRelativeParentRect(ctx);
+                    if (ResolvedStyle._Anchors._Top.HasValue() || ResolvedStyle._Anchors._Bottom.HasValue())
+                    {
+                        absAnchors.Top = parentAnchors.Top;
+                        absAnchors.Bottom = parentAnchors.Bottom;
+                    }
+
+                    if (ResolvedStyle._Anchors._Left.HasValue() || ResolvedStyle._Anchors._Right.HasValue())
+                    {
+                        absAnchors.Left = parentAnchors.Left;
+                        absAnchors.Right = parentAnchors.Right;
+                    }
+                }
+
                 var absCenter = absAnchors.Center;
 
                 // Because we don't have flow, both axis behave exactly the same,
@@ -502,6 +518,30 @@ namespace AxGui
             }
         }
 
+        private protected Box GetRelativeParentRect(ProcessLayoutContext ctx)
+        {
+            var el = GetRelativeParent(ctx);
+            if (el == null)
+                return ctx.GlobalContext!.GlobalViewPort;
+
+            return el.ClientRect;
+        }
+
+        private protected Element? GetRelativeParent(ProcessLayoutContext ctx)
+        {
+            var p = Parent;
+
+            while (p != null)
+            {
+                if (!p.PassThrough && p.Style.Position == StylePosition.Relative)
+                    return p;
+
+                p = p.Parent;
+            }
+
+            return null;
+        }
+
         protected internal virtual void JustifyChildren(ProcessLayoutContext ctx)
         {
             var childBounds = GetChildsBounds();
@@ -538,9 +578,7 @@ namespace AxGui
                         offset.Y = space / 2;
 
                     if (offset != Point.Zero)
-                    {
                         TranslateChilds(offset.X, offset.Y);
-                    }
                 }
             }
         }
