@@ -21,6 +21,16 @@ namespace AxGui.Test
         }
 
         [Fact]
+        public void SimpleDiv()
+        {
+            var el = CreateElement();
+
+            Layout(el);
+
+            Assert.Equal(new Box(0, 0, 200, 100), el.ClientRect);
+        }
+
+        [Fact]
         public void MarginCheck()
         {
             var el = CreateElement();

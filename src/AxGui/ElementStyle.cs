@@ -196,7 +196,7 @@ namespace AxGui
             target.Visibility = StyleHelper.ParseEnum<StyleVisibility>(parent.Visibility);
 
             target.JustifyContent = StyleHelper.ParseEnum<StyleJustifyContenet>(parent.JustifyContent);
-            target.AlignItems = StyleHelper.ParseEnum<StyleAlignItems>(parent.AlignContent);
+            target.AlignItems = StyleHelper.ParseEnum<StyleAlignItems>(parent.AlignItems);
             target.FlexDirection = StyleHelper.ParseEnum<StyleFlexDirection>(parent.FlexDirection);
             target._FlexGrow = parent.FlexGrow;
 
@@ -205,6 +205,57 @@ namespace AxGui
                 target.JustifyContent = StyleJustifyContenet.Center;
             if (parent.VerticalAlign == "middle")
                 target.AlignItems = StyleAlignItems.Center;
+        }
+
+        internal static void WriteRule(ExCSS.StyleDeclaration target, ElementStyle parent)
+        {
+            target.Left = parent.Left.ToCss();
+            target.Top = parent.Top.ToCss();
+            target.Right = parent.Right.ToCss();
+            target.Bottom = parent.Bottom.ToCss();
+
+            target.MarginLeft = parent.MarginLeft.ToCss();
+            target.MarginTop = parent.MarginTop.ToCss();
+            target.MarginRight = parent.MarginRight.ToCss();
+            target.MarginBottom = parent.MarginBottom.ToCss();
+
+            //target._BorderColor = StyleRect.Combine(parent.BorderColor, new StyleRect(parent.BorderLeftColor, parent.BorderTopColor, parent.BorderRightColor, parent.BorderBottomColor));
+
+            target.BorderLeftWidth = parent.BorderWidth.Left.ToCss();
+            target.BorderTopWidth = parent.BorderWidth.Top.ToCss();
+            target.BorderRightWidth = parent.BorderWidth.Right.ToCss();
+            target.BorderBottomWidth = parent.BorderWidth.Bottom.ToCss();
+
+            //target._BorderStyle = StyleRect.Combine(parent.BorderStyle, new StyleRect(parent.BorderLeftStyle, parent.BorderTopStyle, parent.BorderRightStyle, parent.BorderBottomStyle));
+            //target._BorderRadius = StyleCorners.Combine(parent.BorderRadius, new StyleCorners(parent.BorderTopLeftRadius, parent.BorderTopRightRadius, parent.BorderBottomLeftRadius, parent.BorderBottomRightRadius));
+
+            target.PaddingLeft = parent.PaddingLeft.ToCss();
+            target.PaddingTop = parent.PaddingTop.ToCss();
+            target.PaddingRight = parent.PaddingRight.ToCss();
+            target.PaddingBottom = parent.PaddingBottom.ToCss();
+
+            target.MinWidth = parent.MinWidth.ToCss();
+            target.MinHeight = parent.MinHeight.ToCss();
+
+            target.MaxWidth = parent.MaxWidth.ToCss();
+            target.MaxHeight = parent.MaxHeight.ToCss();
+
+            target.Width = parent.Width.ToCss();
+            target.Height = parent.Height.ToCss();
+
+            target.BackgroundColor = parent.BackgroundColor.ToCss();
+            target.Color = parent.Color.ToCss();
+            target.FontSize = parent.FontSize.ToCss();
+            target.FontFamily = parent.FontFamily.ToCss();
+
+            target.Display = StyleHelper.ToCss(parent.Display);
+            target.Position = StyleHelper.ToCss(parent.Position);
+            target.Visibility = StyleHelper.ToCss(parent.Visibility);
+
+            target.JustifyContent = StyleHelper.ToCss(parent.JustifyContent);
+            target.AlignItems = StyleHelper.ToCss(parent.AlignItems);
+            target.FlexDirection = StyleHelper.ToCss(parent.FlexDirection);
+            target.FlexGrow = parent.FlexGrow.ToCss();
         }
 
         public static ElementStyle FromString(string styleBlock)

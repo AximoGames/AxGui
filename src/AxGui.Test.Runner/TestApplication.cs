@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Xml.Linq;
 using OpenToolkit.Graphics.OpenGL4;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
@@ -20,9 +21,23 @@ namespace AxGui.Test.Runner
 
         private void BuildUI()
         {
-            var test = new BoxModelRootTests();
-            test.PercentAnchors();
+            var test = new BoxModelChildTests();
+            test.DivGrowHeight();
             el = test.RootElement;
+
+            var xml = el.ToXml();
+            var html = new XElement("html");
+
+            var style = new XElement("style");
+            html.Add(new XElement("head", style));
+            var body = new XElement("body");
+            html.Add(body);
+            body.Add(xml);
+
+            style.Add("* { border-width: 0px; border-color: red; border-style: solid; box-shadow: inset 1px 1px 0px 0px rgba(0,255,0,0.5), inset -1px -1px 0px 0px rgba(0,255,0,0.5); }\n");
+            style.Add("html, body { box-shadow: initial; margin: 0px; padding: 0px }\n");
+
+            File.WriteAllText("/tmp/output.htm", html.ToString(SaveOptions.DisableFormatting));
 
             //Layouter = new LayoutProcessor();
             //Layouter.ViewPort = new Box(0, 0, CurrentSize.X, CurrentSize.Y);

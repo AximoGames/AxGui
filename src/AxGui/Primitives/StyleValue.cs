@@ -190,12 +190,18 @@ namespace AxGui
             {
                 StyleUnit.Number => Number.ToString("F1", CultureInfo.InvariantCulture),
                 StyleUnit.Pixel => Number.ToString("F1", CultureInfo.InvariantCulture) + "px",
-                StyleUnit.Percentage => Number.ToString("F1", CultureInfo.InvariantCulture) + " %",
+                StyleUnit.Percentage => Number.ToString("F1", CultureInfo.InvariantCulture) + "%",
                 StyleUnit.Color => Color.ToString(),
 #pragma warning disable HAA0102 // Non-overridden virtual method call on value type
                 _ => Unit.ToString(),
 #pragma warning restore HAA0102 // Non-overridden virtual method call on value type
             };
+        }
+
+        public string ToCss() {
+            if (Unit == StyleUnit.Unset)
+                return "";
+            return ToString();
         }
 
     }

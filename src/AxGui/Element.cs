@@ -4,8 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 using SkiaSharp;
+using System.IO;
+using System.Text;
 
 namespace AxGui
 {
@@ -922,6 +926,35 @@ namespace AxGui
             foreach (var child in Children)
                 foreach (var itm in child.GetNodesWithSelf())
                     yield return itm;
+        }
+
+        public string ToHtml()
+        {
+            return ToXml().ToString(SaveOptions.DisableFormatting);
+        }
+
+        public XElement ToXml()
+        {
+            var el = new XElement(TagName ?? "div");
+            foreach (var entry in Attributes)
+                if (entry.Key != "style" && !string.IsNullOrEmpty(entry.Value))
+                    el.SetAttributeValue(entry.Key, entry.Value);
+
+            var parser = new ExCSS.StylesheetParser(includeUnknownDeclarations: true, tolerateInvalidConstraints: true, tolerateInvalidValues: true);
+            var rule = new ExCSS.StyleRule(parser);
+            var decl = rule.Style;
+            ElementStyle.WriteRule(decl, Style);
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb);
+            decl.ToCss(writer, ExCSS.CompressedStyleFormatter.Instance);
+            var str = sb.ToString();
+            if (!string.IsNullOrEmpty(str))
+                el.SetAttributeValue("style", str);
+
+            foreach (var child in Children)
+                el.Add(child.ToXml());
+
+            return el;
         }
 
     }
