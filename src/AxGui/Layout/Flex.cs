@@ -14,7 +14,7 @@ using System.Text;
 namespace AxGui
 {
 
-    internal class Flex : Display
+    internal class Flex : LegacyDisplay
     {
         public Flex(Element element) : base(element)
         {

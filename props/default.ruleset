@@ -77,6 +77,7 @@
     <Rule Id="CA2242" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS0114" Action="Error" />
     <Rule Id="CS0162" Action="Info" />
     <Rule Id="CS0168" Action="Info" />
     <Rule Id="CS0219" Action="Info" />

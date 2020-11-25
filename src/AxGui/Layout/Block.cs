@@ -14,7 +14,7 @@ using System.Text;
 namespace AxGui
 {
 
-    internal class Block : Display
+    internal class Block : LegacyDisplay
     {
         public Block(Element element) : base(element)
         {
